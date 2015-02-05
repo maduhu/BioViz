@@ -2,46 +2,53 @@
 <items version="2" >
 
     <item
-        jar="/home/ricardo/Development/BioViz/app/libs/volley.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d4aaa36e04ee71a83444f8367c97a46fda662d2c">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/volley-9cb0d172a3a6a928d3aa639c7f82c60e9349820d.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-db07d4b2c3ab514f8bb49256fe556141ab60674b.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-17bf13f1b180d6c18ff7a33f5120743f7a29dfb0.jar" />
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-78d412c168cbbc4ceabd96e0a22dad6f2f344c3a.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-96b63d411ec9130debf02cfb89e287b85b2cac40.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6ea318c92883889f5fa9d274440ae1bcaed3469a.jar" />
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-71bd8cb67f63640fdf5f0add6e962357ec63ddd9.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-000a7ff7955ba7ffba34ff3fbf5d9e3e4c3ac0f3.jar" />
     </item>
     <item
         jar="/home/ricardo/Development/tools/android-sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-5d74cb2d8918b92aa8c94dfe5e9a1ed99e9c0dcb.jar" />
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-5d74cb2d8918b92aa8c94dfe5e9a1ed99e9c0dcb.jar" />
     </item>
     <item
-        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/gson-2.2.4-344ab9dfe69f7e345055acfa961e2f9fbc5a90b5.jar" />
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/gson-2.3-a78e3fb641a0856e61e54b318414a466145ae1f0.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/bioviz/app/libs/volley.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d4aaa36e04ee71a83444f8367c97a46fda662d2c">
+        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/volley-13d49ec5a180f2764283745e0566ebf91dbd11d9.jar" />
     </item>
 
 </items>

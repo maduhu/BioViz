@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.activity.Home;
+import com.bioviz.ricardo.bioviz.activity.MainActivity;
 import com.bioviz.ricardo.bioviz.utils.Values;
 
 /**
@@ -51,6 +51,6 @@ public class About extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((Home) activity).onSectionAttached(Values.section_about_id);
+        ((MainActivity) activity).onSectionAttached(Values.section_about_id);
     }
 }

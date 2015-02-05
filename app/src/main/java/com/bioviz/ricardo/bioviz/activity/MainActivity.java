@@ -14,10 +14,11 @@ import android.view.ViewGroup;
 
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.fragment.About;
+import com.bioviz.ricardo.bioviz.fragment.Home;
 import com.bioviz.ricardo.bioviz.fragment.NavigationDrawerFragment;
 
 
-public class Home extends Activity
+public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -33,7 +34,7 @@ public class Home extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -51,6 +52,9 @@ public class Home extends Activity
         Fragment fragment;
 
         switch (position) {
+            case 0:
+                fragment = Home.newInstance();
+                break;
             case 2:
                 fragment = About.newInstance();
                 break;
@@ -67,7 +71,7 @@ public class Home extends Activity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.section_home);
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
@@ -102,7 +106,7 @@ public class Home extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the MainActivity/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -142,14 +146,14 @@ public class Home extends Activity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((Home) activity).onSectionAttached(
+            ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
