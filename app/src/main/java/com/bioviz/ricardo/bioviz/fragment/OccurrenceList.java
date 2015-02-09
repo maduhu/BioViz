@@ -1,6 +1,7 @@
 package com.bioviz.ricardo.bioviz.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -118,6 +119,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     @Override
     public void onItemClick(View view, int position) {
         //TODO launch preview activity
+        Intent myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+        myIntent.putExtra("item", new Gson().toJson(items.get(position)));
+        getActivity().startActivity(myIntent);
     }
 
     @Override
