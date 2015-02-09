@@ -10,18 +10,28 @@
         android:layout_height="6dp"
         android:indeterminate="true"
         />
-    <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/list_occurrences"
-        android:divider="@android:color/transparent"
-        android:scrollbars="none"
-        android:layout_marginEnd="2dp"
-        android:dividerHeight="10dp"
-        android:layout_marginStart="2dp"
+
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:minHeight="30dp" />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe"
+        android:visibility="gone"
+        >
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_occurrences"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none"
+            android:layout_marginEnd="2dp"
+            android:dividerHeight="10dp"
+            android:layout_marginStart="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:minHeight="30dp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/list_occurrences_buttons"

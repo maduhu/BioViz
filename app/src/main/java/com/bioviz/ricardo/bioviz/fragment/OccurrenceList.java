@@ -2,6 +2,7 @@ package com.bioviz.ricardo.bioviz.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,7 +44,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     private LinearLayout llQueryButtons;
     private Button btRandomQuery;
     private Button btTailoredQuery;
-    private ProgressBar queryProgress;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private OccurrenceListAdapter mAdapter;
     private ArrayList<GBIFOccurrence> items;
@@ -75,7 +77,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         llQueryButtons = (LinearLayout) rootView.findViewById(R.id.list_occurrences_buttons);
         btRandomQuery = (Button) rootView.findViewById(R.id.list_occurrences_random);
         btTailoredQuery = (Button) rootView.findViewById(R.id.list_occurrences_search);
-        queryProgress = (ProgressBar) rootView.findViewById(R.id.list_occurrences_progress);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -83,9 +85,17 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         mAdapter = new OccurrenceListAdapter(items, this, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.setVisibility(View.GONE);
-        queryProgress.setIndeterminate(false);
+        swipeRefreshLayout.setVisibility(View.GONE);
         llQueryButtons.setVisibility(View.VISIBLE);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                executeQuery("");
+            }
+        });
+
 
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,13 +127,13 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
     @Override
     public void onResponse(JSONObject response) {
-        queryProgress.setIndeterminate(false);
 
         OccurrenceLookupResponse responseObj =
                 new Gson().fromJson(response.toString(), OccurrenceLookupResponse.class);
 
         llQueryButtons.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(false);
 
         items = responseObj.getResults();
         mAdapter = new OccurrenceListAdapter(items, this, getActivity());
@@ -133,11 +143,11 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         Log.e("VOLLEY", volleyError.toString());
-        queryProgress.setIndeterminate(false);
 
         Toast.makeText(getActivity(), "Something went wrong :o ", Toast.LENGTH_SHORT).show();
         llQueryButtons.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -163,7 +173,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
     private void executeQuery(String params) {
 
-        queryProgress.setIndeterminate(true);
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?mediaType=StillImage";
         offset += 10;
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
