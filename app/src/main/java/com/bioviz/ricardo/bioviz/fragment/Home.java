@@ -64,62 +64,7 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ivFetchButton = (ImageView) rootView.findViewById(R.id.home_fetch_occurrences);
-
-        ivFetchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String url = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?mediaType=StillImage";
-
-                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                        url, null,
-                        new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.d("GET", response.toString());
-                                OccurrenceLookupResponse responseObj =
-                                        new Gson().fromJson(response.toString(), OccurrenceLookupResponse.class);
-
-                                GBIFOccurrence occurrence = responseObj.getResults().get(0);
-                                LoadImage(occurrence.getMedia().get(0).getIdentifier());
-
-                            }
-                        }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d("GET", "Error: " + error.getMessage());
-                    }
-                });
-
-                // Adding request to request queue
-                AppController.getInstance().addToRequestQueue(jsonObjReq, "home_request");
-            }
-        });
-
         return rootView;
-    }
-
-    private void LoadImage(String URL) {
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-        // If you are using normal ImageView
-        imageLoader.get(URL, new ImageLoader.ImageListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("IMG", "Image Load Error: " + error.getMessage());
-            }
-
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean arg1) {
-                if (response.getBitmap() != null) {
-                    // load image into imageview
-                    ivFetchButton.setImageBitmap(response.getBitmap());
-                }
-            }
-        });
     }
 
     @Override

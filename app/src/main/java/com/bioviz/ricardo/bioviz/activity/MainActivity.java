@@ -16,6 +16,7 @@ import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.fragment.About;
 import com.bioviz.ricardo.bioviz.fragment.Home;
 import com.bioviz.ricardo.bioviz.fragment.NavigationDrawerFragment;
+import com.bioviz.ricardo.bioviz.fragment.OccurrenceList;
 
 
 public class MainActivity extends Activity
@@ -55,6 +56,9 @@ public class MainActivity extends Activity
             case 0:
                 fragment = Home.newInstance();
                 break;
+            case 1:
+                fragment = OccurrenceList.newInstance();
+                break;
             case 2:
                 fragment = About.newInstance();
                 break;
@@ -74,7 +78,7 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.section_home);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.section_occurrence_list);
                 break;
             case 3:
                 mTitle = getString(R.string.section_about);
@@ -96,8 +100,8 @@ public class MainActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.home, menu);
-            restoreActionBar();
+            //getMenuInflater().inflate(R.menu.home, menu);
+            //restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);

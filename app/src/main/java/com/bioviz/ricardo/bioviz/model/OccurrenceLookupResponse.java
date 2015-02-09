@@ -1,5 +1,6 @@
 package com.bioviz.ricardo.bioviz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OccurrenceLookupResponse {
@@ -8,7 +9,7 @@ public class OccurrenceLookupResponse {
     private boolean endOfRecords;
     private Number limit;
     private Number offset;
-    private List<GBIFOccurrence> results;
+    private ArrayList<GBIFOccurrence> results;
 
     public Number getCount(){
         return this.count;
@@ -34,10 +35,10 @@ public class OccurrenceLookupResponse {
     public void setOffset(Number offset){
         this.offset = offset;
     }
-    public List<GBIFOccurrence> getResults(){
+    public ArrayList<GBIFOccurrence> getResults(){
         return this.results;
     }
-    public void setResults(List results){
+    public void setResults(ArrayList results){
         this.results = results;
     }
 }
