@@ -69,7 +69,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
         offset = 0;
 
-
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list_occurrences);
         llQueryButtons = (LinearLayout) rootView.findViewById(R.id.list_occurrences_buttons);
         btRandomQuery = (Button) rootView.findViewById(R.id.list_occurrences_random);
@@ -100,7 +99,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
                 executeQuery("");
             }
         });
-
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +112,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
     @Override
     public void onItemClick(View view, int position) {
-        //TODO launch preview activity
         Intent myIntent = new Intent(getActivity(), OccurrenceDetails.class);
         myIntent.putExtra("item", new Gson().toJson(items.get(position)));
         getActivity().startActivity(myIntent);
