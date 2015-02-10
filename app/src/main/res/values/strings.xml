@@ -12,5 +12,6 @@
     <string name="section_occurrence_list">Occurrences</string>
     <string name="title_activity_occurrence_details">Occurrence details</string>
     <string name="hello_world">Hello world!</string>
+    <string name="share">Share</string>
 
 </resources>

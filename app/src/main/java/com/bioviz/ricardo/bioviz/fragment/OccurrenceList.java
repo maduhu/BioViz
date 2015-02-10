@@ -15,23 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.activity.MainActivity;
 import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.OccurrenceLookupResponse;
+import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
 

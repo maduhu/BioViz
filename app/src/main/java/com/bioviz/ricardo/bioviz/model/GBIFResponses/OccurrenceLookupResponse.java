@@ -1,4 +1,6 @@
-package com.bioviz.ricardo.bioviz.model;
+package com.bioviz.ricardo.bioviz.model.GBIFResponses;
+
+import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
 
 import java.util.ArrayList;
 import java.util.List;

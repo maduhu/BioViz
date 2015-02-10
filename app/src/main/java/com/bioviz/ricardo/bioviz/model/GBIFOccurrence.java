@@ -7,7 +7,7 @@ import java.util.List;
  * (not all of them are listed)
  */
 public class GBIFOccurrence {
-    private String datasetKey;
+
     private String basisOfRecord;
     private String scientificName;
     private String kingdom;
@@ -20,6 +20,9 @@ public class GBIFOccurrence {
     private String locality;
     private String decimalLongitude;
     private String decimalLatitude;
+    private String datasetKey;
+    private String speciesKey;
+
     private int year;
     private List<GBIFMediaElement> media;
 
@@ -144,5 +147,12 @@ public class GBIFOccurrence {
         this.media = media;
     }
 
+    public String getSpeciesKey() {
+        return speciesKey;
+    }
+
+    public void setSpeciesKey(String speciesKey) {
+        this.speciesKey = speciesKey;
+    }
 
 }
