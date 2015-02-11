@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 
+import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.MainActivity;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -65,59 +66,19 @@ public class About extends Fragment {
         btSaveConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                applySettings(swData.isChecked(), swPics.isChecked(), swLang.isChecked());
+                AppController.applySettings(swData.isChecked(), swPics.isChecked(), swLang.isChecked());
                 btSaveConf.setText("Saved");
                 btSaveConf.setEnabled(false);
             }
         });
 
-        boolean[] states = getStates();
+        boolean[] states = AppController.getStates();
         swData.setChecked(states[0]);
         swPics.setChecked(states[1]);
         swLang.setChecked(states[2]);
 
         // Inflate the layout for this fragment
         return rootView;
-    }
-
-    private boolean[] getStates() {
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!preferences.contains("use_data") ||
-                !preferences.contains("require_images") ||
-                !preferences.contains("require_language")) {
-
-           applySettings(false, true, false);
-           return new boolean[]{false, true, false};
-        }
-
-        return new boolean[]{
-                preferences.getBoolean("use_data", false),
-                preferences.getBoolean("require_images", true),
-                preferences.getBoolean("require_language", false)};
-    }
-
-    private void applySettings(boolean data, boolean pictures, boolean language) {
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit= preferences.edit();
-
-        if (preferences.contains("use_data") ||
-                preferences.contains("require_images") ||
-                preferences.contains("require_language")) {
-            edit.remove("use_data");
-            edit.remove("require_images");
-            edit.remove("require_language");
-        }
-
-        edit.putBoolean("use_data", data);
-        edit.putBoolean("require_images", pictures);
-        edit.putBoolean("require_language", language);
-        edit.apply();
-
-        swData.setChecked(data);
-        swPics.setChecked(pictures);
-        swLang.setChecked(language);
     }
 
     @Override

@@ -169,8 +169,19 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     }
 
     private void executeQuery(String params) {
+        String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
-        String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?mediaType=StillImage";
+        boolean[] settings = AppController.getStates();
+
+        if (settings[1]) {
+            request += "&mediaType=StillImage";
+        }
+
+        //FIXME apparently the api simply ignores this -.-''
+        if (settings[2]) {
+            request+="&language=en";
+        }
+
         offset += 10;
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,

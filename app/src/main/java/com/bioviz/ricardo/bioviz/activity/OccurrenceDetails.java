@@ -58,6 +58,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         }
         occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         final RecyclerView descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -99,9 +100,24 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id ==  android.R.id.home) {
+            finish();
             return true;
+        } else if (id == R.id.action_share_occurrence) {
+
+            String body = occurrenceItem.getScientificName() + "\n\n";
+
+            for (GBIFSpeciesDescription description : items) {
+                body += "\n"
+                        + description.getType() + "\n"
+                        + description.getDescription();
+            }
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, body);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,10 +128,20 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         GBIFSpeciesLookupResponse response = new Gson().fromJson(jsonObject.toString(), GBIFSpeciesLookupResponse.class);
         ArrayList<GBIFSpeciesDescription> fetchedDescriptions = response.getResults();
 
+        boolean[] settings = AppController.getStates();
+
         for (GBIFSpeciesDescription description : fetchedDescriptions) {
             if (description.getDescription() != null &&
                     !description.getDescription().equals("")) {
-                items.add(description);
+
+                if (settings[2]) {
+                    if (description.getLanguage().equals("eng")) {
+                        items.add(description);
+                    }
+                } else {
+                    items.add(description);
+                }
+
             }
         }
 
