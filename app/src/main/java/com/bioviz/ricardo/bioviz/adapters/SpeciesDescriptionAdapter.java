@@ -2,12 +2,16 @@ package com.bioviz.ricardo.bioviz.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.ClipboardManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -24,15 +28,20 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
 
     private Context context;
     private ArrayList<GBIFSpeciesDescription> items;
+    private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
+    private int textSize;
 
 
     public SpeciesDescriptionAdapter(ArrayList<GBIFSpeciesDescription> srcItems,
+                                     GBIFOccurrence occurrence,
                                      OnItemClickListener clickListener,
                                      Context context) {
 
         this.context = context;
+        this.occurrenceItem = occurrence;
         this.items = srcItems;
+        this.textSize = 14;
         listener = clickListener;
     }
 
@@ -59,23 +68,20 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         final GBIFSpeciesDescription item = items.get(position);
 
         if (getItemViewType(position) == 0) {
-            //TODO: load this view type
-            ((OccurrenceViewHolder) holder).tvItemCountry.setText("CENAS DO PAIS");
-
-            ((OccurrenceViewHolder) holder).tvItemValue.setText(i.getScientificName());
-            ((OccurrenceViewHolder) holder).tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
-            ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
+            //Occurrence item
+            ((OccurrenceViewHolder) holder).tvItemValue.setText(occurrenceItem.getScientificName());
+            ((OccurrenceViewHolder) holder).tvItemCountry.setText(occurrenceItem.getCountry() + ", " + occurrenceItem.getYear());
+            ((OccurrenceViewHolder) holder).tvItemSpecies.setText(occurrenceItem.getSpecies());
 
             ImageLoader imageLoader = AppController.getInstance().getImageLoader();
             ((OccurrenceViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
-            if (item.getMedia() != null &&
-                    item.getMedia().get(0).getIdentifier() != null) {
-                ((OccurrenceViewHolder) holder).ivItemDrawable.setImageUrl(item.getMedia().get(0).getIdentifier(), imageLoader);
+            if (occurrenceItem.getMedia() != null &&
+                    occurrenceItem.getMedia().get(0).getIdentifier() != null) {
+                ((OccurrenceViewHolder) holder).ivItemDrawable.setImageUrl(occurrenceItem.getMedia().get(0).getIdentifier(), imageLoader);
                 Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
                 ((OccurrenceViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
             }
-
             return;
         }
 
@@ -87,7 +93,50 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         //Deal with foreign characters
         ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
         ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
-        ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("empty field");
+        ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
+
+        ((DescriptionViewHolder) holder).btZoomOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textSize -= 1;
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
+            }
+        });
+
+        ((DescriptionViewHolder) holder).btZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textSize += 1;
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
+            }
+        });
+
+        //Copy text to clipboard
+        ((DescriptionViewHolder) holder).btCopy.setOnClickListener(new View.OnClickListener() {
+            String text = ((DescriptionViewHolder) holder).tvDescriptionValue.getText().toString();
+            @Override
+            public void onClick(View v) {
+                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboard.setText(text);
+                } else {
+                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+                    clipboard.setPrimaryClip(clip);
+                }
+
+                Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+        if (holder.getItemViewType() != 0) {
+            textSize = 14;
+            ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        }
     }
 
     @Override
@@ -101,6 +150,9 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         private TextView tvDescriptionValue;
         private TextView tvDescriptionLanguage;
         private TextView tvDescriptionType;
+        private ImageButton btZoomIn;
+        private ImageButton btZoomOut;
+        private ImageButton btCopy;
 
 
         public DescriptionViewHolder(View rowView) {
@@ -109,6 +161,9 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             tvDescriptionValue = (TextView) rowView.findViewById(R.id.tvDescriptionValue);
             tvDescriptionType = (TextView) rowView.findViewById(R.id.tvDescriptionType);
             tvDescriptionLanguage = (TextView) rowView.findViewById(R.id.tvDescriptionLanguage);
+            btZoomIn = (ImageButton) rowView.findViewById(R.id.description_item_zoom_in);
+            btZoomOut = (ImageButton) rowView.findViewById(R.id.description_item_zoom_out);
+            btCopy = (ImageButton) rowView.findViewById(R.id.description_item_copy);
 
             rowView.setOnClickListener(this);
             rowView.setOnLongClickListener(this);

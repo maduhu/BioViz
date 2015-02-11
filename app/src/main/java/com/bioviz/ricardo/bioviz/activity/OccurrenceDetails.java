@@ -41,7 +41,6 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
 
     GBIFOccurrence occurrenceItem;
 
-    private RecyclerView descriptionList;
     private ArrayList<GBIFSpeciesDescription> items;
     private SpeciesDescriptionAdapter mAdapter;
 
@@ -57,16 +56,17 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         } else {
             itemString = savedInstanceState.getString("item");
         }
+        occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
 
-        items = new ArrayList<>();
-        descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
-        mAdapter = new SpeciesDescriptionAdapter(items, this, this);
-        descriptionList.setAdapter(mAdapter);
+
+        final RecyclerView descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        descriptionList.setLayoutManager(layoutManager);
 
-        occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
+        items = new ArrayList<>();
+        mAdapter = new SpeciesDescriptionAdapter(items, occurrenceItem, this, this);
+        descriptionList.setAdapter(mAdapter);
+        descriptionList.setLayoutManager(layoutManager);
 
         if (getActionBar() != null) {
             getActionBar().setTitle(occurrenceItem.getSpecies());
@@ -144,5 +144,11 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
      */
     private void loadEmptyView() {
         //TODO Build and load view
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("item", new Gson().toJson(occurrenceItem));
     }
 }

@@ -3,8 +3,8 @@
 
     <color name="text_blue_grey_darker">#ff202c34</color>
 
-    <color name="primary">#ff2c3b44</color>
-    <color name="primary_dark">#263238</color>
+    <color name="primary">#ff698b9e</color>
+    <color name="primary_dark">#ff698b9e</color>
     <color name="text_primary">#ffffffff</color>
     <color name="text_blue_grey">#37474F</color>
     <color name="fab_color">#ffb20800</color>
