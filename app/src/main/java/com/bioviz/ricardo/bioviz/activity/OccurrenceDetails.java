@@ -169,7 +169,11 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
      * Loads the view showing that there are no descriptions available
      */
     private void loadEmptyView() {
-        //TODO Build and load view
+        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.view_woops, null);
+        LinearLayout llDetails = (LinearLayout) findViewById(R.id.ll_occurrence_details);
+        llDetails.removeAllViews();
+        llDetails.addView(v);
     }
 
     @Override
