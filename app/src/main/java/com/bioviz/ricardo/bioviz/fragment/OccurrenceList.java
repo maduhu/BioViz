@@ -119,7 +119,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
     @Override
     public void onItemLongClick(View view, int position) {
-
     }
 
     @Override

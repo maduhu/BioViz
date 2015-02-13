@@ -171,9 +171,12 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
     private void loadEmptyView() {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.view_woops, null);
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
         LinearLayout llDetails = (LinearLayout) findViewById(R.id.ll_occurrence_details);
         llDetails.removeAllViews();
-        llDetails.addView(v);
+        llDetails.addView(v, params);
     }
 
     @Override

@@ -21,7 +21,6 @@ import com.bioviz.ricardo.bioviz.utils.Values;
  */
 public class About extends Fragment {
 
-
     private Button btSaveConf;
     private Switch swData;
     private Switch swPics;
