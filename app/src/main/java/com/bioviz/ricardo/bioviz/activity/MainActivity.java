@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.fragment.About;
 import com.bioviz.ricardo.bioviz.fragment.Home;
@@ -40,6 +41,8 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
+        AppController.enableHttpResponseCache();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(

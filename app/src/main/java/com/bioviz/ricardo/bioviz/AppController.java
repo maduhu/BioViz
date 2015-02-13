@@ -1,19 +1,22 @@
 package com.bioviz.ricardo.bioviz;
 
-/**
- * Created by ricardo on 05-02-2015.
- */
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.bioviz.ricardo.bioviz.utils.LruBitmapCache;
+
+import java.io.File;
 
 public class AppController extends Application {
 
@@ -92,9 +95,9 @@ public class AppController extends Application {
 
     /**
      * Saves the received settings to the shared preferences
-     * @param data
-     * @param pictures
-     * @param language
+     * @param data whether data can or not be used to download resources
+     * @param pictures display only items with images
+     * @param language only display items in english (for now)
      */
     public static void applySettings(boolean data, boolean pictures, boolean language) {
 
@@ -113,5 +116,21 @@ public class AppController extends Application {
         edit.putBoolean("require_images", pictures);
         edit.putBoolean("require_language", language);
         edit.apply();
+    }
+
+    /**
+     * Enables caching of web requests
+     */
+    public static void enableHttpResponseCache() {
+        try {
+            long httpCacheSize = 20 * 1024 * 1024; // 20 MiB
+            File httpCacheDir = getInstance().getCacheDir();
+            httpCacheDir = new File(httpCacheDir, "http");
+            Class.forName("android.net.http.HttpResponseCache")
+                    .getMethod("install", File.class, long.class)
+                    .invoke(null, httpCacheDir, httpCacheSize);
+        } catch (Exception httpResponseCacheNotAvailable) {
+            Log.d(TAG, "HTTP response cache is unavailable.");
+        }
     }
 }
