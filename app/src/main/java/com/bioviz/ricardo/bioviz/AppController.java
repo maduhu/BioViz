@@ -81,16 +81,18 @@ public class AppController extends Application {
         SharedPreferences preferences = mInstance.getSharedPreferences(mInstance.getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!preferences.contains("use_data") ||
                 !preferences.contains("require_images") ||
-                !preferences.contains("require_language")) {
+                !preferences.contains("require_language") ||
+                !preferences.contains("require_fine_location")) {
 
-            applySettings(false, true, false);
-            return new boolean[]{false, true, false};
+            applySettings(false, true, false, false);
+            return new boolean[]{false, true, false, false};
         }
 
         return new boolean[]{
                 preferences.getBoolean("use_data", false),
                 preferences.getBoolean("require_images", true),
-                preferences.getBoolean("require_language", false)};
+                preferences.getBoolean("require_language", false),
+                preferences.getBoolean("require_fine_location", false)};
     }
 
     /**
@@ -99,22 +101,25 @@ public class AppController extends Application {
      * @param pictures display only items with images
      * @param language only display items in english (for now)
      */
-    public static void applySettings(boolean data, boolean pictures, boolean language) {
+    public static void applySettings(boolean data, boolean pictures, boolean language, boolean gps) {
 
         SharedPreferences preferences = mInstance.getSharedPreferences(mInstance.getString(R.string.app_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor edit= preferences.edit();
 
         if (preferences.contains("use_data") ||
                 preferences.contains("require_images") ||
-                preferences.contains("require_language")) {
+                preferences.contains("require_language") ||
+                preferences.contains("require_fine_location")) {
             edit.remove("use_data");
             edit.remove("require_images");
             edit.remove("require_language");
+            edit.remove("require_fine_location");
         }
 
         edit.putBoolean("use_data", data);
         edit.putBoolean("require_images", pictures);
         edit.putBoolean("require_language", language);
+        edit.putBoolean("require_fine_location", gps);
         edit.apply();
     }
 

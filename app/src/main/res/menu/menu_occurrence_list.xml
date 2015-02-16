@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".Home">
-    <item android:id="@+id/action_refresh" android:title="Random"
+
+    <item
+        android:icon="@android:drawable/ic_menu_search"
+        android:id="@+id/action_search"
+        android:title="@android:string/search_go"
         android:showAsAction="withText|ifRoom"
         />
 
-    <item android:id="@+id/action_search" android:title="Search"
+    <item
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:id="@+id/action_near_me"
+        android:title="Near my location"
+        android:showAsAction="withText|ifRoom"
+        />
+
+    <item
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:id="@+id/action_refresh"
+        android:title="Random"
         android:showAsAction="withText|ifRoom"
         />
 </menu>
