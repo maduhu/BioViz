@@ -2,7 +2,6 @@ package com.bioviz.ricardo.bioviz.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.ClipboardManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 
 import java.util.ArrayList;

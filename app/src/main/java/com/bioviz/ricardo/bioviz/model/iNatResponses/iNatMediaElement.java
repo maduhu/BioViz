@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model;
+package com.bioviz.ricardo.bioviz.model.iNatResponses;
 
 /**
  * Created by ricardo on 18-02-2015.

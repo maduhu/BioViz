@@ -14,7 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 
 import java.util.ArrayList;
 

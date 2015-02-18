@@ -1,6 +1,5 @@
 package com.bioviz.ricardo.bioviz.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -25,14 +24,17 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
+import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
-import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservationLookupResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -42,13 +44,13 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class OccurrenceList extends Fragment implements OnItemClickListener, Response.Listener<JSONObject>, Response.ErrorListener, ConnectionCallbacks,
-        OnConnectionFailedListener {
+public class OccurrenceList extends Fragment implements OnItemClickListener, ConnectionCallbacks,
+        OnConnectionFailedListener, Response.ErrorListener {
 
     private RecyclerView mRecyclerView;
     private LinearLayout mEmptyView;
@@ -61,6 +63,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
     private Dialog dialog;
     private String lastQuery;
+
+    private OnObservationResponseListener iNatResponseListener;
+    private OnOccurrenceResponseListener GBIFResponseListener;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
 
@@ -98,6 +103,60 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         mEmptyView = (LinearLayout) rootView.findViewById(R.id.list_occurrences_empty);
         llQueryButtons = (LinearLayout) rootView.findViewById(R.id.list_occurrences_buttons);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
+
+        iNatResponseListener = new OnObservationResponseListener() {
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                //TODO implement the handler
+                if (items == null)
+                    items = new ArrayList<>();
+
+                try {
+                    ArrayList<iNatObservationLookupResponse> responses =
+                            new Gson().fromJson(jsonArray.toString(), Values.ARRAY_INAT_OBSERVATIONS);
+
+                    llQueryButtons.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setRefreshing(false);
+                    items.addAll(responses);
+
+                } catch (Exception e) {
+                    Log.e("ERR", "error parsing this response" + jsonArray.toString());
+                    return;
+                }
+            }
+        };
+
+        GBIFResponseListener = new OnOccurrenceResponseListener() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                OccurrenceLookupResponse responseObj =
+                        new Gson().fromJson(jsonObject.toString(), OccurrenceLookupResponse.class);
+
+                llQueryButtons.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
+
+                if (items == null)
+                    items = new ArrayList<>();
+
+                items.addAll(responseObj.getResults());
+                if (items.size() == 0) {
+                    //load empty view
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    llQueryButtons.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                } else {
+                    mEmptyView.setVisibility(View.GONE);
+                    llQueryButtons.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mAdapter = new OccurrenceListAdapter(items, OccurrenceList.this, getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+        };
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -152,41 +211,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     public void onItemLongClick(View view, int position) {
     }
 
-    @Override
-    public void onResponse(JSONObject response) {
-
-        OccurrenceLookupResponse responseObj =
-                new Gson().fromJson(response.toString(), OccurrenceLookupResponse.class);
-
-        llQueryButtons.setVisibility(View.GONE);
-        swipeRefreshLayout.setVisibility(View.VISIBLE);
-        swipeRefreshLayout.setRefreshing(false);
-
-        items = new ArrayList<>();
-        items.addAll(responseObj.getResults());
-        if (items.size() == 0) {
-            //load empty view
-            mEmptyView.setVisibility(View.VISIBLE);
-            llQueryButtons.setVisibility(View.GONE);
-            swipeRefreshLayout.setVisibility(View.GONE);
-        } else {
-            mEmptyView.setVisibility(View.GONE);
-            llQueryButtons.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mAdapter = new OccurrenceListAdapter(items, this, getActivity());
-            mRecyclerView.setAdapter(mAdapter);
-        }
-
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError volleyError) {
-        Log.e("VOLLEY", volleyError.toString());
-        Toast.makeText(getActivity(), "Something went wrong :o ", Toast.LENGTH_SHORT).show();
-        llQueryButtons.setVisibility(View.VISIBLE);
-        swipeRefreshLayout.setVisibility(View.GONE);
-        swipeRefreshLayout.setRefreshing(false);
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -277,7 +301,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
                 request, null,
-                this, this);
+                GBIFResponseListener, this);
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, "occurrence_list_request");
@@ -301,10 +325,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
 
         Log.e("REQUEST", request);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
-                request, null,
-                this, this);
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(
+                request, iNatResponseListener, this);
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, "occurrence_list_request");
@@ -405,5 +427,14 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     @Override
     public void onConnectionSuspended(int arg0) {
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        Log.e("VOLLEY", volleyError.toString());
+        Toast.makeText(getActivity(), "Something went wrong :o ", Toast.LENGTH_SHORT).show();
+        llQueryButtons.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
