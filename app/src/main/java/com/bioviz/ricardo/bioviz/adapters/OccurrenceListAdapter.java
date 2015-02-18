@@ -22,12 +22,12 @@ import java.util.ArrayList;
 public class OccurrenceListAdapter  extends RecyclerView.Adapter<OccurrenceListAdapter.OccurrenceViewHolder> {
 
     private Context context;
-    private ArrayList<GBIFOccurrence> items;
+    private ArrayList<Object> items;
 
     private static OnItemClickListener listener;
 
 
-    public OccurrenceListAdapter(ArrayList<GBIFOccurrence> srcItems,
+    public OccurrenceListAdapter(ArrayList<Object> srcItems,
                                  OnItemClickListener clickListener,
                                  Context context) {
 
@@ -47,21 +47,27 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<OccurrenceListA
 
     @Override
     public void onBindViewHolder(final OccurrenceViewHolder holder, int position) {
-        final GBIFOccurrence item = items.get(position);
+        if (items.get(position) instanceof GBIFOccurrence) {
+            final GBIFOccurrence item = (GBIFOccurrence) items.get(position);
 
-        holder.tvItemValue.setText(item.getScientificName());
-        holder.tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
-        holder.tvItemSpecies.setText(item.getSpecies());
+            holder.tvItemValue.setText(item.getScientificName());
+            holder.tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
+            holder.tvItemSpecies.setText(item.getSpecies());
 
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-        holder.ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
-        if (item.getMedia() != null &&
-                item.getMedia().get(0).getIdentifier() != null) {
-            holder.ivItemDrawable.setImageUrl(item.getMedia().get(0).getIdentifier(), imageLoader);
-            Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-            holder.ivItemDrawable.setAnimation(anim);
-            anim.start();
+            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+            holder.ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
+            if (item.getMedia() != null &&
+                    item.getMedia().get(0).getIdentifier() != null) {
+                holder.ivItemDrawable.setImageUrl(item.getMedia().get(0).getIdentifier(), imageLoader);
+                Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+                holder.ivItemDrawable.setAnimation(anim);
+                anim.start();
+            }
+        } else {
+            //TODO deal with other types
+            holder.tvItemValue.setText("\n\nRECURSO DA NATA\n\n");
         }
+
     }
 
     @Override
@@ -79,6 +85,39 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<OccurrenceListA
 
 
         public OccurrenceViewHolder(View rowView) {
+            super(rowView);
+
+            tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
+            tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
+            tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
+            ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+
+            rowView.setOnClickListener(this);
+            rowView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onItemClick(view, getPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
+        }
+    }
+
+
+    static class ObservationViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener{
+
+        private TextView tvItemValue;
+        private TextView tvItemCountry;
+        private TextView tvItemSpecies;
+        private NetworkImageView ivItemDrawable;
+
+
+        public ObservationViewHolder(View rowView) {
             super(rowView);
 
             tvItemValue = (TextView) rowView.findViewById(R.id.item_value);

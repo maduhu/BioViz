@@ -1,14 +1,10 @@
 package com.bioviz.ricardo.bioviz.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,11 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,16 +34,21 @@ import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.Objects;
 
-public class OccurrenceList extends Fragment implements OnItemClickListener, Response.Listener<JSONObject>, Response.ErrorListener, LocationListener {
+public class OccurrenceList extends Fragment implements OnItemClickListener, Response.Listener<JSONObject>, Response.ErrorListener, ConnectionCallbacks,
+        OnConnectionFailedListener {
 
     private RecyclerView mRecyclerView;
     private LinearLayout mEmptyView;
@@ -58,13 +57,15 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private OccurrenceListAdapter mAdapter;
-    private ArrayList<GBIFOccurrence> items;
+    private ArrayList<Object> items;
 
     private Dialog dialog;
-    private LocationManager locationManager;
-    private String latitude;
-    private String longitude;
     private String lastQuery;
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+
+    // Google client to interact with Google API
+    private GoogleApiClient mGoogleApiClient;
 
     private int offset;
 
@@ -107,18 +108,27 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         swipeRefreshLayout.setVisibility(View.GONE);
         llQueryButtons.setVisibility(View.VISIBLE);
 
+        // First we need to check availability of play services
+        if (checkPlayServices()) {
+
+            // Building the GoogleApi client
+            buildGoogleApiClient();
+        }
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
-                executeQuery("");
+                lastQuery = "";
+                executeGBIFQuery();
+                executeiNATQuery();
             }
         });
 
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeQuery("");
+                executeGBIFQuery("");
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +162,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         swipeRefreshLayout.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
 
-        items = responseObj.getResults();
+        items = new ArrayList<>();
+        items.addAll(responseObj.getResults());
         if (items.size() == 0) {
             //load empty view
             mEmptyView.setVisibility(View.VISIBLE);
@@ -188,46 +199,17 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
         // handle item selection
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                executeQuery("");
+                executeGBIFQuery();
+                executeiNATQuery();
                 return true;
             case R.id.action_search:
                 promptSearchParams();
                 return true;
             case R.id.action_near_me:
-                fetchLocalOccurrences();
+                updateLocation();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void fetchLocalOccurrences() {
-        boolean[] states = AppController.getStates();
-        locationManager = (LocationManager)
-                getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        //fine locaiton is required by the user
-        if (states[3]) {
-
-            //start location listener
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, OccurrenceList.this);
-
-            swipeRefreshLayout.setRefreshing(true);
-
-        } else { //it can be an aproximate location
-
-            Location loc = getLastBestLocation();
-            latitude = "" + loc.getLatitude();
-            longitude = "" + loc.getLongitude();
-
-            Toast.makeText(getActivity(),
-                    "LAT: " + loc.getLatitude() + "\nLNG: " + loc.getLongitude(),
-                    Toast.LENGTH_SHORT).show();
-
-            executeQuery(lastQuery == null ? "" : lastQuery,
-                    "&decimalLatitude=" + latitude,
-                    "&decimalLongitude=" + longitude);
         }
     }
 
@@ -258,14 +240,15 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
                 if (!sName.getText().toString().equals("")) {
                     lastQuery = "&scientificName=" + sName.getText().toString();
                 }
-                executeQuery(lastQuery);
+                executeGBIFQuery(lastQuery);
+                executeiNATQuery(lastQuery);
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
 
-    private void executeQuery(String... params) {
+    private void executeGBIFQuery(String... params) {
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
         boolean[] settings = AppController.getStates();
@@ -279,12 +262,43 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
             request+="&language=en";
         }
 
-        for (String s : params) {
-            request += s;
+        //no params == random query, can use the offset to retrieve other results
+        if (params.length == 0) {
+            offset += 10;
+            request += "&offset=" + offset;
+        } else {
+            for (String s : params) {
+                request += s;
+            }
         }
 
-        offset += 10;
-        request += "&offset=" + offset;
+        Log.e("REQUEST", request);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.GET,
+                request, null,
+                this, this);
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, "occurrence_list_request");
+    }
+
+    private void executeiNATQuery(String... params) {
+        String request = Values.iNATBaseAddr + Values.iNatObservation + "?";
+
+        boolean[] settings = AppController.getStates();
+
+        if (settings[1]) {
+            request += "&has[]=photo";
+        }
+
+        //no params == random query, can use the offset to retrieve other results
+        if (params.length != 0) {
+            for (String s : params) {
+                request += s;
+            }
+        }
+
         Log.e("REQUEST", request);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
@@ -297,96 +311,99 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Res
     }
 
     @Override
-    public void onLocationChanged(Location loc) {
-        Toast.makeText(
-                getActivity(),
-                "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                        + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-
-        longitude = "" + loc.getLongitude();
-        latitude = "" + loc.getLatitude();
-
-        if (lastQuery != null ||
-                !lastQuery.equals("")) {
-
-            executeQuery(lastQuery
-                    + "&decimalLatitude=" + latitude
-                    + "&decimalLongitude=" + longitude
-                    );
-        } else {
-            executeQuery("&decimalLatitude=" + latitude
-                    + "&decimalLongitude=" + longitude
-                    );
-        }
-
-        /*------- To get city name from coordinates -------- */
-        String cityName = null;
-        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-        List<Address> addresses;
-        try {
-            addresses = gcd.getFromLocation(loc.getLatitude(),
-                    loc.getLongitude(), 1);
-            if (addresses.size() > 0)
-                System.out.println(addresses.get(0).getLocality());
-            cityName = addresses.get(0).getLocality();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                + cityName;
-        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    /**
-     * @return the last know best location
-     */
-    private Location getLastBestLocation() {
-        if (locationManager == null) {
-            Toast.makeText(getActivity(), "Unable to fetch location", Toast.LENGTH_SHORT).show();
-            return new Location("Porto");
-        }
-        Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        long GPSLocationTime = 0;
-        if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
-
-        long NetLocationTime = 0;
-
-        if (null != locationNet) {
-            NetLocationTime = locationNet.getTime();
-        }
-
-        if ( 0 < GPSLocationTime - NetLocationTime ) {
-            return locationGPS;
-        }
-        else {
-            return locationNet;
-        }
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    /**
+     * Creating google api client object
+     * */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+    /**
+     * Check google play services on the device
+     * */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(getActivity());
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(),
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getActivity(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                getActivity().finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Get location coordinates and launch the api request
+     * */
+    private void updateLocation() {
+
+        Location mLastLocation = LocationServices.FusedLocationApi
+                .getLastLocation(mGoogleApiClient);
+
+        if (mLastLocation != null) {
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+
+            Toast.makeText(getActivity(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
+
+            executeGBIFQuery(lastQuery == null ? "" : lastQuery,
+                    "&decimalLatitude=" + ("" + latitude).substring(0, 4),
+                    "&decimalLongitude=" + ("" + longitude).substring(0, 4));
+
+        } else {
+            Toast.makeText(getActivity(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkPlayServices();
+    }
+
+    /**
+     * Google api callback methods
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i("CONN", "Connection failed: ConnectionResult.getErrorCode() = "
+                + result.getErrorCode());
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+        // Once connected with google api, get the location
+        Toast.makeText(getActivity(), "Successfully connected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        mGoogleApiClient.connect();
     }
 }

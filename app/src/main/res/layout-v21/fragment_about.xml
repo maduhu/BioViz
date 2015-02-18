@@ -97,18 +97,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <Switch
-                    android:id="@+id/conf_sw_fine_location"
-                    android:drawableStart="@drawable/ic_data"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginTop="15dp"
-                    android:layout_gravity="center"
-                    android:text="Require fine location. This will reject aproximate locations and require that the coordinates come from the GPS device. This may consume more battery and take some time to find a valid coordinate, but results in a more precise location."
-                    android:background="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
                 <Button
                     android:id="@+id/conf_bt_save"
                     android:layout_marginTop="10dp"

@@ -12,14 +12,14 @@
     <item
         android:icon="@android:drawable/ic_menu_mylocation"
         android:id="@+id/action_near_me"
-        android:title="Near my location"
+        android:title="Around me"
         android:showAsAction="withText|ifRoom"
         />
 
     <item
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@android:drawable/ic_menu_recent_history"
         android:id="@+id/action_refresh"
         android:title="Random"
-        android:showAsAction="withText|ifRoom"
+        android:showAsAction="ifRoom"
         />
 </menu>

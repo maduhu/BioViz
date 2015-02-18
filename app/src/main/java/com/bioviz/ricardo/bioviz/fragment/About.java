@@ -25,7 +25,6 @@ public class About extends Fragment {
     private Switch swData;
     private Switch swPics;
     private Switch swLang;
-    private Switch swGPS;
 
     /**
      * Use this factory method to create a new instance of
@@ -60,7 +59,6 @@ public class About extends Fragment {
         swData = (Switch) rootView.findViewById(R.id.conf_sw_data);
         swLang = (Switch) rootView.findViewById(R.id.conf_sw_language);
         swPics = (Switch) rootView.findViewById(R.id.conf_sw_pictures);
-        swGPS = (Switch) rootView.findViewById(R.id.conf_sw_fine_location);
 
         btSaveConf = (Button) rootView.findViewById(R.id.conf_bt_save);
         btSaveConf.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +67,7 @@ public class About extends Fragment {
                 AppController.applySettings(
                         swData.isChecked(),
                         swPics.isChecked(),
-                        swLang.isChecked(),
-                        swGPS.isChecked());
+                        swLang.isChecked());
                 btSaveConf.setText("Saved");
                 btSaveConf.setEnabled(false);
             }
@@ -80,7 +77,6 @@ public class About extends Fragment {
         swData.setChecked(states[0]);
         swPics.setChecked(states[1]);
         swLang.setChecked(states[2]);
-        swGPS.setChecked(states[3]);
 
         // Inflate the layout for this fragment
         return rootView;
