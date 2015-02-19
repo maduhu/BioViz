@@ -4,7 +4,7 @@ package com.bioviz.ricardo.bioviz.model.iNatResponses;
 import java.util.ArrayList;
 
 
-public class iNatObservationLookupResponse {
+public class iNatObservation {
 
     private String uri;
     private String species_guess;

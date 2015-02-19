@@ -34,7 +34,7 @@ import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservationLookupResponse;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -48,6 +48,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class OccurrenceList extends Fragment implements OnItemClickListener, ConnectionCallbacks,
         OnConnectionFailedListener, Response.ErrorListener {
@@ -108,23 +110,39 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                //TODO implement the handler
+
+                swipeRefreshLayout.setRefreshing(false);
+                mEmptyView.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+
                 if (items == null)
                     items = new ArrayList<>();
 
-                try {
-                    ArrayList<iNatObservationLookupResponse> responses =
-                            new Gson().fromJson(jsonArray.toString(), Values.ARRAY_INAT_OBSERVATIONS);
-
+                if (items.size() == 0) {
+                    mEmptyView.setVisibility(View.VISIBLE);
                     llQueryButtons.setVisibility(View.GONE);
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
-                    swipeRefreshLayout.setRefreshing(false);
-                    items.addAll(responses);
-
-                } catch (Exception e) {
-                    Log.e("ERR", "error parsing this response" + jsonArray.toString());
-                    return;
+                    swipeRefreshLayout.setVisibility(View.GONE);
                 }
+
+                if (mAdapter == null) {
+                    mAdapter = new OccurrenceListAdapter(items, OccurrenceList.this, getActivity());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+
+                ArrayList<iNatObservation> responses =
+                        new Gson().fromJson(jsonArray.toString(), Values.ARRAY_INAT_OBSERVATIONS);
+
+                items.addAll(responses);
+
+                long seed = System.nanoTime();
+                Collections.shuffle(items, new Random(seed));
+
+                mEmptyView.setVisibility(View.GONE);
+                llQueryButtons.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mAdapter.notifyDataSetChanged();
+
+                swipeRefreshLayout.setRefreshing(false);
             }
         };
 
@@ -135,12 +153,12 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 OccurrenceLookupResponse responseObj =
                         new Gson().fromJson(jsonObject.toString(), OccurrenceLookupResponse.class);
 
-                llQueryButtons.setVisibility(View.GONE);
-                swipeRefreshLayout.setVisibility(View.VISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
-
                 if (items == null)
                     items = new ArrayList<>();
+
+                swipeRefreshLayout.setRefreshing(false);
+                mEmptyView.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
 
                 items.addAll(responseObj.getResults());
                 if (items.size() == 0) {
@@ -188,6 +206,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             @Override
             public void onClick(View v) {
                 executeGBIFQuery("");
+                executeiNATQuery();
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -390,6 +409,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                     "&decimalLatitude=" + ("" + latitude).substring(0, 4),
                     "&decimalLongitude=" + ("" + longitude).substring(0, 4));
 
+            //TODO execute iNat query with geo bound box
         } else {
             Toast.makeText(getActivity(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
         }

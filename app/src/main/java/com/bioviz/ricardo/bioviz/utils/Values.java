@@ -1,6 +1,5 @@
 package com.bioviz.ricardo.bioviz.utils;
 
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservationLookupResponse;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -18,6 +17,9 @@ public class Values {
     public static int section_about_id = 3;
     public static int section_home_id = 1;
 
-    public static final Type ARRAY_INAT_OBSERVATIONS = new TypeToken<ArrayList<iNatObservationLookupResponse>>() {
+    public static int view_occurrence = 0;
+    public static int view_observation = 1;
+
+    public static final Type ARRAY_INAT_OBSERVATIONS = new TypeToken<ArrayList<com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation>>() {
     }.getType();
 }

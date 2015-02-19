@@ -2,6 +2,7 @@ package com.bioviz.ricardo.bioviz.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,13 @@ import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.utils.Values;
 
 import java.util.ArrayList;
 
 
-public class OccurrenceListAdapter  extends RecyclerView.Adapter<OccurrenceListAdapter.OccurrenceViewHolder> {
+public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<Object> items;
@@ -37,37 +40,67 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<OccurrenceListA
     }
 
     @Override
-    public OccurrenceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View v;
+        if (viewType == Values.view_observation) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_occurence_list, parent, false);
+
+            return new ObservationViewHolder(v);
+        }
+
+        v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_occurence_list, parent, false);
-
-
         return new OccurrenceViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final OccurrenceViewHolder holder, int position) {
-        if (items.get(position) instanceof GBIFOccurrence) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        if (getItemViewType(position) == Values.view_occurrence) {
             final GBIFOccurrence item = (GBIFOccurrence) items.get(position);
 
-            holder.tvItemValue.setText(item.getScientificName());
-            holder.tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
-            holder.tvItemSpecies.setText(item.getSpecies());
+            ((OccurrenceViewHolder) holder).tvItemValue.setText(item.getScientificName());
+            ((OccurrenceViewHolder) holder).tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
+            ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
 
             ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-            holder.ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
+            ((OccurrenceViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
             if (item.getMedia() != null &&
                     item.getMedia().get(0).getIdentifier() != null) {
-                holder.ivItemDrawable.setImageUrl(item.getMedia().get(0).getIdentifier(), imageLoader);
+                ((OccurrenceViewHolder) holder).ivItemDrawable.setImageUrl(item.getMedia().get(0).getIdentifier(), imageLoader);
                 Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                holder.ivItemDrawable.setAnimation(anim);
+                ((OccurrenceViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
             }
-        } else {
-            //TODO deal with other types
-            holder.tvItemValue.setText("\n\nRECURSO DA NATA\n\n");
+
+        } else if (getItemViewType(position) == Values.view_observation) {
+            final iNatObservation item = (iNatObservation) items.get(position);
+
+            ((ObservationViewHolder) holder).tvItemValue.setText(item.getSpecies_guess());
+            ((ObservationViewHolder) holder).tvItemCountry.setText(item.getPlace_guess());
+            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+            ((ObservationViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
+            if (item.getPhotos().size() > 0 &&
+                    item.getPhotos().get(0).getLarge_url() != null) {
+                ((ObservationViewHolder) holder).ivItemDrawable.setImageUrl(item.getPhotos().get(0).getLarge_url(), imageLoader);
+                Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+                ((ObservationViewHolder) holder).ivItemDrawable.setAnimation(anim);
+                anim.start();
+            }
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (items.get(position) instanceof GBIFOccurrence) {
+            return Values.view_occurrence;
+        } else if (items.get(position) instanceof iNatObservation) {
+            return Values.view_observation;
         }
 
+        return -1;
     }
 
     @Override
