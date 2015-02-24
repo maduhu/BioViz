@@ -45,7 +45,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         View v;
         if (viewType == Values.view_observation) {
             v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_occurence_list, parent, false);
+                    R.layout.item_observation_list, parent, false);
 
             return new ObservationViewHolder(v);
         }
@@ -80,17 +80,26 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
 
             ((ObservationViewHolder) holder).tvItemValue.setText(item.getSpecies_guess());
             ((ObservationViewHolder) holder).tvItemCountry.setText(item.getPlace_guess());
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
             ((ObservationViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
-            if (item.getPhotos().size() > 0 &&
-                    item.getPhotos().get(0).getLarge_url() != null) {
-                ((ObservationViewHolder) holder).ivItemDrawable.setImageUrl(item.getPhotos().get(0).getLarge_url(), imageLoader);
+            if (item.getPhotos().size() > 0) {
+                String thumbUrl;
+                if (item.getPhotos().get(0).getMedium_url() != null ) {
+                    thumbUrl = item.getPhotos().get(0).getMedium_url();
+                } else {
+                    thumbUrl = item.getPhotos().get(0).getLarge_url();
+                }
+
+                ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+                ((ObservationViewHolder) holder).ivItemDrawable.setImageUrl(thumbUrl, imageLoader);
                 Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
                 ((ObservationViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
+            } else {
+                ((ObservationViewHolder) holder).ivItemDrawable.setVisibility(View.GONE);
             }
         }
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -108,68 +117,68 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         return items == null ? 0 : items.size();
     }
 
-    static class OccurrenceViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
+static class OccurrenceViewHolder extends RecyclerView.ViewHolder
+        implements View.OnClickListener, View.OnLongClickListener{
 
-        private TextView tvItemValue;
-        private TextView tvItemCountry;
-        private TextView tvItemSpecies;
-        private NetworkImageView ivItemDrawable;
+    private TextView tvItemValue;
+    private TextView tvItemCountry;
+    private TextView tvItemSpecies;
+    private NetworkImageView ivItemDrawable;
 
 
-        public OccurrenceViewHolder(View rowView) {
-            super(rowView);
+    public OccurrenceViewHolder(View rowView) {
+        super(rowView);
 
-            tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
-            tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
-            tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
-            ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+        tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
+        tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
+        tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
+        ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
 
-            rowView.setOnClickListener(this);
-            rowView.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            listener.onItemClick(view, getPosition());
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
-        }
+        rowView.setOnClickListener(this);
+        rowView.setOnLongClickListener(this);
     }
 
-
-    static class ObservationViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
-
-        private TextView tvItemValue;
-        private TextView tvItemCountry;
-        private TextView tvItemSpecies;
-        private NetworkImageView ivItemDrawable;
-
-
-        public ObservationViewHolder(View rowView) {
-            super(rowView);
-
-            tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
-            tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
-            tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
-            ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
-
-            rowView.setOnClickListener(this);
-            rowView.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            listener.onItemClick(view, getPosition());
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
-        }
+    @Override
+    public void onClick(View view) {
+        listener.onItemClick(view, getPosition());
     }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+}
+
+
+static class ObservationViewHolder extends RecyclerView.ViewHolder
+        implements View.OnClickListener, View.OnLongClickListener{
+
+    private TextView tvItemValue;
+    private TextView tvItemCountry;
+    private TextView tvItemSpecies;
+    private NetworkImageView ivItemDrawable;
+
+
+    public ObservationViewHolder(View rowView) {
+        super(rowView);
+
+        tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
+        tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
+        tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
+        ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+
+        rowView.setOnClickListener(this);
+        rowView.setOnLongClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        listener.onItemClick(view, getPosition());
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+}
 }

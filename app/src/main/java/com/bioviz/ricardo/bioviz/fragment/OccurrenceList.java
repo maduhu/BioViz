@@ -65,6 +65,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
     private Dialog dialog;
     private String lastQuery;
+    private boolean occurrenceReady;
+    private boolean observationReady;
 
     private OnObservationResponseListener iNatResponseListener;
     private OnOccurrenceResponseListener GBIFResponseListener;
@@ -96,6 +98,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         setHasOptionsMenu(true);
 
         offset = 0;
+        occurrenceReady = true;
+        observationReady = true;
         dialog = new Dialog(getActivity());
 
         Button btRandomQuery = (Button) rootView.findViewById(R.id.list_occurrences_random);
@@ -111,7 +115,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             @Override
             public void onResponse(JSONArray jsonArray) {
 
-                swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefreshLayout.isRefreshing() && occurrenceReady) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
                 mEmptyView.setVisibility(View.GONE);
                 swipeRefreshLayout.setVisibility(View.VISIBLE);
 
@@ -153,6 +160,12 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 OccurrenceLookupResponse responseObj =
                         new Gson().fromJson(jsonObject.toString(), OccurrenceLookupResponse.class);
 
+                occurrenceReady = true;
+
+                if (swipeRefreshLayout.isRefreshing() && observationReady) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
                 if (items == null)
                     items = new ArrayList<>();
 
@@ -185,10 +198,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         swipeRefreshLayout.setVisibility(View.GONE);
         llQueryButtons.setVisibility(View.VISIBLE);
 
-        // First we need to check availability of play services
+        // Check availability of play services
         if (checkPlayServices()) {
-
-            // Building the GoogleApi client
             buildGoogleApiClient();
         }
 
@@ -205,7 +216,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeGBIFQuery("");
+                executeGBIFQuery();
                 executeiNATQuery();
             }
         });
@@ -283,6 +294,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 if (!sName.getText().toString().equals("")) {
                     lastQuery = "&scientificName=" + sName.getText().toString();
                 }
+                items = new ArrayList<>();
+                mAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(true);
+
                 executeGBIFQuery(lastQuery);
                 executeiNATQuery(lastQuery);
                 dialog.dismiss();
@@ -295,6 +310,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
         boolean[] settings = AppController.getStates();
+        occurrenceReady = false;
 
         if (settings[1]) {
             request += "&mediaType=StillImage";
@@ -330,6 +346,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         String request = Values.iNATBaseAddr + Values.iNatObservation + "?";
 
         boolean[] settings = AppController.getStates();
+        observationReady = false;
 
         if (settings[1]) {
             request += "&has[]=photo";

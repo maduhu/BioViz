@@ -5,7 +5,9 @@ package com.bioviz.ricardo.bioviz.model.iNatResponses;
  */
 public class iNatMediaElement {
     private String large_url;
+    private String small_url;
     private String native_realname;
+    private String medium_url;
     private String thumb_url;
 
     public String getLarge_url() {
@@ -30,5 +32,21 @@ public class iNatMediaElement {
 
     public void setThumb_url(String thumb_url) {
         this.thumb_url = thumb_url;
+    }
+
+    public String getSmall_url() {
+        return small_url;
+    }
+
+    public void setSmall_url(String small_url) {
+        this.small_url = small_url;
+    }
+
+    public String getMedium_url() {
+        return medium_url;
+    }
+
+    public void setMedium_url(String medium_url) {
+        this.medium_url = medium_url;
     }
 }
