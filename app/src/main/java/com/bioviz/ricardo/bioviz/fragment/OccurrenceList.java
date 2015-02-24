@@ -49,6 +49,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class OccurrenceList extends Fragment implements OnItemClickListener, ConnectionCallbacks,
@@ -63,8 +65,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     private OccurrenceListAdapter mAdapter;
     private ArrayList<Object> items;
 
+    private Map<String, String> gbifQuery;
+    private Map<String, String> iNatQuery;
+
     private Dialog dialog;
-    private String lastQuery;
     private boolean occurrenceReady;
     private boolean observationReady;
 
@@ -100,6 +104,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         offset = 0;
         occurrenceReady = true;
         observationReady = true;
+        gbifQuery = new HashMap<String, String>();
+        iNatQuery = new HashMap<String, String>();
+
         dialog = new Dialog(getActivity());
 
         Button btRandomQuery = (Button) rootView.findViewById(R.id.list_occurrences_random);
@@ -207,17 +214,20 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
-                lastQuery = "";
-                executeGBIFQuery();
-                executeiNATQuery();
+                items.clear();
+                mAdapter.notifyDataSetChanged();
+                iNatQuery.clear();
+                gbifQuery.clear();
+                executeGBIFQuery(null);
+                executeiNATQuery(null);
             }
         });
 
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeGBIFQuery();
-                executeiNATQuery();
+                executeGBIFQuery(null);
+                executeiNATQuery(null);
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -253,8 +263,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         // handle item selection
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                executeGBIFQuery();
-                executeiNATQuery();
+                executeGBIFQuery(null);
+                executeiNATQuery(null);
                 return true;
             case R.id.action_search:
                 promptSearchParams();
@@ -292,21 +302,23 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             public void onClick(View v) {
 
                 if (!sName.getText().toString().equals("")) {
-                    lastQuery = "&scientificName=" + sName.getText().toString();
+                    iNatQuery.put("q", sName.getText().toString());
+                    gbifQuery.put("scientificName", sName.getText().toString());
                 }
-                items = new ArrayList<>();
+
+                items.clear();
                 mAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(true);
 
-                executeGBIFQuery(lastQuery);
-                executeiNATQuery(lastQuery);
+                executeGBIFQuery(gbifQuery);
+                executeiNATQuery(iNatQuery);
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
 
-    private void executeGBIFQuery(String... params) {
+    private void executeGBIFQuery(Map<String, String> params) {
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
         boolean[] settings = AppController.getStates();
@@ -322,12 +334,12 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         }
 
         //no params == random query, can use the offset to retrieve other results
-        if (params.length == 0) {
+        if (params == null || params.isEmpty()) {
             offset += 10;
             request += "&offset=" + offset;
         } else {
-            for (String s : params) {
-                request += s;
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                request += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }
 
@@ -342,7 +354,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         AppController.getInstance().addToRequestQueue(jsonObjReq, "occurrence_list_request");
     }
 
-    private void executeiNATQuery(String... params) {
+    private void executeiNATQuery(Map<String, String> params) {
         String request = Values.iNATBaseAddr + Values.iNatObservation + "?";
 
         boolean[] settings = AppController.getStates();
@@ -353,9 +365,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         }
 
         //no params == random query, can use the offset to retrieve other results
-        if (params.length != 0) {
-            for (String s : params) {
-                request += s;
+        if (params != null && !params.isEmpty()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                request += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }
 
@@ -422,11 +434,13 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
             Toast.makeText(getActivity(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
-            executeGBIFQuery(lastQuery == null ? "" : lastQuery,
-                    "&decimalLatitude=" + ("" + latitude).substring(0, 4),
-                    "&decimalLongitude=" + ("" + longitude).substring(0, 4));
+            gbifQuery.put("decimalLatitude", ("" + latitude).substring(0, 4));
+            gbifQuery.put("decimalLongitude", ("" + longitude).substring(0, 4));
+
+            executeGBIFQuery(gbifQuery);
 
             //TODO execute iNat query with geo bound box
+
         } else {
             Toast.makeText(getActivity(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
         }
