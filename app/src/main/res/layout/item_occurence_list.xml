@@ -51,8 +51,19 @@
                 android:text=""
                 />
 
+            <ImageView
+                android:id="@+id/ivRecordProvenance"
+                android:layout_below="@id/item_species"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="5dp"
+                android:src="@drawable/logo_gbif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/item_country"
+                android:layout_toStartOf="@id/ivRecordProvenance"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="6dp"
                 android:layout_below="@id/item_species"
                 android:textColor="@android:color/darker_gray"
@@ -64,14 +75,6 @@
                 android:text="Country, Year"
                 android:layout_marginBottom="4dp"
                 />
-
-            <ImageView
-                android:layout_margin="5dp"
-                android:layout_below="@id/item_country"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/logo_gbif"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </RelativeLayout>
     </LinearLayout>
