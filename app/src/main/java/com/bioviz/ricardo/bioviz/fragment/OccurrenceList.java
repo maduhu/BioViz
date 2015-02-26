@@ -474,7 +474,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     @Override
     public void onConnected(Bundle arg0) {
         // Once connected with google api, get the location
-        Toast.makeText(getActivity(), "Successfully connected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Successfully connected", Toast.LENGTH_SHORT).show();
     }
 
     @Override

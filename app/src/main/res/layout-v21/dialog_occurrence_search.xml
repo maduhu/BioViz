@@ -28,7 +28,7 @@
             android:layout_weight=".5"
             style="@android:style/Widget.Material.Button.Borderless"
             android:id="@+id/occurrence_search_cancel"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:src="@drawable/ic_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
             android:layout_weight=".5"
             style="@android:style/Widget.Material.Button.Borderless"
             android:id="@+id/occurrence_search_submit"
-            android:src="@drawable/ic_picture"
+            android:src="@drawable/ic_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

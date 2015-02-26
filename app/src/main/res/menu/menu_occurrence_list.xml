@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".Home">
 
     <item
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         android:id="@+id/action_search"
         android:title="@android:string/search_go"
-        android:showAsAction="withText|ifRoom"
+        android:showAsAction="ifRoom"
         />
 
     <item
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@drawable/ic_gps"
         android:id="@+id/action_near_me"
         android:title="Around me"
-        android:showAsAction="withText|ifRoom"
+        android:showAsAction="ifRoom"
         />
 
     <item
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:icon="@drawable/ic_random"
         android:id="@+id/action_refresh"
         android:title="Random"
         android:showAsAction="ifRoom"
