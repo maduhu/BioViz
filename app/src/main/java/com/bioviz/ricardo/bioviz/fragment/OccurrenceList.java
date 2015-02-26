@@ -1,9 +1,12 @@
 package com.bioviz.ricardo.bioviz.fragment;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -106,7 +109,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         observationReady = true;
         gbifQuery = new HashMap<>();
         iNatQuery = new HashMap<>();
-
         dialog = new Dialog(getActivity());
 
         Button btRandomQuery = (Button) rootView.findViewById(R.id.list_occurrences_random);
@@ -245,7 +247,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     public void onItemClick(View view, int position) {
         Intent myIntent = new Intent(getActivity(), OccurrenceDetails.class);
         myIntent.putExtra("item", new Gson().toJson(items.get(position)));
-        getActivity().startActivity(myIntent);
+        ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                0, view.getWidth(), view.getHeight());
+        startActivity(myIntent, options.toBundle());
+        //getActivity().startActivity(myIntent);
     }
 
     @Override

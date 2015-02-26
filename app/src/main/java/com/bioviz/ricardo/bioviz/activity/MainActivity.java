@@ -1,9 +1,14 @@
 package com.bioviz.ricardo.bioviz.activity;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -33,6 +38,8 @@ public class MainActivity extends Activity
      */
     private CharSequence mTitle;
 
+    private Integer colorStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,21 +61,49 @@ public class MainActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment fragment;
+        final Integer colorTo;
+        ValueAnimator colorAnimation;
+
+        if (colorStatus == null) {
+            colorStatus = R.color.primary;
+        }
 
         switch (position) {
             case 0:
                 fragment = Home.newInstance();
+                colorTo = getResources().getColor(R.color.primary);
                 break;
             case 1:
                 fragment = OccurrenceList.newInstance();
+                colorTo = getResources().getColor(R.color.tab_blue);
                 break;
             case 2:
                 fragment = About.newInstance();
+                colorTo = getResources().getColor(R.color.tab_red);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position+1);
+                colorTo = getResources().getColor(R.color.tab_green);
                 break;
         }
+
+        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorStatus, colorTo);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                colorStatus = colorTo;
+                if (Build.VERSION.SDK_INT >= 21) {
+                    getWindow().setStatusBarColor(colorTo);
+                }
+
+                if (getActionBar() != null) {
+                    getActionBar().setBackgroundDrawable(new ColorDrawable((Integer) animator.getAnimatedValue()));
+                }
+            }
+        });
+        colorAnimation.start();
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
