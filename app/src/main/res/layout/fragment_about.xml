@@ -40,11 +40,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:foreground="?android:attr/selectableItemBackground"
             >
 
             <LinearLayout
-                android:layout_margin="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -59,6 +62,7 @@
                     />
 
                 <Switch
+                    android:id="@+id/conf_sw_pictures"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/ic_picture"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
@@ -70,6 +74,7 @@
                     android:layout_height="wrap_content" />
 
                 <Switch
+                    android:id="@+id/conf_sw_language"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/ic_language"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
@@ -81,6 +86,7 @@
                     android:layout_height="wrap_content" />
 
                 <Switch
+                    android:id="@+id/conf_sw_data"
                     android:drawableStart="@drawable/ic_data"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@android:color/darker_gray"
@@ -92,13 +98,12 @@
                     android:layout_height="wrap_content" />
 
                 <Button
+                    android:id="@+id/conf_bt_save"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/text_blue_grey_darker"
                     style="@android:style/Widget.Holo.Button.Borderless"
                     android:text="Save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     />
             </LinearLayout>
 

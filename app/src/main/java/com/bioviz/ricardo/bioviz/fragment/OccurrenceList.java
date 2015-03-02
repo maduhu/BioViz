@@ -222,7 +222,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 iNatQuery.clear();
                 gbifQuery.clear();
                 executeGBIFQuery(null);
-                executeiNATQuery(null);
+                //executeiNATQuery(null);
             }
         });
 
@@ -230,7 +230,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             @Override
             public void onClick(View v) {
                 executeGBIFQuery(null);
-                executeiNATQuery(null);
+                //executeiNATQuery(null);
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +271,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             case R.id.action_refresh:
                 items.clear();
                 executeGBIFQuery(null);
-                executeiNATQuery(null);
+                //executeiNATQuery(null);
                 return true;
             case R.id.action_search:
                 promptSearchParams();
@@ -318,7 +318,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 swipeRefreshLayout.setRefreshing(true);
 
                 executeGBIFQuery(gbifQuery);
-                executeiNATQuery(iNatQuery);
+                //executeiNATQuery(iNatQuery);
                 dialog.dismiss();
             }
         });

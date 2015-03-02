@@ -55,6 +55,14 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             return new OccurrenceViewHolder(v);
         }
 
+        //Species details
+        if (viewType == 1) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_species_details, parent, false);
+
+            return new SpeciesExtrasViewHolder(v);
+        }
+
         v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.occurence_description_item, parent, false);
 
@@ -81,6 +89,11 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 ((OccurrenceViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
             }
+            return;
+        }
+
+        if (getItemViewType(position) == 1) {
+            ((OccurrenceViewHolder) holder).tvItemValue.setText("Descrição do bicho, alguns extras interessantes");
             return;
         }
 
@@ -204,6 +217,32 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
             tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
             ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+
+            rowView.setOnClickListener(this);
+            rowView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onItemClick(view, getPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
+        }
+    }
+
+    static class SpeciesExtrasViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener{
+
+        private TextView tvDescriptionValue;
+
+
+        public SpeciesExtrasViewHolder(View rowView) {
+            super(rowView);
+
+            tvDescriptionValue = (TextView) rowView.findViewById(R.id.tvDescriptionValue);
 
             rowView.setOnClickListener(this);
             rowView.setOnLongClickListener(this);

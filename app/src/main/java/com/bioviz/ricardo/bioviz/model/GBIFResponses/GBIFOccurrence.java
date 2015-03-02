@@ -25,6 +25,9 @@ public class GBIFOccurrence {
     private String datasetKey;
     private String speciesKey;
 
+    private String verbatimLocality;
+
+
     private int year;
     private List<GBIFMediaElement> media;
 
@@ -155,6 +158,14 @@ public class GBIFOccurrence {
 
     public void setSpeciesKey(String speciesKey) {
         this.speciesKey = speciesKey;
+    }
+
+    public String getVerbatimLocality() {
+        return verbatimLocality;
+    }
+
+    public void setVerbatimLocality(String verbatimLocality) {
+        this.verbatimLocality = verbatimLocality;
     }
 
 }

@@ -61,9 +61,22 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         if (getItemViewType(position) == Values.view_occurrence) {
             final GBIFOccurrence item = (GBIFOccurrence) items.get(position);
 
+            String location = "";
+
+            if (item.getVerbatimLocality() != null) {
+                location += item.getVerbatimLocality();
+            }
+
+            String coordinates = "";
+            if (item.getDecimalLatitude() != null &&
+                    item.getDecimalLongitude() != null) {
+                coordinates += item.getDecimalLatitude() + ", " + item.getDecimalLongitude();
+            }
+
             ((OccurrenceViewHolder) holder).tvItemValue.setText(item.getScientificName());
-            ((OccurrenceViewHolder) holder).tvItemCountry.setText(item.getCountry() + ", " + item.getYear());
+            ((OccurrenceViewHolder) holder).tvItemCountry.setText(location + item.getCountry() + ", " + item.getYear());
             ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
+            ((OccurrenceViewHolder) holder).tvItemCoordinates.setText(coordinates);
 
             ImageLoader imageLoader = AppController.getInstance().getImageLoader();
             ((OccurrenceViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
@@ -121,6 +134,7 @@ static class OccurrenceViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener, View.OnLongClickListener{
 
     private TextView tvItemValue;
+    private TextView tvItemCoordinates;
     private TextView tvItemCountry;
     private TextView tvItemSpecies;
     private NetworkImageView ivItemDrawable;
@@ -132,6 +146,7 @@ static class OccurrenceViewHolder extends RecyclerView.ViewHolder
         tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
         tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
         tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
+        tvItemCoordinates = (TextView) rowView.findViewById(R.id.item_coordinates);
         ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
 
         rowView.setOnClickListener(this);

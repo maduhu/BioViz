@@ -20,7 +20,6 @@
             android:textColor="@color/text_blue_grey_darker"
             android:text="BioViz: finding biodiversity at home"
             />
-
         <TextView
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:layout_width="wrap_content"
@@ -28,7 +27,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="15dp"
-            android:text="This application was developed to help discovering biodiversity data. This is supposed to be a thoughtful message from the developer, but honestly I didn't have time to write it yet. So I hope you like this application and feel free to comment on what new features you want :)"
+            android:text="BioViz was developed with love and affection. We try to create easy to use tools for you to explore your world of biodiversity. All the information here available is directly extracted from the registered sources and no text is edited in the meantime. We hope you enjoy using this app and feel free to submit any features request that you wish to be implemented in the future."
             />
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -56,7 +55,7 @@
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Some tweaks are available though..."
+                    android:text="Some tweaks are also available..."
                     android:textColor="@color/text_blue_grey_darker"
                     android:layout_marginBottom="10dp"
                     />
@@ -68,7 +67,7 @@
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@android:color/darker_gray"
                     android:layout_gravity="center"
-                    android:text="Display only items with images. Although images allow to better visualize data, not all the occurrences have images attached."
+                    android:text="Display only items with images. Although images allow to better visualize data, not all the records have images attached."
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -81,26 +80,30 @@
                     android:textColor="@android:color/darker_gray"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="Only display  english records. This will hide results that are writen in other languages such as German or Portuguese."
+                    android:text="Only display english records. This will hide results that are written in other languages such as German or Portuguese."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <Switch
+                    android:shadowColor="@color/tab_red"
+                    android:textColorHighlight="@color/tab_red"
                     android:id="@+id/conf_sw_data"
                     android:drawableStart="@drawable/ic_data"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@android:color/darker_gray"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center"
-                    android:text="Use mobile data. Warning: when loading images, the application can use large ammounts of traffic. Please bear in mind your montlhy plan when using this option."
+                    android:text="Use mobile data. Warning: when loading images, the application can use large amounts of traffic. Please bear in mind your monthly plan when using this option."
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/conf_bt_save"
+                    android:enabled="false"
                     android:layout_marginTop="10dp"
                     style="@android:style/Widget.Material.Button.Borderless.Colored"
+                    android:textColor="@color/tab_red"
                     android:text="Save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

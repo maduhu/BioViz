@@ -24,6 +24,7 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.SpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFSpecies;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFSpeciesLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -46,15 +47,20 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         setContentView(R.layout.activity_occurrence_details);
 
         String itemString;
+
         if (savedInstanceState == null) {
             Intent intent = getIntent();
             itemString = intent.getStringExtra("item");
         } else {
             itemString = savedInstanceState.getString("item");
         }
+
         occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
 
         final RecyclerView descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -70,8 +76,10 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
             getActionBar().setSubtitle("Species overview");
         }
 
+        String request = Values.GBIFBaseAddr + "species/" + occurrenceItem.getSpeciesKey();
+
         //lookup species with speciesKey
-        String request = Values.GBIFBaseAddr + "species/" + occurrenceItem.getSpeciesKey() + "/descriptions";
+        Log.e("REQUEST", request + "/descriptions");
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
                 request, null,
@@ -97,6 +105,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         int id = item.getItemId();
 
         if (id ==  android.R.id.home) {
+            AppController.getInstance().cancelPendingRequests("species_description_lookup");
             finish();
             return true;
         } else if (id == R.id.action_share_occurrence) {
@@ -115,14 +124,18 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onResponse(JSONObject jsonObject) {
+
         GBIFSpeciesLookupResponse response = new Gson().fromJson(jsonObject.toString(), GBIFSpeciesLookupResponse.class);
         ArrayList<GBIFSpeciesDescription> fetchedDescriptions = response.getResults();
+        if (response.getResults() == null) {
+            Toast.makeText(this, "No descriptions available for this species", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         boolean[] settings = AppController.getStates();
 
