@@ -13,11 +13,12 @@
         android:orientation="vertical"
         >
 
-        <com.android.volley.toolbox.NetworkImageView
+        <ImageView
             android:id="@+id/item_drawable"
-            android:scaleType="centerCrop"
+            android:adjustViewBounds= "true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxHeight="180dp"
             />
 
         <RelativeLayout

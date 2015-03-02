@@ -222,7 +222,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 iNatQuery.clear();
                 gbifQuery.clear();
                 executeGBIFQuery(null);
-                //executeiNATQuery(null);
+                executeiNATQuery(null);
             }
         });
 
@@ -230,7 +230,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             @Override
             public void onClick(View v) {
                 executeGBIFQuery(null);
-                //executeiNATQuery(null);
+                executeiNATQuery(null);
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -271,7 +271,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             case R.id.action_refresh:
                 items.clear();
                 executeGBIFQuery(null);
-                //executeiNATQuery(null);
+                executeiNATQuery(null);
                 return true;
             case R.id.action_search:
                 promptSearchParams();
@@ -318,7 +318,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 swipeRefreshLayout.setRefreshing(true);
 
                 executeGBIFQuery(gbifQuery);
-                //executeiNATQuery(iNatQuery);
+                executeiNATQuery(iNatQuery);
                 dialog.dismiss();
             }
         });
@@ -332,12 +332,16 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         occurrenceReady = false;
 
         if (settings[1]) {
-            request += "&mediaType=StillImage";
+            if (gbifQuery == null) {
+                gbifQuery = new HashMap<>();
+            }
+
+            gbifQuery.put("mediaType", "StillImage");
         }
 
         //FIXME apparently the api simply ignores this -.-''
         if (settings[2]) {
-            request+="&language=en";
+            gbifQuery.put("language", "en");
         }
 
         //no params == random query, can use the offset to retrieve other results
@@ -367,9 +371,14 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         boolean[] settings = AppController.getStates();
         observationReady = false;
 
+
         if (settings[1]) {
-            request += "&has[]=photo&limit=20";
+            if (iNatQuery == null) {
+                iNatQuery = new HashMap<>();
+            }
+            iNatQuery.put("has[]", "photo");
         }
+        iNatQuery.put("limit", "20");
 
         //no params == random query, can use the offset to retrieve other results
         if (params != null && !params.isEmpty()) {
@@ -443,6 +452,14 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
             gbifQuery.put("decimalLatitude", ("" + latitude).substring(0, 4));
             gbifQuery.put("decimalLongitude", ("" + longitude).substring(0, 4));
+
+            if (gbifQuery.containsKey("mediaType")) {
+                gbifQuery.remove("mediaType");
+            }
+
+            if (gbifQuery.containsKey("offset")) {
+                gbifQuery.remove("offset");
+            }
 
             executeGBIFQuery(gbifQuery);
 

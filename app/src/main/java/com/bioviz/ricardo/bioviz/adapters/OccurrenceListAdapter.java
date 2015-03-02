@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -18,6 +19,7 @@ import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,8 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
             ((OccurrenceViewHolder) holder).tvItemCoordinates.setText(coordinates);
 
+            //FOR USE WITH NetworkImageView (it was somehow inefficient dealing with images...
+            /*
             ImageLoader imageLoader = AppController.getInstance().getImageLoader();
             ((OccurrenceViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
             if (item.getMedia() != null &&
@@ -87,13 +91,24 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                 ((OccurrenceViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
             }
+            */
 
+            if (item.getMedia() != null &&
+                    item.getMedia().get(0).getIdentifier() != null) {
+
+                //Glide.with(this).load("http://goo.gl/h8qOq7").into(imageView);
+                Glide.with(context).load(item.getMedia().get(0).getIdentifier())
+                        .crossFade()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_launcher)
+                        .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+            }
         } else if (getItemViewType(position) == Values.view_observation) {
             final iNatObservation item = (iNatObservation) items.get(position);
 
             ((ObservationViewHolder) holder).tvItemValue.setText(item.getSpecies_guess());
             ((ObservationViewHolder) holder).tvItemCountry.setText(item.getPlace_guess());
-            ((ObservationViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
+            //((ObservationViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
             if (item.getPhotos().size() > 0) {
                 String thumbUrl;
                 if (item.getPhotos().get(0).getMedium_url() != null ) {
@@ -102,11 +117,19 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                     thumbUrl = item.getPhotos().get(0).getLarge_url();
                 }
 
+                Glide.with(context).load(thumbUrl)
+                        .crossFade()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_launcher)
+                        .into(((ObservationViewHolder) holder).ivItemDrawable);
+
+                /*
                 ImageLoader imageLoader = AppController.getInstance().getImageLoader();
                 ((ObservationViewHolder) holder).ivItemDrawable.setImageUrl(thumbUrl, imageLoader);
                 Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
                 ((ObservationViewHolder) holder).ivItemDrawable.setAnimation(anim);
                 anim.start();
+                */
             } else {
                 ((ObservationViewHolder) holder).ivItemDrawable.setVisibility(View.GONE);
             }
@@ -137,7 +160,7 @@ static class OccurrenceViewHolder extends RecyclerView.ViewHolder
     private TextView tvItemCoordinates;
     private TextView tvItemCountry;
     private TextView tvItemSpecies;
-    private NetworkImageView ivItemDrawable;
+    private ImageView ivItemDrawable;
 
 
     public OccurrenceViewHolder(View rowView) {
@@ -147,7 +170,7 @@ static class OccurrenceViewHolder extends RecyclerView.ViewHolder
         tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
         tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
         tvItemCoordinates = (TextView) rowView.findViewById(R.id.item_coordinates);
-        ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+        ivItemDrawable = (ImageView) rowView.findViewById(R.id.item_drawable);
 
         rowView.setOnClickListener(this);
         rowView.setOnLongClickListener(this);
@@ -171,7 +194,7 @@ static class ObservationViewHolder extends RecyclerView.ViewHolder
     private TextView tvItemValue;
     private TextView tvItemCountry;
     private TextView tvItemSpecies;
-    private NetworkImageView ivItemDrawable;
+    private ImageView ivItemDrawable;
 
 
     public ObservationViewHolder(View rowView) {
@@ -180,7 +203,7 @@ static class ObservationViewHolder extends RecyclerView.ViewHolder
         tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
         tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
         tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
-        ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+        ivItemDrawable = (ImageView) rowView.findViewById(R.id.item_drawable);
 
         rowView.setOnClickListener(this);
         rowView.setOnLongClickListener(this);

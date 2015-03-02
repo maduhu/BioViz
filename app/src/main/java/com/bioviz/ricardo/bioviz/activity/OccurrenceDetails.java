@@ -24,7 +24,6 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.SpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFSpecies;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFSpeciesLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -36,8 +35,7 @@ import java.util.ArrayList;
 
 public class OccurrenceDetails extends Activity implements Response.Listener<JSONObject>, Response.ErrorListener, OnItemClickListener {
 
-    GBIFOccurrence occurrenceItem;
-
+    private GBIFOccurrence occurrenceItem;
     private ArrayList<GBIFSpeciesDescription> items;
     private SpeciesDescriptionAdapter mAdapter;
 
