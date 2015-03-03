@@ -81,18 +81,16 @@ public class AppController extends Application {
         SharedPreferences preferences = mInstance.getSharedPreferences(mInstance.getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!preferences.contains("use_data") ||
                 !preferences.contains("require_images") ||
-                !preferences.contains("require_language") ||
-                !preferences.contains("require_fine_location")) {
+                !preferences.contains("require_language")) {
 
             applySettings(false, true, false);
-            return new boolean[]{false, true, false, false};
+            return new boolean[]{false, true, false};
         }
 
         return new boolean[]{
                 preferences.getBoolean("use_data", false),
                 preferences.getBoolean("require_images", true),
-                preferences.getBoolean("require_language", false),
-                preferences.getBoolean("require_fine_location", false)};
+                preferences.getBoolean("require_language", false)};
     }
 
     /**

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.bioviz.ricardo.bioviz.AppController;
@@ -19,7 +20,7 @@ import com.bioviz.ricardo.bioviz.utils.Values;
 /**
  * Fragment to show additional info about the author and the involved technologies
  */
-public class About extends Fragment {
+public class About extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private Button btSaveConf;
     private Switch swData;
@@ -74,9 +75,15 @@ public class About extends Fragment {
         });
 
         boolean[] states = AppController.getStates();
+
         swData.setChecked(states[0]);
         swPics.setChecked(states[1]);
         swLang.setChecked(states[2]);
+
+        swData.setOnCheckedChangeListener(this);
+        swLang.setOnCheckedChangeListener(this);
+        swPics.setOnCheckedChangeListener(this);
+
 
         // Inflate the layout for this fragment
         return rootView;
@@ -86,5 +93,10 @@ public class About extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(Values.section_about_id);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        btSaveConf.setEnabled(true);
     }
 }

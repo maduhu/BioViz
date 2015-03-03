@@ -164,15 +164,33 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 ArrayList<iNatObservation> responses =
                         new Gson().fromJson(jsonArray.toString(), Values.ARRAY_INAT_OBSERVATIONS);
 
-                items.addAll(responses);
+                //Apparently this post processing is required as in some cases has[]=photos is ignored
+                // and some of the values can be null
+                for (iNatObservation obs : responses) {
+                    if (obs.getSpecies_guess() != null
+                            && obs.getPlace_guess() != null) {
 
-                long seed = System.nanoTime();
-                Collections.shuffle(items, new Random(seed));
+                        boolean[] settings = AppController.getStates();
+
+                        if (settings[1]) {
+                            if (obs.getPhotos().size() != 0) {
+                                items.add(obs);
+                            }
+                        } else {
+                            items.add(obs);
+                        }
+
+                    }
+                }
 
                 mEmptyView.setVisibility(View.GONE);
                 llQueryButtons.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
+
                 if (occurrenceReady) {
+                    long seed = System.nanoTime();
+                    Collections.shuffle(items, new Random(seed));
+
                     mAdapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -206,6 +224,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                     llQueryButtons.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
                     if (observationReady) {
+                        long seed = System.nanoTime();
+                        Collections.shuffle(items, new Random(seed));
+
                         mAdapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -221,16 +242,16 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 mAdapter.notifyDataSetChanged();
                 iNatQuery.clear();
                 gbifQuery.clear();
-                executeGBIFQuery(null);
-                executeiNATQuery(null);
+                executeGBIFQuery();
+                executeiNATQuery();
             }
         });
 
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeGBIFQuery(null);
-                executeiNATQuery(null);
+                executeGBIFQuery();
+                executeiNATQuery();
             }
         });
         btTailoredQuery.setOnClickListener(new View.OnClickListener() {
@@ -270,8 +291,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 items.clear();
-                executeGBIFQuery(null);
-                executeiNATQuery(null);
+                executeGBIFQuery();
+                executeiNATQuery();
                 return true;
             case R.id.action_search:
                 promptSearchParams();
@@ -317,39 +338,39 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 mAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(true);
 
-                executeGBIFQuery(gbifQuery);
-                executeiNATQuery(iNatQuery);
+                executeGBIFQuery();
+                executeiNATQuery();
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
 
-    private void executeGBIFQuery(Map<String, String> params) {
+    private void executeGBIFQuery() {
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
         boolean[] settings = AppController.getStates();
         occurrenceReady = false;
 
-        if (settings[1]) {
-            if (gbifQuery == null) {
-                gbifQuery = new HashMap<>();
-            }
+        if (gbifQuery == null) {
+            gbifQuery = new HashMap<>();
+        }
 
+        if (settings[1]) {
             gbifQuery.put("mediaType", "StillImage");
         }
 
-        //FIXME apparently the api simply ignores this -.-''
+        //FIXME apparently the api simply ignores this
         if (settings[2]) {
             gbifQuery.put("language", "en");
         }
 
         //no params == random query, can use the offset to retrieve other results
-        if (params == null || params.isEmpty()) {
+        if (gbifQuery.isEmpty()) {
             offset += 10;
             request += "&offset=" + offset;
         } else {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
+            for (Map.Entry<String, String> entry : gbifQuery.entrySet()) {
                 request += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }
@@ -365,8 +386,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         AppController.getInstance().addToRequestQueue(jsonObjReq, "occurrence_list_request");
     }
 
-    private void executeiNATQuery(Map<String, String> params) {
-        String request = Values.iNATBaseAddr + Values.iNatObservation + "?";
+    private void executeiNATQuery() {
+        String request = Values.iNATBaseAddr + Values.iNatObservation + ".json" + "?";
 
         boolean[] settings = AppController.getStates();
         observationReady = false;
@@ -381,8 +402,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         iNatQuery.put("limit", "20");
 
         //no params == random query, can use the offset to retrieve other results
-        if (params != null && !params.isEmpty()) {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
+        if (iNatQuery != null && !iNatQuery.isEmpty()) {
+            for (Map.Entry<String, String> entry : iNatQuery.entrySet()) {
                 request += "&" + entry.getKey() + "=" + entry.getValue();
             }
         }
@@ -461,8 +482,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 gbifQuery.remove("offset");
             }
 
-            executeGBIFQuery(gbifQuery);
-
+            executeGBIFQuery();
             //TODO execute iNat query with geo bound box
 
         } else {
