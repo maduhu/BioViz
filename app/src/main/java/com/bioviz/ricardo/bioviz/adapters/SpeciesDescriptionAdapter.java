@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -80,20 +82,20 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             ((OccurrenceViewHolder) holder).tvItemCountry.setText(occurrenceItem.getCountry() + ", " + occurrenceItem.getYear());
             ((OccurrenceViewHolder) holder).tvItemSpecies.setText(occurrenceItem.getSpecies());
 
-            ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-            ((OccurrenceViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
             if (occurrenceItem.getMedia() != null &&
                     occurrenceItem.getMedia().get(0).getIdentifier() != null) {
-                ((OccurrenceViewHolder) holder).ivItemDrawable.setImageUrl(occurrenceItem.getMedia().get(0).getIdentifier(), imageLoader);
-                Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                ((OccurrenceViewHolder) holder).ivItemDrawable.setAnimation(anim);
-                anim.start();
+
+                Glide.with(context).load(occurrenceItem.getMedia().get(0).getIdentifier())
+                        .crossFade()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_launcher)
+                        .into(((OccurrenceViewHolder) holder).ivItemDrawable);
             }
             return;
         }
 
         if (getItemViewType(position) == 1) {
-            ((OccurrenceViewHolder) holder).tvItemValue.setText("Descrição do bicho, alguns extras interessantes");
+            //((OccurrenceViewHolder) holder).tvItemValue.setText("Descrição do bicho, alguns extras interessantes");
             return;
         }
 
@@ -207,7 +209,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         private TextView tvItemValue;
         private TextView tvItemCountry;
         private TextView tvItemSpecies;
-        private NetworkImageView ivItemDrawable;
+        private ImageView ivItemDrawable;
 
 
         public OccurrenceViewHolder(View rowView) {
@@ -216,7 +218,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             tvItemValue = (TextView) rowView.findViewById(R.id.item_value);
             tvItemCountry = (TextView) rowView.findViewById(R.id.item_country);
             tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
-            ivItemDrawable = (NetworkImageView) rowView.findViewById(R.id.item_drawable);
+            ivItemDrawable = (ImageView) rowView.findViewById(R.id.item_drawable);
 
             rowView.setOnClickListener(this);
             rowView.setOnLongClickListener(this);

@@ -80,7 +80,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         Log.e("REQUEST", request + "/descriptions");
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
-                request, null,
+                request + "/descriptions", null,
                 this, this);
 
         // Adding request to request queue

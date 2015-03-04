@@ -242,7 +242,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 mAdapter.notifyDataSetChanged();
                 iNatQuery.clear();
                 gbifQuery.clear();
-                executeGBIFQuery();
+                executeGBIFQuery(true);
                 executeiNATQuery();
             }
         });
@@ -250,7 +250,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                executeGBIFQuery();
+                executeGBIFQuery(true);
                 executeiNATQuery();
             }
         });
@@ -291,7 +291,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 items.clear();
-                executeGBIFQuery();
+                executeGBIFQuery(true);
                 executeiNATQuery();
                 return true;
             case R.id.action_search:
@@ -338,7 +338,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 mAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(true);
 
-                executeGBIFQuery();
+                executeGBIFQuery(false);
                 executeiNATQuery();
                 dialog.dismiss();
             }
@@ -346,7 +346,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         dialog.show();
     }
 
-    private void executeGBIFQuery() {
+    private void executeGBIFQuery(boolean randomQuery) {
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
 
         boolean[] settings = AppController.getStates();
@@ -354,6 +354,18 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
         if (gbifQuery == null) {
             gbifQuery = new HashMap<>();
+        }
+
+
+
+        //no params == random query, can use the offset to retrieve other results
+        if (randomQuery) {
+            offset += 10;
+            gbifQuery.clear();
+            gbifQuery.remove("offset");
+            gbifQuery.put("offset", "" + offset);
+        } else {
+            gbifQuery.remove("offset");
         }
 
         if (settings[1]) {
@@ -365,15 +377,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             gbifQuery.put("language", "en");
         }
 
-        //no params == random query, can use the offset to retrieve other results
-        if (gbifQuery.isEmpty()) {
-            offset += 10;
-            request += "&offset=" + offset;
-        } else {
-            for (Map.Entry<String, String> entry : gbifQuery.entrySet()) {
-                request += "&" + entry.getKey() + "=" + entry.getValue();
-            }
+        for (Map.Entry<String, String> entry : gbifQuery.entrySet()) {
+            request += "&" + entry.getKey() + "=" + entry.getValue();
         }
+
 
         Log.e("REQUEST", request);
 
@@ -482,7 +489,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 gbifQuery.remove("offset");
             }
 
-            executeGBIFQuery();
+            executeGBIFQuery(false);
             //TODO execute iNat query with geo bound box
 
         } else {
@@ -528,8 +535,10 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     public void onErrorResponse(VolleyError volleyError) {
         Log.e("VOLLEY", volleyError.toString());
         Toast.makeText(getActivity(), "Something went wrong :o ", Toast.LENGTH_SHORT).show();
-        llQueryButtons.setVisibility(View.VISIBLE);
-        swipeRefreshLayout.setVisibility(View.GONE);
+        if (items.size() == 0) {
+            llQueryButtons.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setVisibility(View.GONE);
+        }
         swipeRefreshLayout.setRefreshing(false);
     }
 }
