@@ -20,6 +20,7 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
+import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -75,73 +76,78 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
         final GBIFSpeciesDescription item = items.get(position);
+        int viewType = getItemViewType(position);
 
-        if (getItemViewType(position) == 0) {
-            //Occurrence item
-            ((OccurrenceViewHolder) holder).tvItemValue.setText(occurrenceItem.getScientificName());
-            ((OccurrenceViewHolder) holder).tvItemCountry.setText(occurrenceItem.getCountry() + ", " + occurrenceItem.getYear());
-            ((OccurrenceViewHolder) holder).tvItemSpecies.setText(occurrenceItem.getSpecies());
+        switch (viewType) {
+            case Values.ITEM_TYPE_HEADER:
+                ((OccurrenceViewHolder) holder).tvItemValue.setText(occurrenceItem.getScientificName());
+                ((OccurrenceViewHolder) holder).tvItemCountry.setText(occurrenceItem.getCountry() + ", " + occurrenceItem.getYear());
+                ((OccurrenceViewHolder) holder).tvItemSpecies.setText(occurrenceItem.getSpecies());
 
-            if (occurrenceItem.getMedia() != null &&
-                    occurrenceItem.getMedia().get(0).getIdentifier() != null) {
+                if (occurrenceItem.getMedia() != null &&
+                        occurrenceItem.getMedia().get(0).getIdentifier() != null) {
 
-                Glide.with(context).load(occurrenceItem.getMedia().get(0).getIdentifier())
-                        .crossFade()
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_launcher)
-                        .into(((OccurrenceViewHolder) holder).ivItemDrawable);
-            }
-            return;
-        }
+                    Glide.with(context).load(occurrenceItem.getMedia().get(0).getIdentifier())
+                            .crossFade()
+                            .centerCrop()
+                            .placeholder(R.drawable.ic_launcher)
+                            .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+                }
+                break;
 
-        if (getItemViewType(position) == 1) {
-            //((OccurrenceViewHolder) holder).tvItemValue.setText("Descrição do bicho, alguns extras interessantes");
-            return;
-        }
+            case Values.ITEM_TYPE_EXTRAS:
+                ((SpeciesExtrasViewHolder) holder).tvDescriptionValue.setText("Descrição do bicho, alguns extras interessantes");
+                break;
 
-        String itemType = item.getType();
-        if (!item.getLanguage().equals("")) {
-            itemType += " (" + item.getLanguage() + ")";
-        }
-
-        //Deal with foreign characters
-        ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
-        ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
-        ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
-
-        ((DescriptionViewHolder) holder).btZoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textSize -= 1;
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
-            }
-        });
-
-        ((DescriptionViewHolder) holder).btZoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textSize += 1;
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
-            }
-        });
-
-        //Copy text to clipboard
-        ((DescriptionViewHolder) holder).btCopy.setOnClickListener(new View.OnClickListener() {
-            String text = ((DescriptionViewHolder) holder).tvDescriptionValue.getText().toString();
-            @Override
-            public void onClick(View v) {
-                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                    clipboard.setText(text);
-                } else {
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
-                    clipboard.setPrimaryClip(clip);
+            case Values.ITEM_TYPE_DESCRIPTION:
+                String itemType = item.getType();
+                if (!item.getLanguage().equals("")) {
+                    itemType += " (" + item.getLanguage() + ")";
                 }
 
-                Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
-            }
-        });
+                //Deal with foreign characters
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
+                ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
+                ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
+
+                ((DescriptionViewHolder) holder).btZoomOut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textSize -= 1;
+                        ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
+                    }
+                });
+
+                ((DescriptionViewHolder) holder).btZoomIn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        textSize += 1;
+                        ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(textSize);
+                    }
+                });
+
+                //Copy text to clipboard
+                ((DescriptionViewHolder) holder).btCopy.setOnClickListener(new View.OnClickListener() {
+                    String text = ((DescriptionViewHolder) holder).tvDescriptionValue.getText().toString();
+                    @Override
+                    public void onClick(View v) {
+                        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            clipboard.setText(text);
+                        } else {
+                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+                            clipboard.setPrimaryClip(clip);
+                        }
+
+                        Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+        }
+
+
+
     }
 
     @Override
@@ -149,7 +155,10 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         super.onViewRecycled(holder);
         if (holder.getItemViewType() != 0) {
             textSize = 14;
-            ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            if (holder instanceof  DescriptionViewHolder) {
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            }
+
         }
     }
 
@@ -196,11 +205,14 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemViewType(int position) {
-        //header
-        if (position == 0) {
-            return 0;
+        switch (position) {
+            case 0:
+                return Values.ITEM_TYPE_HEADER;
+            case 1:
+                return Values.ITEM_TYPE_EXTRAS;
+            default:
+                return Values.ITEM_TYPE_DESCRIPTION;
         }
-        return 1;
     }
 
     static class OccurrenceViewHolder extends RecyclerView.ViewHolder

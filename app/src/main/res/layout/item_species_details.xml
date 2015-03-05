@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tvDescriptionValue"
         android:layout_gravity="center"
         android:text="DETALHES DO BICHO"
         android:layout_marginTop="15dp"

@@ -96,11 +96,10 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             setAnimation(((OccurrenceViewHolder) holder).itemContainer, position);
 
         } else if (getItemViewType(position) == Values.view_observation) {
-            final iNatObservation item = (iNatObservation) items.get(position);
 
+            final iNatObservation item = (iNatObservation) items.get(position);
             ((ObservationViewHolder) holder).tvItemValue.setText(item.getSpecies_guess());
             ((ObservationViewHolder) holder).tvItemCountry.setText(item.getPlace_guess());
-            //((ObservationViewHolder) holder).ivItemDrawable.setErrorImageResId(R.drawable.ic_drawer);
             if (item.getPhotos().size() > 0) {
                 String thumbUrl;
                 if (item.getPhotos().get(0).getMedium_url() != null ) {
@@ -120,9 +119,6 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                 ((ObservationViewHolder) holder).ivItemDrawable.setVisibility(View.GONE);
             }
         }
-
-
-
     }
 
 
@@ -133,7 +129,6 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         } else if (items.get(position) instanceof iNatObservation) {
             return Values.view_observation;
         }
-
         return -1;
     }
 
