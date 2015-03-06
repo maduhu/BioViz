@@ -85,7 +85,6 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             if (item.getMedia() != null &&
                     item.getMedia().get(0).getIdentifier() != null) {
 
-                //Glide.with(this).load("http://goo.gl/h8qOq7").into(imageView);
                 Glide.with(context).load(item.getMedia().get(0).getIdentifier())
                         .crossFade()
                         .centerCrop()

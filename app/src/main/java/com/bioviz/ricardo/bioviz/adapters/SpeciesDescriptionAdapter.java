@@ -145,9 +145,6 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 });
                 break;
         }
-
-
-
     }
 
     @Override
@@ -158,9 +155,9 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             if (holder instanceof  DescriptionViewHolder) {
                 ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             }
-
         }
     }
+
 
     @Override
     public int getItemCount() {
