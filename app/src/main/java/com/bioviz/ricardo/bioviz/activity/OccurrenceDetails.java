@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -184,6 +187,15 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         View v = vi.inflate(R.layout.view_woops, null);
         LinearLayout.LayoutParams params =
                 new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        (v.findViewById(R.id.tvKittenMode)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.google.pt/search?q=kittens&source=lnms&tbm=isch&sa=X");
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
+
 
         LinearLayout llDetails = (LinearLayout) findViewById(R.id.ll_occurrence_details);
         llDetails.removeAllViews();

@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
 
-    <TextView
-        android:drawablePadding="15dp"
-        android:drawableTop="@drawable/ic_woops_big"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large.Inverse"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/text_blue_grey"
-        android:text="Something went wrong...Gonna whoop some ass..."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:drawablePadding="25dp"
+            android:layout_marginTop="50dp"
+            android:drawableTop="@drawable/ic_yok_angry"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large.Inverse"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/text_blue_grey"
+            android:text="I have failed you, master...."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:drawablePadding="15dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small.Inverse"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textColor="@color/text_blue_grey"
+            android:text="But my developer will handle this"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvKittenMode"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:text="...meanwhile, tap here for some relief"
+            android:textColor="@color/wallet_bright_foreground_disabled_holo_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+    </LinearLayout>
+</ScrollView>
