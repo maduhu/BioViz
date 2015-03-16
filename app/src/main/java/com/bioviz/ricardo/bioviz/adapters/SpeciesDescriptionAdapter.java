@@ -1,6 +1,8 @@
 package com.bioviz.ricardo.bioviz.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
+import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -28,7 +33,7 @@ import java.util.ArrayList;
 
 public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
-    private Context context;
+    private static Context context;
     private ArrayList<GBIFSpeciesDescription> items;
     private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
@@ -96,7 +101,13 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 break;
 
             case Values.ITEM_TYPE_EXTRAS:
-                ((SpeciesExtrasViewHolder) holder).tvDescriptionValue.setText("Descrição do bicho, alguns extras interessantes");
+                ((SpeciesExtrasViewHolder) holder).tvExtrasKingdom.setText(occurrenceItem.getKingdom());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasPhylum.setText(occurrenceItem.getPhylum());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasClass.setText(occurrenceItem.getSpeciesClass());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasOrder.setText(occurrenceItem.getOrder());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasFamily.setText(occurrenceItem.getFamily());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasGenus.setText(occurrenceItem.getGenus());
+                ((SpeciesExtrasViewHolder) holder).tvExtrasSpecies.setText(occurrenceItem.getSpecies());
                 break;
 
             case Values.ITEM_TYPE_DESCRIPTION:
@@ -247,16 +258,57 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
     static class SpeciesExtrasViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener{
 
-        private TextView tvDescriptionValue;
-
+        private TextView tvExtrasKingdom;
+        private TextView tvExtrasPhylum;
+        private TextView tvExtrasClass;
+        private TextView tvExtrasOrder;
+        private TextView tvExtrasFamily;
+        private TextView tvExtrasGenus;
+        private TextView tvExtrasSpecies;
+        private TextView tvExtrasHeader;
 
         public SpeciesExtrasViewHolder(View rowView) {
             super(rowView);
 
-            tvDescriptionValue = (TextView) rowView.findViewById(R.id.tvDescriptionValue);
+            tvExtrasKingdom = (TextView) rowView.findViewById(R.id.tvExtrasKingdom);
+            tvExtrasPhylum = (TextView) rowView.findViewById(R.id.tvExtrasPhylum);
+            tvExtrasClass = (TextView) rowView.findViewById(R.id.tvExtrasClass);
+            tvExtrasOrder = (TextView) rowView.findViewById(R.id.tvExtrasOrder);
+            tvExtrasFamily = (TextView) rowView.findViewById(R.id.tvExtrasFamily);
+            tvExtrasGenus = (TextView) rowView.findViewById(R.id.tvExtrasGenus);
+            tvExtrasSpecies = (TextView) rowView.findViewById(R.id.tvExtrasSpecies);
+            tvExtrasHeader = (TextView) rowView.findViewById(R.id.tvExtrasHeader);
 
-            rowView.setOnClickListener(this);
-            rowView.setOnLongClickListener(this);
+            tvExtrasHeader.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle("Biological Classification");
+                    alert.setIcon(R.drawable.ic_search);
+
+                    WebView wv = new WebView(context);
+                    wv.loadUrl("http://en.wikipedia.org/wiki/Biological_classification");
+                    wv.setWebViewClient(new WebViewClient() {
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            view.loadUrl(url);
+                            return true;
+                        }
+                    });
+
+                    alert.setView(wv);
+                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
+                }
+            });
+
+            //rowView.setOnClickListener(this);
+            //rowView.setOnLongClickListener(this);
         }
 
         @Override

@@ -3,11 +3,106 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvDescriptionValue"
-        android:layout_gravity="center"
-        android:text="DETALHES DO BICHO"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:text="Kingdom"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvDescriptionValue"
+            android:text="Philae"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:text="Phylum"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Philae"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:text="Order"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Philae"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Family"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Philae"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>

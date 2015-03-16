@@ -1,6 +1,7 @@
 package com.bioviz.ricardo.bioviz.model.GBIFResponses;
 
 import com.bioviz.ricardo.bioviz.model.GBIFMediaElement;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -25,8 +26,18 @@ public class GBIFOccurrence {
     private String datasetKey;
     private String speciesKey;
 
+    @SerializedName("class")
+    private String speciesClass;
+
     private String verbatimLocality;
 
+    public String getSpeciesClass() {
+        return speciesClass;
+    }
+
+    public void setSpeciesClass(String speciesClass) {
+        this.speciesClass = speciesClass;
+    }
 
     private int year;
     private List<GBIFMediaElement> media;
