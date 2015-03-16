@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/item_drawable"
+            android:src="@drawable/ic_yok_loading"
             android:adjustViewBounds= "true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

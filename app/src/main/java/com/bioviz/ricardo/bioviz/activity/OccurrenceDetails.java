@@ -159,6 +159,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
             }
         }
 
+        items.add(new GBIFSpeciesDescription());
         mAdapter.notifyDataSetChanged();
     }
 
@@ -166,7 +167,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
     public void onErrorResponse(VolleyError volleyError) {
         Log.e("VOLLEY", volleyError.toString());
         Toast.makeText(this, "Something went wrong :| ", Toast.LENGTH_SHORT).show();
-        loadEmptyView();
+        loadErrorView();
     }
 
     @Override
@@ -182,7 +183,7 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
     /**
      * Loads the view showing that there are no descriptions available
      */
-    private void loadEmptyView() {
+    private void loadErrorView() {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.view_woops, null);
         LinearLayout.LayoutParams params =
@@ -201,6 +202,8 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         llDetails.removeAllViews();
         llDetails.addView(v, params);
     }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

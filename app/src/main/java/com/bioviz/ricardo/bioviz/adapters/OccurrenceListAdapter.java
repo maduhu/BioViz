@@ -88,7 +88,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                 Glide.with(context).load(item.getMedia().get(0).getIdentifier())
                         .crossFade()
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher)
+                        .placeholder(R.drawable.ic_yok_loading)
                         .into(((OccurrenceViewHolder) holder).ivItemDrawable);
             }
 
@@ -110,7 +110,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                 Glide.with(context).load(thumbUrl)
                         .crossFade()
                         .centerCrop()
-                        .placeholder(R.drawable.ic_launcher)
+                        .placeholder(R.drawable.ic_yok_loading)
                         .into(((ObservationViewHolder) holder).ivItemDrawable);
 
                 setAnimation(((ObservationViewHolder) holder).itemContainer, position);

@@ -56,7 +56,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v;
-        if (viewType == 0) {
+        if (viewType == Values.ITEM_TYPE_HEADER) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_occurence_list, parent, false);
 
@@ -64,18 +64,23 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
         //Species details
-        if (viewType == 1) {
+        if (viewType == Values.ITEM_TYPE_EXTRAS) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_species_details, parent, false);
 
             return new SpeciesExtrasViewHolder(v);
         }
 
+        if (viewType == Values.ITEM_TYPE_DESCRIPTION) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.occurence_description_item, parent, false);
+            return new DescriptionViewHolder(v);
+        }
+
         v = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.occurence_description_item, parent, false);
+                R.layout.view_end, parent, false);
 
-
-        return new DescriptionViewHolder(v);
+        return new LastItemViewHolder(v);
     }
 
     @Override
@@ -155,6 +160,9 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                     }
                 });
                 break;
+            case Values.ITEM_TYPE_END:
+
+                break;
         }
     }
 
@@ -219,7 +227,11 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             case 1:
                 return Values.ITEM_TYPE_EXTRAS;
             default:
-                return Values.ITEM_TYPE_DESCRIPTION;
+                if (position == items.size()-1) {
+                    return Values.ITEM_TYPE_END;
+                } else {
+                    return Values.ITEM_TYPE_DESCRIPTION;
+                }
         }
     }
 
@@ -319,6 +331,13 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
         @Override
         public boolean onLongClick(View v) {
             return false;
+        }
+    }
+
+    static class LastItemViewHolder extends RecyclerView.ViewHolder {
+
+        public LastItemViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }
