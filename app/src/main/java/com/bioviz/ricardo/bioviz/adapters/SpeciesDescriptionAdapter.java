@@ -8,8 +8,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
@@ -17,12 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -103,6 +97,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                             .placeholder(R.drawable.ic_launcher)
                             .into(((OccurrenceViewHolder) holder).ivItemDrawable);
                 }
+
                 break;
 
             case Values.ITEM_TYPE_EXTRAS:

@@ -72,6 +72,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     private Map<String, String> iNatQuery;
 
     private Dialog dialog;
+
     private boolean occurrenceReady;
     private boolean observationReady;
 
@@ -105,8 +106,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         setHasOptionsMenu(true);
 
         offset = 0;
-        occurrenceReady = true;
-        observationReady = true;
         gbifQuery = new HashMap<>();
         iNatQuery = new HashMap<>();
         dialog = new Dialog(getActivity());
@@ -226,7 +225,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                     if (observationReady) {
                         long seed = System.nanoTime();
                         Collections.shuffle(items, new Random(seed));
-
                         mAdapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -288,6 +286,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle item selection
+        observationReady = false;
+        occurrenceReady = false;
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 items.clear();
@@ -348,15 +348,12 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
     private void executeGBIFQuery(boolean randomQuery) {
         String request = Values.GBIFBaseAddr + Values.GBIFOccurrence + "/search?";
-
         boolean[] settings = AppController.getStates();
         occurrenceReady = false;
 
         if (gbifQuery == null) {
             gbifQuery = new HashMap<>();
         }
-
-
 
         //no params == random query, can use the offset to retrieve other results
         if (randomQuery) {
@@ -395,10 +392,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
     private void executeiNATQuery() {
         String request = Values.iNATBaseAddr + Values.iNatObservation + ".json" + "?";
-
         boolean[] settings = AppController.getStates();
         observationReady = false;
-
 
         if (settings[1]) {
             if (iNatQuery == null) {
