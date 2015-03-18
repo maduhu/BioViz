@@ -34,8 +34,10 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
+import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
 import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
+import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
@@ -264,7 +266,14 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
     @Override
     public void onItemClick(View view, int position) {
-        Intent myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+        Intent myIntent;
+
+        if (items.get(position) instanceof GBIFOccurrence) {
+            myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+        } else {
+            myIntent = new Intent(getActivity(), ObservationDetails.class);
+        }
+
         myIntent.putExtra("item", new Gson().toJson(items.get(position)));
         ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                 0, view.getWidth(), view.getHeight());

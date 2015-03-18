@@ -28,6 +28,10 @@
             android:name=".activity.OccurrenceDetails"
             android:label="@string/title_activity_occurrence_details" >
         </activity>
+        <activity
+            android:name=".activity.ObservationDetails"
+            android:label="@string/title_activity_occurrence_details" >
+        </activity>
     </application>
 
 </manifest>
