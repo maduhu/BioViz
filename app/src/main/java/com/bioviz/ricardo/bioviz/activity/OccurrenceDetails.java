@@ -1,25 +1,19 @@
 package com.bioviz.ricardo.bioviz.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,8 +24,12 @@ import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.SpeciesDescriptionAdapter;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFSpeciesLookupResponse;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpecies;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
+import com.bioviz.ricardo.bioviz.model.GBIFMediaElement;
+import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFMediaLookupResponse;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFSpeciesLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
@@ -43,7 +41,7 @@ import java.util.ArrayList;
 public class OccurrenceDetails extends Activity implements Response.Listener<JSONObject>, Response.ErrorListener, OnItemClickListener {
 
     private GBIFOccurrence occurrenceItem;
-    private ArrayList<GBIFSpeciesDescription> items;
+    private ArrayList<GBIFSpeciesItem> items;
     private SpeciesDescriptionAdapter mAdapter;
 
     @Override
@@ -65,7 +63,6 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
 
         final RecyclerView descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -90,8 +87,30 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
                 request + "/descriptions", null,
                 this, this);
 
+        JsonObjectRequest mediaRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                request + "/media", null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        //TODO:
+                        GBIFMediaLookupResponse response = new Gson().fromJson(jsonObject.toString(), GBIFMediaLookupResponse.class);
+                        ArrayList<GBIFMediaElement> fetchedMedia = response.getResults();
+                        if (response.getResults() == null) {
+                            Toast.makeText(OccurrenceDetails.this, "No media", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (fetchedMedia.size() == 0)
+                            return;
+
+                        items.addAll(fetchedMedia);
+                    }
+                }, this);
+
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, "species_description_lookup");
+        AppController.getInstance().addToRequestQueue(mediaRequest, "species_media_lookup");
     }
 
 
@@ -117,10 +136,13 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
 
             String body = occurrenceItem.getScientificName() + "\n\n";
 
-            for (GBIFSpeciesDescription description : items) {
-                body += "\n"
-                        + description.getType() + "\n"
-                        + description.getDescription();
+            for (GBIFSpeciesItem speciesItem : items) {
+                if (speciesItem instanceof GBIFSpeciesDescription) {
+                    body += "\n"
+                            + ((GBIFSpeciesDescription) speciesItem).getType() + "\n"
+                            + ((GBIFSpeciesDescription) speciesItem).getDescription();
+                }
+
             }
 
             Intent sendIntent = new Intent();
@@ -155,7 +177,6 @@ public class OccurrenceDetails extends Activity implements Response.Listener<JSO
                 } else {
                     items.add(description);
                 }
-
             }
         }
 

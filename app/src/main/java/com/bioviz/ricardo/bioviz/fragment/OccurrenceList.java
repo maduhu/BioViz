@@ -4,9 +4,7 @@ import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,9 +34,10 @@ import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
 import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
+import com.bioviz.ricardo.bioviz.activity.OccurrenceViewActivity;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.OccurrenceLookupResponse;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIF.Responses.OccurrenceLookupResponse;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.android.gms.common.ConnectionResult;
@@ -269,7 +268,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         Intent myIntent;
 
         if (items.get(position) instanceof GBIFOccurrence) {
-            myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+            //myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+            myIntent = new Intent(getActivity(), OccurrenceViewActivity.class);
         } else {
             myIntent = new Intent(getActivity(), ObservationDetails.class);
         }

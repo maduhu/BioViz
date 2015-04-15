@@ -2,67 +2,207 @@
 <items version="2" >
 
     <item
-        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.3/classes.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4b8945fc23a7461c6fdde15753456d64b0a9358b">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-96b63d411ec9130debf02cfb89e287b85b2cac40.jar" />
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-e5300cc1a3d84b4868e7986f214f4d3fa8109b3c.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-71bd8cb67f63640fdf5f0add6e962357ec63ddd9.jar" />
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-a6d30239570a8c6fb104f54da43a3b82184321e8.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/tools/android-sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-5d74cb2d8918b92aa8c94dfe5e9a1ed99e9c0dcb.jar" />
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-9a56c2b52a5445baf5e1f8e7a31cfb99adfa00d1.jar" />
     </item>
     <item
-        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="ecf534dba3a8446ce84cbb797d314763be212a68">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/glide-3.5.2-95a6cd85550905e0687ea848b5efb7834b401b42.jar" />
+        sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-e5fa7f64c42b19b518401079f711eb149523bb0d.jar" />
     </item>
     <item
-        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/gson-2.3-a78e3fb641a0856e61e54b318414a466145ae1f0.jar" />
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-7c76dea8d68e36ba2d3c36787ddbd18598e58735.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-cbd329a923970dce872e4527afdad0150b7caa5b.jar" />
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-8ca262f91179ab973444d524d10959dced3739cc.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/bioviz/app/libs/volley.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-8092d8fc2c7c44a9e53731569ec7dc9d4dcd2ab3.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v13/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7f9cca1caa023a880b00c382bcc5c90245ae4895">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-f5e40ee060868e6a41a045711a0c841c0694bf74.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-8b2b7ecb3409c58a775bbf1d4f566384b9f6984a.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-45768ad725c34d61a30919db27feeedf60d7322d.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-160e7c6e7ab48da625440021131d08ed4cd84b13.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/libs/volley.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d4aaa36e04ee71a83444f8367c97a46fda662d2c">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/volley-13d49ec5a180f2764283745e0566ebf91dbd11d9.jar" />
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/volley-ad2befa8a9bd08755ed551f90271733ebafb23b8.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-78d412c168cbbc4ceabd96e0a22dad6f2f344c3a.jar" />
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-95c18e2189c464d30cd681426832436dc31c425b.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="/home/ricardo/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-000a7ff7955ba7ffba34ff3fbf5d9e3e4c3ac0f3.jar" />
+        sha1="055783146ba9654a725442563be78cad303aad1f">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-f79d1e14f42b2872f0ae0271ebc0c055af3301e7.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/tools/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-a33189e4632cc67be35bd684298b52aae7ea868e.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-a0e780f844febc943d24bdf975785c85f4f87d28.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-3b977d741173134d1a623b411faf19cfc2b322cf.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-bc45345d75ffa3250884dc4cfa394fa0b3cfa925.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-4589a194c59eb054d3c85f64c409d70491cfc593.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v13/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="def3eff2b7b4774d96ae15b07b3fc0111edbfe24">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-ad9d15c23a2482effec097b06c03383d33ecd9f5.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-17f87221d39e8f458666ef19633b2d769b694a8e.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-3bc14316a2bcacb57545dc258f0b0d79ee273e00.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-41a532a0c3191677b6309726d2fcc077a36431a5.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-91d0106bc85dd6524bdcd0124e51ba42bac0b10a.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-9a5a5e09edc5f2a6f4ba14c7eca8f96bd54150ad.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-e7bc02d09deab67b376d3bfae293a16f5c253a64.jar" />
+    </item>
+    <item
+        jar="/home/riku/Development/bioviz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/classes-45ed60b67d274936c8d70a7a38256312440ded1e.jar" />
+    </item>
+    <item
+        jar="/home/riku/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ecf534dba3a8446ce84cbb797d314763be212a68">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/glide-3.5.2-fcbf4de1238984af629722daf25b3a2b838e0d32.jar" />
+    </item>
+    <item
+        jar="/home/riku/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/home/riku/Development/bioviz/app/build/intermediates/pre-dexed/debug/gson-2.3-2aebd8dc7a87ae3095bdeed1e2951657a625947d.jar" />
     </item>
 
 </items>

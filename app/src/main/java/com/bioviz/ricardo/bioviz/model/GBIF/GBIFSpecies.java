@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model.GBIFResponses;
+package com.bioviz.ricardo.bioviz.model.GBIF;
 
 /**
  * Created by ricardo on 26-02-2015.

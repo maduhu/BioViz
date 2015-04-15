@@ -17,7 +17,8 @@ import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.model.GBIFResponses.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
@@ -28,13 +29,13 @@ import java.util.ArrayList;
 public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
     private static Context context;
-    private ArrayList<GBIFSpeciesDescription> items;
+    private ArrayList<? extends GBIFSpeciesItem> items;
     private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
     private int textSize;
 
 
-    public SpeciesDescriptionAdapter(ArrayList<GBIFSpeciesDescription> srcItems,
+    public SpeciesDescriptionAdapter(ArrayList<? extends GBIFSpeciesItem> srcItems,
                                      GBIFOccurrence occurrence,
                                      OnItemClickListener clickListener,
                                      Context context) {
@@ -71,6 +72,12 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             return new DescriptionViewHolder(v);
         }
 
+        if (viewType == Values.ITEM_TYPE_MEDIA) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.occurence_description_item, parent, false);
+            return new DescriptionViewHolder(v);
+        }
+
         v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.view_end, parent, false);
 
@@ -79,7 +86,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
-        final GBIFSpeciesDescription item = items.get(position);
+        final GBIFSpeciesItem item = items.get(position);
         int viewType = getItemViewType(position);
 
         switch (viewType) {
@@ -111,13 +118,14 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 break;
 
             case Values.ITEM_TYPE_DESCRIPTION:
-                String itemType = item.getType();
-                if (!item.getLanguage().equals("")) {
-                    itemType += " (" + item.getLanguage() + ")";
+                GBIFSpeciesDescription descItem = (GBIFSpeciesDescription) item;
+                String itemType = descItem.getType();
+                if (!descItem.getLanguage().equals("")) {
+                    itemType += " (" + descItem.getLanguage() + ")";
                 }
 
                 //Deal with foreign characters
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(descItem.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
                 ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
                 ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
 
@@ -155,6 +163,8 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                     }
                 });
                 break;
+            case Values.ITEM_TYPE_MEDIA:
+                //TODO: handle media type
             case Values.ITEM_TYPE_END:
 
                 break;
@@ -224,9 +234,10 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             default:
                 if (position == items.size()-1) {
                     return Values.ITEM_TYPE_END;
-                } else {
+                } else if (items.get(position) instanceof GBIFSpeciesDescription) {
                     return Values.ITEM_TYPE_DESCRIPTION;
                 }
+                return Values.ITEM_TYPE_MEDIA;
         }
     }
 

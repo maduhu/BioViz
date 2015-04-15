@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model.GBIFResponses;
+package com.bioviz.ricardo.bioviz.model.GBIF.Responses;
 
 import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
 

@@ -1,17 +1,37 @@
 package com.bioviz.ricardo.bioviz.model;
 
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
+
 /**
  * Media element holding the associated resource (image, sound, or moving image)
  * format -> mimeType
  * identifyier -> direct url for the image
  */
-public class GBIFMediaElement {
+public class GBIFMediaElement extends GBIFSpeciesItem  {
 
     private String format;
     private String identifier;
-    private String refecrences;
+    private String references;
+    private String title;
+    private String creator;
 
-    public String getReferences() {return refecrences; }
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getReferences() {return references; }
 
     public String getFormat() {
         return format;
@@ -20,4 +40,5 @@ public class GBIFMediaElement {
     public String getIdentifier() {
         return identifier;
     }
+
 }

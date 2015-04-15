@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model.GBIFResponses;
+package com.bioviz.ricardo.bioviz.model.GBIF;
 
 import com.bioviz.ricardo.bioviz.model.GBIFMediaElement;
 import com.google.gson.annotations.SerializedName;
