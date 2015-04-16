@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="8dp"
+    android:id="@+id/item_card_container"
+    android:layout_margin="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_media"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:background="@color/text_blue_grey_darker"
+            android:text="Je suis le title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+            />
+
+        <TextView
+            android:id="@+id/tv_creator"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="3dp"
+            android:background="@color/text_blue_grey_darker"
+            android:text="I am the author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textAppearance="@android:style/TextAppearance.Holo.Small"
+            />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

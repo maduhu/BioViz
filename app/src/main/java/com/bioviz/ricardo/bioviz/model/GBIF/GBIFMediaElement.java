@@ -1,13 +1,11 @@
-package com.bioviz.ricardo.bioviz.model;
-
-import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
+package com.bioviz.ricardo.bioviz.model.GBIF;
 
 /**
  * Media element holding the associated resource (image, sound, or moving image)
  * format -> mimeType
  * identifyier -> direct url for the image
  */
-public class GBIFMediaElement extends GBIFSpeciesItem  {
+public class GBIFMediaElement {
 
     private String format;
     private String identifier;

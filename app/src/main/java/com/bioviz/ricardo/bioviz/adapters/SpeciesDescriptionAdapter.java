@@ -18,8 +18,7 @@ import android.widget.Toast;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
-import com.bioviz.ricardo.bioviz.model.GBIFSpeciesDescription;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
 
@@ -29,13 +28,13 @@ import java.util.ArrayList;
 public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
     private static Context context;
-    private ArrayList<? extends GBIFSpeciesItem> items;
+    private ArrayList<GBIFSpeciesDescription> items;
     private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
     private int textSize;
 
 
-    public SpeciesDescriptionAdapter(ArrayList<? extends GBIFSpeciesItem> srcItems,
+    public SpeciesDescriptionAdapter(ArrayList<GBIFSpeciesDescription> srcItems,
                                      GBIFOccurrence occurrence,
                                      OnItemClickListener clickListener,
                                      Context context) {
@@ -86,7 +85,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
-        final GBIFSpeciesItem item = items.get(position);
+        final GBIFSpeciesDescription item = items.get(position);
         int viewType = getItemViewType(position);
 
         switch (viewType) {

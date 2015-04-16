@@ -1,6 +1,5 @@
 package com.bioviz.ricardo.bioviz.model.GBIF;
 
-import com.bioviz.ricardo.bioviz.model.GBIFMediaElement;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

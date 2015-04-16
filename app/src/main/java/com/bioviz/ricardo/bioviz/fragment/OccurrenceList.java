@@ -32,9 +32,8 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
+import com.bioviz.ricardo.bioviz.activity.GBIFOccurrenceView;
 import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
-import com.bioviz.ricardo.bioviz.activity.OccurrenceDetails;
-import com.bioviz.ricardo.bioviz.activity.OccurrenceViewActivity;
 import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.OccurrenceLookupResponse;
@@ -269,7 +268,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
         if (items.get(position) instanceof GBIFOccurrence) {
             //myIntent = new Intent(getActivity(), OccurrenceDetails.class);
-            myIntent = new Intent(getActivity(), OccurrenceViewActivity.class);
+            myIntent = new Intent(getActivity(), GBIFOccurrenceView.class);
         } else {
             myIntent = new Intent(getActivity(), ObservationDetails.class);
         }

@@ -26,20 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.OccurrenceDetails"
-            android:label="@string/title_activity_occurrence_details" >
-        </activity>
-        <activity
             android:name=".activity.ObservationDetails"
             android:label="@string/title_activity_occurrence_details" >
         </activity>
         <activity
-            android:name=".activity.OccurrenceViewActivity"
-            android:label="@string/title_activity_occurrence_view"
-            android:parentActivityName=".activity.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bioviz.ricardo.bioviz.activity.MainActivity" />
+            android:name=".activity.GBIFOccurrenceView"
+            android:label="@string/title_activity_gbifoccurrence_view" >
         </activity>
     </application>
 

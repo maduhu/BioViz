@@ -1,6 +1,6 @@
 package com.bioviz.ricardo.bioviz.model.GBIF.Responses;
 
-import com.bioviz.ricardo.bioviz.model.GBIFMediaElement;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;
 
 import java.util.ArrayList;
 

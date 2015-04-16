@@ -1,8 +1,6 @@
-package com.bioviz.ricardo.bioviz.model;
+package com.bioviz.ricardo.bioviz.model.GBIF;
 
-import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesItem;
-
-public class GBIFSpeciesDescription extends GBIFSpeciesItem {
+public class GBIFSpeciesDescription {
     private int key;
     private String type;
     private String language;
