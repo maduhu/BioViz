@@ -1,6 +1,7 @@
 package com.bioviz.ricardo.bioviz.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
@@ -30,9 +33,9 @@ public class SpeciesMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     public SpeciesMediaAdapter(ArrayList<GBIFMediaElement> srcItems,
-                                     GBIFOccurrence occurrence,
-                                     OnItemClickListener clickListener,
-                                     Context context) {
+                               GBIFOccurrence occurrence,
+                               OnItemClickListener clickListener,
+                               Context context) {
 
         this.context = context;
         this.occurrenceItem = occurrence;
@@ -72,10 +75,22 @@ public class SpeciesMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (item.getIdentifier() != null &&
                         !item.getIdentifier().equals("")) {
 
+
+                    Glide.with(context)
+                            .load(item.getIdentifier())
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(200,200) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    (((MediaViewHolder) holder).mediaView).setImageBitmap(resource); // Possibly runOnUiThread()
+                                }
+                            });
+/*
                     Glide.with(context).load(item.getIdentifier())
                             .crossFade()
                             .placeholder(R.drawable.ic_yok_loading)
                             .into(((MediaViewHolder) holder).mediaView);
+                            */
                 }
 
             case Values.ITEM_TYPE_END:

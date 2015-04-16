@@ -1,6 +1,7 @@
 package com.bioviz.ricardo.bioviz.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
@@ -81,11 +84,24 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             if (item.getMedia() != null &&
                     item.getMedia().get(0).getIdentifier() != null) {
 
+
+                Glide.with(context)
+                        .load( item.getMedia().get(0).getIdentifier())
+                        .asBitmap()
+                        .centerCrop()
+                        .into(new SimpleTarget<Bitmap>(200,200) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                (((OccurrenceViewHolder) holder).ivItemDrawable).setImageBitmap(resource); // Possibly runOnUiThread()
+                            }
+                        });
+                /*
                 Glide.with(context).load(item.getMedia().get(0).getIdentifier())
                         .crossFade()
                         .centerCrop()
                         .placeholder(R.drawable.ic_yok_loading)
                         .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+                        */
             }
 
             setAnimation(((OccurrenceViewHolder) holder).itemContainer, position);
