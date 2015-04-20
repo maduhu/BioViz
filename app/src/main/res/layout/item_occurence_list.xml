@@ -12,6 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         >
 
         <ImageView
@@ -22,7 +23,11 @@
             android:layout_height="wrap_content"
             android:maxHeight="180dp"
             />
+
+
         <RelativeLayout
+            android:visibility="visible"
+            android:id="@+id/rl_item_legend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -44,10 +49,11 @@
 
             <TextView
                 android:id="@+id/item_species"
+                android:visibility="gone"
                 android:layout_marginStart="6dp"
                 android:layout_below="@id/item_value"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -69,7 +75,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="6dp"
                 android:layout_below="@id/item_species"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:textAppearance="@android:style/TextAppearance.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,13 +94,14 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="6dp"
                 android:layout_below="@id/item_country"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:textAppearance="@android:style/TextAppearance.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:text="41.0, -10"
+                android:visibility="gone"
                 android:layout_marginBottom="4dp"
                 />
 

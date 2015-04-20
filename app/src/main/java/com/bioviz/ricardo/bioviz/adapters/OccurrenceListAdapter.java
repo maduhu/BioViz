@@ -3,6 +3,7 @@ package com.bioviz.ricardo.bioviz.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -13,16 +14,23 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
+import com.bioviz.ricardo.bioviz.fragment.OccurrenceList;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
@@ -83,16 +91,36 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             ((OccurrenceViewHolder) holder).tvItemCountry.setText(location + item.getCountry() + ", " + item.getYear());
             ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
             ((OccurrenceViewHolder) holder).tvItemCoordinates.setText(coordinates);
+            ((OccurrenceViewHolder) holder).rlItemLegend
+                    .setBackgroundColor(context.getResources().getColor(R.color.text_blue_grey_darker));
 
             if (item.getMedia() != null &&
                     item.getMedia().get(0).getIdentifier() != null) {
 
                 Glide.with(context).load(item.getMedia().get(0).getIdentifier())
-                        .crossFade()
+                        .asBitmap()
                         .centerCrop()
                         .placeholder(R.drawable.ic_yok_loading)
-                        .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+                        .into(new BitmapImageViewTarget(((OccurrenceViewHolder) holder).ivItemDrawable) {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                super.onResourceReady(bitmap, anim);
+                                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        // Here's your generated palette
+                                        ((OccurrenceViewHolder) holder).rlItemLegend.setBackgroundColor(
+                                                palette.getVibrantColor(R.color.text_blue_grey_darker));
+
+                                        ((OccurrenceViewHolder) holder).rlItemLegend.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+                        });
+
             }
+
+
             setAnimation(((OccurrenceViewHolder) holder).itemContainer, position);
 
         } else if (getItemViewType(position) == Values.view_observation) {
@@ -109,10 +137,26 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 Glide.with(context).load(thumbUrl)
-                        .crossFade()
+                        .asBitmap()
                         .centerCrop()
                         .placeholder(R.drawable.ic_yok_loading)
-                        .into(((ObservationViewHolder) holder).ivItemDrawable);
+                        .into(new BitmapImageViewTarget(((ObservationViewHolder) holder).ivItemDrawable) {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                super.onResourceReady(bitmap, anim);
+                                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        // Here's your generated palette
+
+                                        ((ObservationViewHolder) holder).rlItemLegend.setBackgroundColor(
+                                                palette.getLightVibrantColor(R.color.text_blue_grey_darker));
+
+                                        ((ObservationViewHolder) holder).rlItemLegend.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+                        });
 
                 setAnimation(((ObservationViewHolder) holder).itemContainer, position);
             } else {
@@ -120,7 +164,6 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             }
         }
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -138,7 +181,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     static class OccurrenceViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
+            implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView tvItemValue;
         private TextView tvItemCoordinates;
@@ -146,6 +189,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         private TextView tvItemSpecies;
         private ImageView ivItemDrawable;
         private CardView itemContainer;
+        private RelativeLayout rlItemLegend;
 
 
         public OccurrenceViewHolder(View rowView) {
@@ -157,6 +201,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             tvItemCoordinates = (TextView) rowView.findViewById(R.id.item_coordinates);
             ivItemDrawable = (ImageView) rowView.findViewById(R.id.item_drawable);
             itemContainer = (CardView) rowView.findViewById(R.id.item_card_container);
+            rlItemLegend = (RelativeLayout) rowView.findViewById(R.id.rl_item_legend);
 
             rowView.setOnClickListener(this);
             rowView.setOnLongClickListener(this);
@@ -181,6 +226,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         private TextView tvItemSpecies;
         private ImageView ivItemDrawable;
         private CardView itemContainer;
+        private RelativeLayout rlItemLegend;
 
 
         public ObservationViewHolder(View rowView) {
@@ -191,6 +237,7 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             tvItemSpecies = (TextView) rowView.findViewById(R.id.item_species);
             ivItemDrawable = (ImageView) rowView.findViewById(R.id.item_drawable);
             itemContainer = (CardView) rowView.findViewById(R.id.item_card_container);
+            rlItemLegend = (RelativeLayout) rowView.findViewById(R.id.rl_item_legend);
 
             rowView.setOnClickListener(this);
             rowView.setOnLongClickListener(this);

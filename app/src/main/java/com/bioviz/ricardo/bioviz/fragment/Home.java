@@ -5,14 +5,12 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextSwitcher;
-import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.bioviz.ricardo.bioviz.R;
@@ -30,6 +28,7 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
 
     private TextSwitcher switcher;
     private int mIndex = 0;
+    private Timer mTimer;
     ArrayList<String> homeMessages;
     ArrayList<String> homeDescriptions;
 
@@ -67,10 +66,9 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
         switcher.setFactory(this);
 
         Animation in = AnimationUtils.loadAnimation(getActivity(),
-                android.R.anim.slide_in_left);
-        Animation out = AnimationUtils.loadAnimation(getActivity(),
                 android.R.anim.slide_out_right);
-
+        Animation out = AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.slide_in_left);
 
         switcher.setInAnimation(in);
         switcher.setOutAnimation(out);
@@ -89,30 +87,30 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
             add("If you want a more visually-intense experience, you can request that the search results include images of the observation. This is sometimes difficult to happen when getting results from GBIF, but it is still worth the try. iNaturalist is often richer in terms of related media and will certainly get all the results with images. Nevertheless, if a specific observation has no pictures associated with it, it is still possible to get pictures from the associated species by clicking on it.");
         }};
 
-
-
-        Timer T=new Timer();
-        T.scheduleAtFixedRate(new TimerTask() {
+        mTimer =new Timer();
+        mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            switcher.setText(homeMessages.get(mIndex));
-                            if (mIndex == homeMessages.size()-1) {
-                                mIndex = 0;
-                            } else {
-                                mIndex++;
-                            }
-
+                           dispatchNextMessage();
                         }
                     });
                 }
-
-
             }
-        }, 5000, 5000);
+        }, 10000, 10000);
+
+        rootView.findViewById(R.id.switcher_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mTimer != null) {
+                    mTimer.cancel();
+                }
+                dispatchNextMessage();
+            }
+        });
 
         return rootView;
     }
@@ -141,5 +139,14 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
                     }
                 })
                 .show();
+    }
+
+    private void dispatchNextMessage() {
+        switcher.setText(homeMessages.get(mIndex));
+        if (mIndex == homeMessages.size()-1) {
+            mIndex = 0;
+        } else {
+            mIndex++;
+        }
     }
 }
