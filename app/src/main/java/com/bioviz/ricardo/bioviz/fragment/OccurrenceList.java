@@ -133,31 +133,16 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             buildGoogleApiClient();
         }
 
+        mEmptyView.setVisibility(View.GONE);
+        swipeRefreshLayout.setVisibility(View.VISIBLE);
+
         iNatResponseListener = new OnObservationResponseListener() {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
-                observationReady = true;
 
-                if (swipeRefreshLayout.isRefreshing() && occurrenceReady) {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-
-                mEmptyView.setVisibility(View.GONE);
-                swipeRefreshLayout.setVisibility(View.VISIBLE);
-
-                if (items == null)
+                if (items == null) {
                     items = new ArrayList<>();
-
-                if (items.size() == 0) {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    llQueryButtons.setVisibility(View.GONE);
-                    swipeRefreshLayout.setVisibility(View.GONE);
-                }
-
-                if (mAdapter == null) {
-                    mAdapter = new OccurrenceListAdapter(items, OccurrenceList.this, getActivity());
-                    mRecyclerView.setAdapter(mAdapter);
                 }
 
                 ArrayList<iNatObservation> responses =
@@ -182,17 +167,8 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                     }
                 }
 
-                mEmptyView.setVisibility(View.GONE);
-                llQueryButtons.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-
-                if (occurrenceReady) {
-                    long seed = System.nanoTime();
-                    Collections.shuffle(items, new Random(seed));
-
-                    mAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+                observationReady = true;
+                notifyResponseReady();
             }
         };
 
@@ -203,32 +179,13 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 OccurrenceLookupResponse responseObj =
                         new Gson().fromJson(jsonObject.toString(), OccurrenceLookupResponse.class);
 
-                occurrenceReady = true;
-
                 if (items == null)
                     items = new ArrayList<>();
 
-                swipeRefreshLayout.setRefreshing(false);
-                mEmptyView.setVisibility(View.GONE);
-                swipeRefreshLayout.setVisibility(View.VISIBLE);
-
                 items.addAll(responseObj.getResults());
-                if (items.size() == 0) {
-                    //load empty view
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    llQueryButtons.setVisibility(View.GONE);
-                    swipeRefreshLayout.setVisibility(View.GONE);
-                } else {
-                    mEmptyView.setVisibility(View.GONE);
-                    llQueryButtons.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    if (observationReady) {
-                        long seed = System.nanoTime();
-                        Collections.shuffle(items, new Random(seed));
-                        mAdapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }
+
+                occurrenceReady = true;
+                notifyResponseReady();
             }
         };
 
@@ -240,6 +197,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                 mAdapter.notifyDataSetChanged();
                 iNatQuery.clear();
                 gbifQuery.clear();
+
                 executeGBIFQuery(true);
                 executeiNATQuery();
             }
@@ -277,7 +235,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                 0, view.getWidth(), view.getHeight());
         startActivity(myIntent, options.toBundle());
-        //getActivity().startActivity(myIntent);
     }
 
     @Override
@@ -377,7 +334,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             gbifQuery.put("mediaType", "StillImage");
         }
 
-        //FIXME apparently the api simply ignores this
+        //apparently the api simply ignores this
         if (settings[2]) {
             gbifQuery.put("language", "en");
         }
@@ -385,7 +342,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         for (Map.Entry<String, String> entry : gbifQuery.entrySet()) {
             request += "&" + entry.getKey() + "=" + entry.getValue();
         }
-
 
         Log.e("REQUEST", request);
 
@@ -498,6 +454,44 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         } else {
             Toast.makeText(getActivity(), "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Update results list, if applicable
+     */
+    private void notifyResponseReady() {
+
+        if (!occurrenceReady  || !observationReady)
+            return;
+
+        swipeRefreshLayout.setRefreshing(false);
+
+        if (items == null)
+            items = new ArrayList<>();
+
+        //no results :'(
+        if (items.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            llQueryButtons.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        long seed = System.nanoTime();
+        Collections.shuffle(items, new Random(seed));
+
+        //there is hope!
+        if (mAdapter == null) {
+            mAdapter = new OccurrenceListAdapter(items, OccurrenceList.this, getActivity());
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+
+        mEmptyView.setVisibility(View.GONE);
+        llQueryButtons.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+
     }
 
     @Override
