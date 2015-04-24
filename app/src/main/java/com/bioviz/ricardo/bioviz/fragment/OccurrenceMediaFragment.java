@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.adapters.descriptions.SpeciesMediaAdapter;
+import com.bioviz.ricardo.bioviz.adapters.media.SpeciesMediaAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFMediaLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;

@@ -26,6 +26,10 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import java.util.ArrayList;
 
 
+/**
+ * Adapter to hold all the defined object types.
+ * For now, it is configured to hold both observations (GBIF) and occurrences (iNat)
+ */
 public class QueryResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
@@ -163,7 +167,6 @@ public class QueryResultListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
                                 @Override
                                 public void onGenerated(Palette palette) {
-                                    // Here's your generated palette
                                     holder.rlItemLegend.setBackgroundColor(
                                             palette.getVibrantColor(R.color.text_blue_grey_darker));
 
@@ -172,6 +175,8 @@ public class QueryResultListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             });
                         }
                     });
+        } else {
+            holder.ivItemDrawable.setVisibility(View.GONE);
         }
         setAnimation(holder.itemContainer, position);
     }

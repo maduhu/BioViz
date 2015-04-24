@@ -102,6 +102,8 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                             .centerCrop()
                             .placeholder(R.drawable.ic_yok_loading)
                             .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+                } else {
+                    ((OccurrenceViewHolder) holder).ivItemDrawable.setVisibility(View.GONE);
                 }
 
                 break;

@@ -53,7 +53,6 @@ public class OccurrenceDescriptionsFragment extends Fragment implements OnItemCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
             occurrenceItem = new Gson().fromJson(getArguments().getString(
                             "item"),
                             GBIFOccurrence.class);

@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.adapters.descriptions;
+package com.bioviz.ricardo.bioviz.adapters.media;
 
 import android.content.Context;
 import android.graphics.Bitmap;
