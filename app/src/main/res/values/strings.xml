@@ -4,21 +4,45 @@
     <string name="app_name">BioViz</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="section_about">About</string>
     <string name="section_home">Home</string>
     <string name="section_occurrence_list">Occurrences</string>
     <string name="title_activity_occurrence_details">Occurrence details</string>
-    <string name="hello_world">Hello world!</string>
     <string name="share">Share</string>
     <string name="title_activity_occurrence_view">OccurrenceViewActivity</string>
-
-
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="title_activity_gbifoccurrence_view">GBIFOccurrenceView</string>
+
+    <!-- Home messages and tips -->
+    <string name="m0">Welcome to the BioViz application! BioViz is focused on making it easy to find specific details about different species, allowing you to get in touch with the surrounding biodiversity.</string>
+    <string name="m1">I will be your guide throughout this application. I would like you to know that my developer is very eager to get your feedback! If you want to know more about him, tap here.</string>
+    <string name="m2">BioViz gets all its data from two main biodiversity sources: GBIF and iNaturalist. These are often used by biologists and biodiversity specialists to share data about different observations and sightseeings.</string>
+    <string name="m3">You can customize the results shown in this application. This customization can go from requiring observations with images attached, to restricting network data to wifi-based connections.</string>
+    <string name="m4">Although biodiversity is considered… very diverse (pun intended)… some records may have missing details. The result is that not all the items showed in the application will be available to open and get more details.</string>
+
+
+    <!-- Home messages expanded -->
+    <string name="m0e">Throughout the application, you will be able to explore biodiversity data and see what different researchers and biologists publish on the integrated platforms. You can also share any information you may find useful and manage your favorite species for a quick reference.</string>
+    <string name="m1e">Hey! My name is Ricardo, I am the developer of this application. I am kinda new to this mobile application world so be patient if something goes wrong. I enjoy getting info about species around me and explore different locations\' habitats. With that in mind, I started developing this application and focused on searching for biodiversity exchange points to extract such data and show it to you in the application.</string>
+    <string name="m2e">BioViz is this. iNaturalist is like a wikipedia-bioviz everyone can submit, no one cares about curating resources</string>
+    <string name="m3e">If you want a more visually-intense experience, you can request that the search results include images of the observation. This is sometimes difficult to happen when getting results from GBIF, but it is still worth the try. iNaturalist is often richer in terms of related media and will certainly get all the results with images. Nevertheless, if a specific observation has no pictures associated with it, it is still possible to get pictures from the associated species by clicking on it.</string>
+    <string name="m4e">Behind the integrated platforms, there is a lot of effort to create extensive records, containing all possible details. Nevertheless, in some occasions researchers and biologists may not be able to further describe the species or add other details. This can be derived from several reasons, some of theme related to the curation of such records. As evolving platforms though, these inconveniences tend to disappear with time.</string>
+
+    <string name="next">Next</string>
+
+    <string-array name="home_messages">
+        <item>@string/m0</item>
+        <item>@string/m1</item>
+        <item>@string/m1</item>
+        <item>@string/m3</item>
+        <item>@string/m4</item>
+    </string-array>
+
+    <string-array name="home_expanded_messages">
+        <item>@string/m1e</item>
+        <item>@string/m1e</item>
+        <item>@string/m3e</item>
+        <item>@string/m4e</item>
+    </string-array>
 
 </resources>

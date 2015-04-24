@@ -3,7 +3,6 @@
 <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/switcher_textview"
     android:drawablePadding="8dp"
-    android:drawableStart="@drawable/ic_yok"
     android:padding="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
