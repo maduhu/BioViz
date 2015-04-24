@@ -227,6 +227,13 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
         if (items.get(position) instanceof GBIFOccurrence) {
             //myIntent = new Intent(getActivity(), OccurrenceDetails.class);
+            if (((GBIFOccurrence) items.get(position)).getSpeciesKey().equals("null")) {
+                Toast.makeText(
+                        getActivity(),
+                        "Sorry, but this item cannon be displayed",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             myIntent = new Intent(getActivity(), GBIFOccurrenceView.class);
         } else {
             myIntent = new Intent(getActivity(), ObservationDetails.class);

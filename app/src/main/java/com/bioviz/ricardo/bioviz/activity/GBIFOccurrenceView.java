@@ -78,7 +78,6 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
             }
         });
 
-
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
             actionBar.addTab(
                     actionBar.newTab()
@@ -107,7 +106,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
         String request = Values.GBIFBaseAddr + "species/" + occurrenceItem.getSpeciesKey();
 
         //lookup species with speciesKey
-        Log.e("REQUEST", request + "/descriptions");
+        Log.d("REQUEST", request + "/descriptions");
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
                 request + "/descriptions", null,
@@ -119,7 +118,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
                 }, this);
 
 
-        Log.e("REQUEST", request + "/media");
+        Log.d("REQUEST", request + "/media");
         JsonObjectRequest mediaRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 request + "/media", null,
