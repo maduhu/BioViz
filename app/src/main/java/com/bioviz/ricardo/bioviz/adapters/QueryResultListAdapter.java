@@ -26,7 +26,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import java.util.ArrayList;
 
 
-public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class QueryResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<Object> items;
@@ -35,9 +35,9 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
     private static OnItemClickListener listener;
 
 
-    public OccurrenceListAdapter(ArrayList<Object> srcItems,
-                                 OnItemClickListener clickListener,
-                                 Context context) {
+    public QueryResultListAdapter(ArrayList<Object> srcItems,
+                                  OnItemClickListener clickListener,
+                                  Context context) {
 
         this.context = context;
         this.items = srcItems;
@@ -64,99 +64,116 @@ public class OccurrenceListAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
         if (getItemViewType(position) == Values.view_occurrence) {
+
             final GBIFOccurrence item = (GBIFOccurrence) items.get(position);
-
-            String location = "";
-
-            if (item.getVerbatimLocality() != null) {
-                location += item.getVerbatimLocality();
-            }
-
-            String coordinates = "";
-            if (item.getDecimalLatitude() != null &&
-                    item.getDecimalLongitude() != null) {
-                coordinates += item.getDecimalLatitude() + ", " + item.getDecimalLongitude();
-            }
-
-            ((OccurrenceViewHolder) holder).tvItemValue.setText(item.getScientificName());
-            ((OccurrenceViewHolder) holder).tvItemCountry.setText(location + item.getCountry() + ", " + item.getYear());
-            ((OccurrenceViewHolder) holder).tvItemSpecies.setText(item.getSpecies());
-            ((OccurrenceViewHolder) holder).tvItemCoordinates.setText(coordinates);
-            ((OccurrenceViewHolder) holder).rlItemLegend
-                    .setBackgroundColor(context.getResources().getColor(R.color.text_blue_grey_darker));
-
-            if (item.getMedia() != null &&
-                    item.getMedia().get(0).getIdentifier() != null) {
-
-                Glide.with(context).load(item.getMedia().get(0).getIdentifier())
-                        .asBitmap()
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_yok_loading)
-                        .into(new BitmapImageViewTarget(((OccurrenceViewHolder) holder).ivItemDrawable) {
-                            @Override
-                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                                super.onResourceReady(bitmap, anim);
-                                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(Palette palette) {
-                                        // Here's your generated palette
-                                        ((OccurrenceViewHolder) holder).rlItemLegend.setBackgroundColor(
-                                                palette.getVibrantColor(R.color.text_blue_grey_darker));
-
-                                        ((OccurrenceViewHolder) holder).rlItemLegend.setVisibility(View.VISIBLE);
-                                    }
-                                });
-                            }
-                        });
-
-            }
-
-
-            setAnimation(((OccurrenceViewHolder) holder).itemContainer, position);
+            bindOccurrenceHolder((OccurrenceViewHolder)holder, item, position);
 
         } else if (getItemViewType(position) == Values.view_observation) {
 
             final iNatObservation item = (iNatObservation) items.get(position);
-            ((ObservationViewHolder) holder).tvItemValue.setText(item.getSpecies_guess());
-            ((ObservationViewHolder) holder).tvItemCountry.setText(item.getPlace_guess());
-            ((ObservationViewHolder) holder).rlItemLegend
-                    .setBackgroundColor(context.getResources().getColor(R.color.text_blue_grey_darker));
-
-            if (item.getPhotos().size() > 0) {
-                String thumbUrl;
-                if (item.getPhotos().get(0).getMedium_url() != null ) {
-                    thumbUrl = item.getPhotos().get(0).getMedium_url();
-                } else {
-                    thumbUrl = item.getPhotos().get(0).getLarge_url();
-                }
-
-                Glide.with(context).load(thumbUrl)
-                        .asBitmap()
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_yok_loading)
-                        .into(new BitmapImageViewTarget(((ObservationViewHolder) holder).ivItemDrawable) {
-                            @Override
-                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                                super.onResourceReady(bitmap, anim);
-                                Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(Palette palette) {
-                                        // Here's your generated palette
-
-                                        ((ObservationViewHolder) holder).rlItemLegend.setBackgroundColor(
-                                                palette.getLightVibrantColor(R.color.text_blue_grey_darker));
-
-                                        ((ObservationViewHolder) holder).rlItemLegend.setVisibility(View.VISIBLE);
-                                    }
-                                });
-                            }
-                        });
-
-                setAnimation(((ObservationViewHolder) holder).itemContainer, position);
-            } else {
-                ((ObservationViewHolder) holder).ivItemDrawable.setVisibility(View.GONE);
-            }
+            bindObservationViewHolder((ObservationViewHolder)holder, item, position);
         }
+    }
+
+    /**
+     * Binds the viewholder for GBIF observations
+     * @param holder holder to manipulate (casted)
+     * @param item occurrence item
+     * @param position position in the view
+     */
+    private void bindObservationViewHolder(final ObservationViewHolder holder, iNatObservation item, int position) {
+
+        holder.tvItemValue.setText(item.getSpecies_guess());
+        holder.tvItemCountry.setText(item.getPlace_guess());
+        holder.rlItemLegend
+                .setBackgroundColor(context.getResources().getColor(R.color.text_blue_grey_darker));
+
+        if (item.getPhotos().size() > 0) {
+            String thumbUrl;
+            if (item.getPhotos().get(0).getMedium_url() != null ) {
+                thumbUrl = item.getPhotos().get(0).getMedium_url();
+            } else {
+                thumbUrl = item.getPhotos().get(0).getLarge_url();
+            }
+
+            Glide.with(context).load(thumbUrl)
+                    .asBitmap()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_yok_loading)
+                    .into(new BitmapImageViewTarget(((ObservationViewHolder) holder).ivItemDrawable) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            super.onResourceReady(bitmap, anim);
+                            Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    // Here's your generated palette
+
+                                    holder.rlItemLegend.setBackgroundColor(
+                                            palette.getLightVibrantColor(R.color.text_blue_grey_darker));
+
+                                    holder.rlItemLegend.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    });
+
+            setAnimation(holder.itemContainer, position);
+        } else {
+            holder.ivItemDrawable.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Binds the viewholder for iNatObservation
+     * @param holder holder to manipulate (casted)
+     * @param item observation item
+     * @param position position in the view
+     */
+    private void bindOccurrenceHolder(final OccurrenceViewHolder holder, GBIFOccurrence item, int position) {
+        String location = "";
+        if (item.getVerbatimLocality() != null) {
+            location += item.getVerbatimLocality();
+        }
+
+        String coordinates = "";
+        if (item.getDecimalLatitude() != null &&
+                item.getDecimalLongitude() != null) {
+            coordinates += item.getDecimalLatitude() + ", " + item.getDecimalLongitude();
+        }
+
+        holder.tvItemValue.setText(item.getScientificName());
+        holder.tvItemCountry.setText(location + item.getCountry() + ", " + item.getYear());
+        holder.tvItemSpecies.setText(item.getSpecies());
+        holder.tvItemCoordinates.setText(coordinates);
+        holder.rlItemLegend
+                .setBackgroundColor(context.getResources().getColor(R.color.text_blue_grey_darker));
+
+        if (item.getMedia() != null &&
+                item.getMedia().get(0).getIdentifier() != null) {
+
+            Glide.with(context).load(item.getMedia().get(0).getIdentifier())
+                    .asBitmap()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_yok_loading)
+                    .into(new BitmapImageViewTarget(holder.ivItemDrawable) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            super.onResourceReady(bitmap, anim);
+                            Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    // Here's your generated palette
+                                    holder.rlItemLegend.setBackgroundColor(
+                                            palette.getVibrantColor(R.color.text_blue_grey_darker));
+
+                                    holder.rlItemLegend.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    });
+        }
+        setAnimation(holder.itemContainer, position);
     }
 
     @Override

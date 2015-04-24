@@ -13,7 +13,7 @@ import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.adapters.SpeciesDescriptionAdapter;
+import com.bioviz.ricardo.bioviz.adapters.descriptions.SpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFSpeciesDescriptionLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesDescription;

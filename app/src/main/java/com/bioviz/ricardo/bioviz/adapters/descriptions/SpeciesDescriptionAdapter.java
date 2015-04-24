@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.adapters;
+package com.bioviz.ricardo.bioviz.adapters.descriptions;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,33 +13,34 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesDescription;
 import com.bioviz.ricardo.bioviz.utils.Values;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-/**
- * Created by ricardo on 17-03-2015.
- */
-public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
+
+public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
     private static Context context;
-    private ArrayList<Object> items;
-    private iNatObservation observationItem;
+    private ArrayList<GBIFSpeciesDescription> items;
+    private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
     private int textSize;
 
 
-    public iNatSpeciesDescriptionAdapter(ArrayList<Object> srcItems,
-                                         iNatObservation observation,
-                                         OnItemClickListener clickListener,
-                                         Context context) {
+    public SpeciesDescriptionAdapter(ArrayList<GBIFSpeciesDescription> srcItems,
+                                     GBIFOccurrence occurrence,
+                                     OnItemClickListener clickListener,
+                                     Context context) {
 
         this.context = context;
-        this.observationItem = observation;
+        this.occurrenceItem = occurrence;
         this.items = srcItems;
         this.textSize = 14;
         listener = clickListener;
@@ -49,7 +50,7 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v;
-        if (viewType == Values.INAT_ITEM_TYPE_HEADER) {
+        if (viewType == Values.ITEM_TYPE_HEADER) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_occurence_list, parent, false);
 
@@ -57,20 +58,20 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         }
 
         //Species details
-        if (viewType == Values.INAT_ITEM_TYPE_EXTRAS) {
+        if (viewType == Values.ITEM_TYPE_EXTRAS) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_species_details, parent, false);
 
             return new SpeciesExtrasViewHolder(v);
         }
 
-        if (viewType == Values.INAT_ITEM_TYPE_TAXON_NAME) {
+        if (viewType == Values.ITEM_TYPE_DESCRIPTION) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.occurence_description_item, parent, false);
             return new DescriptionViewHolder(v);
         }
 
-        if (viewType == Values.INAT_ITEM_TYPE_TAXON_PHOTO) {
+        if (viewType == Values.ITEM_TYPE_MEDIA) {
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.occurence_description_item, parent, false);
             return new DescriptionViewHolder(v);
@@ -84,7 +85,6 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
-        /*
         final GBIFSpeciesDescription item = items.get(position);
         int viewType = getItemViewType(position);
 
@@ -103,6 +103,7 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
                             .placeholder(R.drawable.ic_yok_loading)
                             .into(((OccurrenceViewHolder) holder).ivItemDrawable);
                 }
+
                 break;
 
             case Values.ITEM_TYPE_EXTRAS:
@@ -116,13 +117,14 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
                 break;
 
             case Values.ITEM_TYPE_DESCRIPTION:
-                String itemType = item.getType();
-                if (!item.getLanguage().equals("")) {
-                    itemType += " (" + item.getLanguage() + ")";
+                GBIFSpeciesDescription descItem = (GBIFSpeciesDescription) item;
+                String itemType = descItem.getType();
+                if (!descItem.getLanguage().equals("")) {
+                    itemType += " (" + descItem.getLanguage() + ")";
                 }
 
                 //Deal with foreign characters
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(descItem.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
                 ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
                 ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
 
@@ -160,10 +162,12 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
                     }
                 });
                 break;
+            case Values.ITEM_TYPE_MEDIA:
+                //TODO: handle media type
             case Values.ITEM_TYPE_END:
 
                 break;
-        }*/
+        }
     }
 
     @Override
@@ -229,9 +233,10 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
             default:
                 if (position == items.size()-1) {
                     return Values.ITEM_TYPE_END;
-                } else {
+                } else if (items.get(position) instanceof GBIFSpeciesDescription) {
                     return Values.ITEM_TYPE_DESCRIPTION;
                 }
+                return Values.ITEM_TYPE_MEDIA;
         }
     }
 

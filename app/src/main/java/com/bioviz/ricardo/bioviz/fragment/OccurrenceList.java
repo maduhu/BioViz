@@ -34,7 +34,7 @@ import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.GBIFOccurrenceView;
 import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
-import com.bioviz.ricardo.bioviz.adapters.OccurrenceListAdapter;
+import com.bioviz.ricardo.bioviz.adapters.QueryResultListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.OccurrenceLookupResponse;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
@@ -50,6 +50,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private OccurrenceListAdapter mAdapter;
+    private QueryResultListAdapter mAdapter;
     private ArrayList<Object> items;
 
     private Map<String, String> gbifQuery;
@@ -122,7 +123,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         items = new ArrayList<>();
-        mAdapter = new OccurrenceListAdapter(items, this, getActivity());
+        mAdapter = new QueryResultListAdapter(items, this, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         swipeRefreshLayout.setVisibility(View.GONE);
@@ -437,8 +438,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
             Toast.makeText(getActivity(), latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
-            gbifQuery.put("decimalLatitude", ("" + latitude).substring(0, 4));
-            gbifQuery.put("decimalLongitude", ("" + longitude).substring(0, 4));
+            DecimalFormat df = new DecimalFormat("#.#");
+            gbifQuery.put("decimalLatitude", df.format(latitude));
+            gbifQuery.put("decimalLongitude", df.format(longitude));
 
             if (gbifQuery.containsKey("mediaType")) {
                 gbifQuery.remove("mediaType");
@@ -449,6 +451,12 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
             }
 
             executeGBIFQuery(false);
+            double geoThreshold = 1d;
+            iNatQuery.put("swlat", df.format(latitude - geoThreshold));
+            iNatQuery.put("swlng", df.format(longitude - geoThreshold));
+            iNatQuery.put("nelat", df.format(latitude + geoThreshold));
+            iNatQuery.put("nelng", df.format(longitude + geoThreshold));
+            executeiNATQuery();
             //TODO execute iNat query with geo bound box
 
         } else {
@@ -482,7 +490,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
         //there is hope!
         if (mAdapter == null) {
-            mAdapter = new OccurrenceListAdapter(items, OccurrenceList.this, getActivity());
+            mAdapter = new QueryResultListAdapter(items, OccurrenceList.this, getActivity());
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -491,7 +499,6 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         mEmptyView.setVisibility(View.GONE);
         llQueryButtons.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-
     }
 
     @Override
