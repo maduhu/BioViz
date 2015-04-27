@@ -6,5 +6,13 @@ import java.util.List;
  * Created by ricardo on 17-03-2015.
  */
 public class iNatSpeciesLookupResponse {
-    public List<iNatSpecies> results;
+    private  List<iNatSpecies> results;
+
+    public List<iNatSpecies> getResults() {
+        return results;
+    }
+
+    public void setResults(List<iNatSpecies> results) {
+        this.results = results;
+    }
 }

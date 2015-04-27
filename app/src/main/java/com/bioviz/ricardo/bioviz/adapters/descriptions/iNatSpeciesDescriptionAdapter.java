@@ -27,13 +27,13 @@ import java.util.ArrayList;
 public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
     private static Context context;
-    private ArrayList<Object> items;
+    private ArrayList<String> items;
     private iNatObservation observationItem;
     private static OnItemClickListener listener;
     private int textSize;
 
 
-    public iNatSpeciesDescriptionAdapter(ArrayList<Object> srcItems,
+    public iNatSpeciesDescriptionAdapter(ArrayList<String> srcItems,
                                          iNatObservation observation,
                                          OnItemClickListener clickListener,
                                          Context context) {

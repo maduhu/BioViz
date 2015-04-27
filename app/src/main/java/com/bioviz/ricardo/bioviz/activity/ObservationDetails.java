@@ -1,10 +1,16 @@
 package com.bioviz.ricardo.bioviz.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,31 +25,83 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
+import com.bioviz.ricardo.bioviz.fragment.iNatDescriptionFragment;
+import com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpeciesLookupResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
-public class ObservationDetails  extends Activity implements Response.Listener<JSONObject>, Response.ErrorListener, OnItemClickListener {
+public class ObservationDetails  extends Activity implements ActionBar.TabListener, Response.ErrorListener, OnItemClickListener, Response.Listener<JSONArray> {
+
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
+     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private iNatDescriptionFragment descriptionFragment;
+    private iNatMediaFragment mediaFragment;
 
     private iNatObservation observationItem;
-    private ArrayList<Object> items;
-    private iNatSpeciesDescriptionAdapter mAdapter;
+
+    /**
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
+     */
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_occurrence_details);
+        setContentView(R.layout.activity_gbifoccurrence_view);
+
+
+        // Set up the action bar.
+        final ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
+
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setTabListener(this));
+        }
+
 
         String itemString;
 
@@ -60,34 +118,22 @@ public class ObservationDetails  extends Activity implements Response.Listener<J
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        descriptionFragment = iNatDescriptionFragment.newInstance(observationItem);
+        mediaFragment = iNatMediaFragment.newInstance(observationItem);
+
+        /**
+         * Deploy network request
+         */
         //http://www.inaturalist.org/taxa/search.json?q=merriam kangaroo rat
-
-        final RecyclerView descriptionList = (RecyclerView) findViewById(R.id.list_descriptions);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-
-        items = new ArrayList<>();
-        mAdapter = new iNatSpeciesDescriptionAdapter(items, observationItem, this, this);
-        descriptionList.setAdapter(mAdapter);
-        descriptionList.setLayoutManager(layoutManager);
-
-        if (getActionBar() != null) {
-            getActionBar().setTitle(observationItem.getSpecies_guess());
-            getActionBar().setSubtitle("Species overview");
-        }
-
         String request = Values.iNATBaseAddr + "taxa/search.json?q=" + observationItem.getSpecies_guess();
 
         //lookup species with speciesKey
         Log.e("REQUEST", request);
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
-                request, null,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(request,
                 this, this);
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq, "inat_species_description_lookup");
+        AppController.getInstance().addToRequestQueue(jsonArrayRequest, "inat_species_description_lookup");
     }
 
 
@@ -100,65 +146,15 @@ public class ObservationDetails  extends Activity implements Response.Listener<J
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-       /* int id = item.getItemId();
-
-        if (id ==  android.R.id.home) {
-            AppController.getInstance().cancelPendingRequests("species_description_lookup");
-            finish();
-            return true;
-        } else if (id == R.id.action_share_occurrence) {
-
-            String body = occurrenceItem.getScientificName() + "\n\n";
-
-            for (GBIFSpeciesDescription description : items) {
-                body += "\n"
-                        + description.getType() + "\n"
-                        + description.getDescription();
-            }
-
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, body);
-            sendIntent.setType("text/plain");
-            startActivity(sendIntent);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onResponse(JSONObject jsonObject) {
+    public void onResponse(JSONArray jsonArray) {
+        iNatSpeciesLookupResponse response = new Gson().fromJson(jsonArray.toString(), iNatSpeciesLookupResponse.class);
 
-        iNatSpeciesLookupResponse response = new Gson().fromJson(jsonObject.toString(), iNatSpeciesLookupResponse.class);
-       /*
-        ArrayList<GBIFSpeciesDescription> fetchedDescriptions = response.getResults();
-        if (response.getResults() == null) {
-            Toast.makeText(this, "No descriptions available for this species", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        boolean[] settings = AppController.getStates();
-
-        for (GBIFSpeciesDescription description : fetchedDescriptions) {
-            if (description.getDescription() != null &&
-                    !description.getDescription().equals("")) {
-
-                if (settings[2]) {
-                    if (description.getLanguage().equals("eng")) {
-                        items.add(description);
-                    }
-                } else {
-                    items.add(description);
-                }
-
-            }
-        }
-
-        items.add(new GBIFSpeciesDescription());
-        mAdapter.notifyDataSetChanged();
-        */
+        descriptionFragment.onResponse(jsonArray);
+        //TODO: mediaFragment.onResponse(jsonArray);
     }
 
     @Override
@@ -200,11 +196,64 @@ public class ObservationDetails  extends Activity implements Response.Listener<J
         llDetails.removeAllViews();
         llDetails.addView(v, params);
     }
-/*
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+    /**
+     * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            if (position == 0) {
+                return descriptionFragment;
+            } else if (position == 1) {
+                return mediaFragment;
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Observation descriptions";
+                case 1:
+                    return "Media";
+            }
+            return null;
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("item", new Gson().toJson(occurrenceItem));
-    }*/
+        outState.putString("item", new Gson().toJson(observationItem));
+    }
 }

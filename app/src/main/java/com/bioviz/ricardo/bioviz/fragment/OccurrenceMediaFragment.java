@@ -13,9 +13,9 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.media.SpeciesMediaAdapter;
+import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFMediaLookupResponse;
-import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

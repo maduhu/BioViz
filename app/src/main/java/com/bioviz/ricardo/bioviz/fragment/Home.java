@@ -2,38 +2,49 @@ package com.bioviz.ricardo.bioviz.fragment;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.TextSwitcher;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.activity.MainActivity;
+import com.bioviz.ricardo.bioviz.model.Trivia.Clue;
+import com.bioviz.ricardo.bioviz.model.Trivia.TriviaResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * Initial screen
  */
 public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnClickListener {
 
-    private TextSwitcher switcher;
+    private TextView switcher;
+    private TextView triviaSwitcher;
     private int mIndex = 0;
-    private Timer mTimer;
+    private int triviaIndex = 0;
     private String[] homeMessages;
     private String[] homeDescriptions;
+
+    private ArrayList<Clue> clues;
+
+    private JsonObjectRequest getRequest;
 
     /**
      * Use this factory method to create a new instance of
@@ -63,52 +74,105 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        switcher = (TextSwitcher) rootView.findViewById(R.id.home_switcher);
-        switcher.setFactory(this);
+        switcher = (TextView) rootView.findViewById(R.id.home_switcher);
+        triviaSwitcher = (TextView) rootView.findViewById(R.id.trivia_switcher);
 
-        Animation in = AnimationUtils.loadAnimation(getActivity(),
-                android.R.anim.fade_in);
-        Animation out = AnimationUtils.loadAnimation(getActivity(),
-                android.R.anim.fade_out);
-
-        switcher.setInAnimation(in);
-        switcher.setOutAnimation(out);
         switcher.setOnClickListener(this);
-
 
         homeMessages = getResources().getStringArray(R.array.home_messages);
         homeDescriptions = getResources().getStringArray(R.array.home_expanded_messages);
 
         switcher.setText(homeMessages[mIndex]);
 
-        mTimer =new Timer();
-        mTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                           dispatchNextMessage();
-                        }
-                    });
-                }
-            }
-        }, 10000, 10000);
-
         rootView.findViewById(R.id.switcher_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTimer != null) {
-                    mTimer.cancel();
-                }
                 dispatchNextMessage();
             }
         });
 
+        rootView.findViewById(R.id.trivia_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (clues == null || clues.isEmpty()) {
+                    AppController.getInstance().addToRequestQueue(getRequest, "trivia_request");
+                } else {
+                    dispatchNextClue();
+                }
+            }
+        });
+
+        triviaSwitcher.setText(getString(R.string.loading));
+        ((ImageView) rootView.findViewById(R.id.iv_trivia)).setImageDrawable(
+                getResources().getDrawable(R.drawable.ic_yok_loading)
+        );
+
+
+
+        getRequest = new JsonObjectRequest(Request.Method.GET,
+                "http://jservice.io/api/category?id=21", null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        if (!isAdded()) {
+                            return;
+                        }
+                        ArrayList<Clue> inClues = new Gson().fromJson(response.toString(), TriviaResponse.class).getClues();
+                        clues = new ArrayList<>();
+
+                        for (Clue c : inClues) {
+                            if (!c.getQuestion().equals("")) {
+                                clues.add(c);
+                            }
+                        }
+
+                        long seed = System.nanoTime();
+                        Collections.shuffle(clues, new Random(seed));
+
+                        triviaIndex = 0;
+                        rootView.findViewById(R.id.trivia_next).setEnabled(true);
+                        dispatchNextClue();
+
+                        ((ImageView) rootView.findViewById(R.id.iv_trivia)).setImageDrawable(
+                                getResources().getDrawable(R.drawable.ic_yok)
+                        );
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ((ImageView) rootView.findViewById(R.id.iv_trivia)).setImageDrawable(
+                                getResources().getDrawable(R.drawable.ic_yok_tired)
+                        );
+
+                        triviaSwitcher.setText(getString(R.string.trivia_error));
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        AppController.getInstance().addToRequestQueue(getRequest, "trivia_request");
+
+
         return rootView;
+    }
+
+    private void dispatchNextClue() {
+        triviaIndex++;
+
+        if (triviaIndex == clues.size() - 1) {
+            //get new ones
+            AppController.getInstance().addToRequestQueue(getRequest, "trivia_request");
+            return;
+        }
+
+        triviaSwitcher.setText(clues.get(triviaIndex).getQuestion() + "\n\n"
+                + "   - " + clues.get(triviaIndex).getAnswer());
     }
 
     @Override

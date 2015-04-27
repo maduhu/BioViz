@@ -29,6 +29,8 @@
     <string name="m4e">Behind the integrated platforms, there is a lot of effort to create extensive records, containing all possible details. Nevertheless, in some occasions researchers and biologists may not be able to further describe the species or add other details. This can be derived from several reasons, some of theme related to the curation of such records. As evolving platforms though, these inconveniences tend to disappear with time.</string>
 
     <string name="next">Next</string>
+    <string name="loading">Loading...</string>
+    <string name="trivia_error">I was unable to get this for you. Maybe there\'s a problem with your connection?</string>
 
     <string-array name="home_messages">
         <item>@string/m0</item>
@@ -44,5 +46,8 @@
         <item>@string/m3e</item>
         <item>@string/m4e</item>
     </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

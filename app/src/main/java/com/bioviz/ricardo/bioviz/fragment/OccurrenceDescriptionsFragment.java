@@ -1,7 +1,7 @@
 package com.bioviz.ricardo.bioviz.fragment;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +15,8 @@ import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.SpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFSpeciesDescriptionLookupResponse;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFSpeciesDescription;
+import com.bioviz.ricardo.bioviz.model.GBIF.Responses.GBIFSpeciesDescriptionLookupResponse;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
