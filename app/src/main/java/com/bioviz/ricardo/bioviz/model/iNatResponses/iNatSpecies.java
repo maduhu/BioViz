@@ -68,7 +68,7 @@ public class iNatSpecies {
         this.taxon_names = taxon_names;
     }
 
-    private class TaxonNames {
+    public class TaxonNames {
         public String name;
         public String lexicon;
     }

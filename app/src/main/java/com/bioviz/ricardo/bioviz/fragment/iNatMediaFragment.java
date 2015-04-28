@@ -6,9 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +36,24 @@ public class iNatMediaFragment extends Fragment {
 
 
     public static iNatMediaFragment newInstance(iNatObservation observationItem) {
-        return null;
+        iNatMediaFragment fragment = new iNatMediaFragment();
+
+        Bundle args = new Bundle();
+        args.putString("item", new Gson().toJson(observationItem));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public void onResponse(JSONArray jsonArray) {
+
+        iNatSpecies response;
+        try {
+            response = new Gson().fromJson(jsonArray.get(0).toString(), iNatSpecies.class);
+        } catch (JSONException e) {
+            Toast.makeText(getActivity(), "Unable to load the resources", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        Toast.makeText(getActivity(), "GOT. " + response.getTaxon_photos().size(), Toast.LENGTH_SHORT).show();
     }
 }

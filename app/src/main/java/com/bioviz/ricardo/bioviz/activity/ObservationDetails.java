@@ -11,8 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,30 +20,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.fragment.iNatDescriptionFragment;
 import com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpeciesLookupResponse;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import org.json.JSONException;
 
 
 public class ObservationDetails  extends Activity implements ActionBar.TabListener, Response.ErrorListener, OnItemClickListener, Response.Listener<JSONArray> {
@@ -136,7 +125,6 @@ public class ObservationDetails  extends Activity implements ActionBar.TabListen
         AppController.getInstance().addToRequestQueue(jsonArrayRequest, "inat_species_description_lookup");
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -151,10 +139,8 @@ public class ObservationDetails  extends Activity implements ActionBar.TabListen
 
     @Override
     public void onResponse(JSONArray jsonArray) {
-        iNatSpeciesLookupResponse response = new Gson().fromJson(jsonArray.toString(), iNatSpeciesLookupResponse.class);
-
         descriptionFragment.onResponse(jsonArray);
-        //TODO: mediaFragment.onResponse(jsonArray);
+        mediaFragment.onResponse(jsonArray);
     }
 
     @Override

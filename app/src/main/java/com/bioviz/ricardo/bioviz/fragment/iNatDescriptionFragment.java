@@ -8,15 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
+import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -84,12 +88,37 @@ public class iNatDescriptionFragment extends Fragment implements OnItemClickList
     }
 
     @Override
-    public void onResponse(JSONArray response) {
+    public void onResponse(JSONArray jsonArray) {
+        if (jsonArray == null || jsonArray.equals("")) {
+            return;
+        }
+
+        iNatSpecies response;
+        try {
+            response = new Gson().fromJson(jsonArray.get(0).toString(), iNatSpecies.class);
+        } catch (JSONException e) {
+            Toast.makeText(getActivity(), "Unable to load the resources", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (items == null)
             items = new ArrayList<>();
 
-        //TODO: not like this
-        items.add(response.toString());
+        items.add(
+                response.getName()
+                + " (\""
+                + response.getUnique_name()
+                + "\")");
+
+        items.add(response.getWikipedia_title() + "\n\n\n" + response.getWikipedia_summary());
+
+        String taxtonNames = "";
+        for (iNatSpecies.TaxonNames tn : response.getTaxon_names()) {
+            taxtonNames += tn.lexicon + " - " + tn.name;
+        }
+
+        items.add(taxtonNames);
+
         mAdapter.notifyDataSetChanged();
     }
 }

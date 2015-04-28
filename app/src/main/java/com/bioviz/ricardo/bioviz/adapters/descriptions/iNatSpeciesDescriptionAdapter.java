@@ -18,6 +18,7 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,6 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
     private ArrayList<String> items;
     private iNatObservation observationItem;
     private static OnItemClickListener listener;
-    private int textSize;
-
 
     public iNatSpeciesDescriptionAdapter(ArrayList<String> srcItems,
                                          iNatObservation observation,
@@ -41,7 +40,6 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         this.context = context;
         this.observationItem = observation;
         this.items = srcItems;
-        this.textSize = 14;
         listener = clickListener;
     }
 
@@ -64,18 +62,6 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
             return new SpeciesExtrasViewHolder(v);
         }
 
-        if (viewType == Values.INAT_ITEM_TYPE_TAXON_NAME) {
-            v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.occurence_description_item, parent, false);
-            return new DescriptionViewHolder(v);
-        }
-
-        if (viewType == Values.INAT_ITEM_TYPE_TAXON_PHOTO) {
-            v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.occurence_description_item, parent, false);
-            return new DescriptionViewHolder(v);
-        }
-
         v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.view_end, parent, false);
 
@@ -84,8 +70,31 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
+
+        int viewType = getItemViewType(position);
+
+        switch (viewType) {
+            case Values.INAT_ITEM_TYPE_HEADER:
+                ((OccurrenceViewHolder) holder).tvItemValue.setText(observationItem.getSpecies_guess());
+                ((OccurrenceViewHolder) holder).tvItemCountry.setText(observationItem.getPlace_guess());
+                ((OccurrenceViewHolder) holder).tvItemSpecies.setText("ITEM SPECIES HERE");
+
+                if (!observationItem.getUri().equals("")) {
+
+                    Glide.with(context).load(observationItem.getUri())
+                            .crossFade()
+                            .centerCrop()
+                            .placeholder(R.drawable.ic_yok_loading)
+                            .into(((OccurrenceViewHolder) holder).ivItemDrawable);
+                }
+                break;
+
+            case Values.INAT_ITEM_TYPE_EXTRAS:
+
+            default:
+                break;
+        }
         /*
-        final GBIFSpeciesDescription item = items.get(position);
         int viewType = getItemViewType(position);
 
         switch (viewType) {
@@ -166,58 +175,6 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         }*/
     }
 
-    @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
-        super.onViewRecycled(holder);
-        if (holder.getItemViewType() != 0) {
-            textSize = 14;
-            if (holder instanceof  DescriptionViewHolder) {
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-            }
-        }
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return items == null ? 0 : items.size();
-    }
-
-    static class DescriptionViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
-
-        private TextView tvDescriptionValue;
-        private TextView tvDescriptionLanguage;
-        private TextView tvDescriptionType;
-        private ImageButton btZoomIn;
-        private ImageButton btZoomOut;
-        private ImageButton btCopy;
-
-
-        public DescriptionViewHolder(View rowView) {
-            super(rowView);
-
-            tvDescriptionValue = (TextView) rowView.findViewById(R.id.tvDescriptionValue);
-            tvDescriptionType = (TextView) rowView.findViewById(R.id.tvDescriptionType);
-            tvDescriptionLanguage = (TextView) rowView.findViewById(R.id.tvDescriptionLanguage);
-            btZoomIn = (ImageButton) rowView.findViewById(R.id.description_item_zoom_in);
-            btZoomOut = (ImageButton) rowView.findViewById(R.id.description_item_zoom_out);
-            btCopy = (ImageButton) rowView.findViewById(R.id.description_item_copy);
-
-            rowView.setOnClickListener(this);
-            rowView.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            listener.onItemClick(view, getPosition());
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
-        }
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -235,6 +192,14 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return items == null ? 0 : items.size();
+    }
+
+    /**
+     * Species identification and basic picture
+     */
     static class OccurrenceViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener{
 
@@ -267,60 +232,18 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         }
     }
 
+    /**
+     * ViewHolder for basic string resources (must be formatted when passed to the adapter)
+     */
     static class SpeciesExtrasViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener{
 
-        private TextView tvExtrasKingdom;
-        private TextView tvExtrasPhylum;
-        private TextView tvExtrasClass;
-        private TextView tvExtrasOrder;
-        private TextView tvExtrasFamily;
-        private TextView tvExtrasGenus;
-        private TextView tvExtrasSpecies;
         private TextView tvExtrasHeader;
 
         public SpeciesExtrasViewHolder(View rowView) {
             super(rowView);
 
-            tvExtrasKingdom = (TextView) rowView.findViewById(R.id.tvExtrasKingdom);
-            tvExtrasPhylum = (TextView) rowView.findViewById(R.id.tvExtrasPhylum);
-            tvExtrasClass = (TextView) rowView.findViewById(R.id.tvExtrasClass);
-            tvExtrasOrder = (TextView) rowView.findViewById(R.id.tvExtrasOrder);
-            tvExtrasFamily = (TextView) rowView.findViewById(R.id.tvExtrasFamily);
-            tvExtrasGenus = (TextView) rowView.findViewById(R.id.tvExtrasGenus);
-            tvExtrasSpecies = (TextView) rowView.findViewById(R.id.tvExtrasSpecies);
             tvExtrasHeader = (TextView) rowView.findViewById(R.id.tvExtrasHeader);
-
-            tvExtrasHeader.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.setTitle("Biological Classification");
-                    alert.setIcon(R.drawable.ic_search);
-
-                    WebView wv = new WebView(context);
-                    wv.loadUrl("http://en.wikipedia.org/wiki/Biological_classification");
-                    wv.setWebViewClient(new WebViewClient() {
-                        @Override
-                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                            view.loadUrl(url);
-                            return true;
-                        }
-                    });
-
-                    alert.setView(wv);
-                    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alert.show();
-                }
-            });
-
-            //rowView.setOnClickListener(this);
-            //rowView.setOnLongClickListener(this);
         }
 
         @Override

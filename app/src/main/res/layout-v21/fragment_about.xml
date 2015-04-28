@@ -113,48 +113,181 @@
         </android.support.v7.widget.CardView>
 
 
-        <TextView
-            android:padding="20dp"
-            style="@android:style/TextAppearance.Holo.Large"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="30sp"
-            android:text="My informers..."
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_gravity="center"
+            card_view:cardCornerRadius="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
             >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/card_view_gbif"
-                android:drawableTop="@drawable/ic_gbif_logo"
-                android:contentDescription="@string/app_name"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:drawablePadding="8dp"
-                android:clickable="true"
-                style="@android:style/TextAppearance.DeviceDefault.Medium"
-                android:text="Global Biodiversity Information Facility"/>
+                <TextView
+                    android:padding="10dp"
+                    style="@android:style/TextAppearance.Holo.Large"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="30sp"
+                    android:text="My informers..."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/card_view_iNat"
-                android:drawableTop="@drawable/ic_inat_logo"
-                android:contentDescription="@string/app_name"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:drawablePadding="8dp"
-                android:clickable="true"
-                style="@android:style/TextAppearance.DeviceDefault.Medium"
-                android:text="iNaturalist" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    >
 
+                    <TextView
+                        android:id="@+id/card_view_gbif"
+                        android:drawableTop="@drawable/ic_gbif_logo"
+                        android:contentDescription="@string/app_name"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:drawablePadding="8dp"
+                        android:clickable="true"
+                        style="@android:style/TextAppearance.DeviceDefault.Medium"
+                        android:text="Global Biodiversity Information Facility"/>
+
+                    <TextView
+                        android:id="@+id/card_view_iNat"
+                        android:drawableTop="@drawable/ic_inat_logo"
+                        android:contentDescription="@string/app_name"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:drawablePadding="8dp"
+                        android:clickable="true"
+                        style="@android:style/TextAppearance.DeviceDefault.Medium"
+                        android:text="iNaturalist, a community for naturalists" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            card_view:cardCornerRadius="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="10dp"
+                    style="@android:style/TextAppearance.Holo.Large"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="30sp"
+                    android:text="One thing or two about this app..."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="true"
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:autoLink="web"
+                    android:text="I developed this app to make it easy to discover different aspects of our biodiversity. The platforms connected to this app serve as data sources and thus, all the extracted data is of their full responsibility. It is possible that some of the records shown have missing or incomplete fields, and some of the information may seem repeated (even though it belongs to different records). From my standpoint, I will pursue to handle such cases and make this app better looking, for which and appreciate your feedback. Please also bear in mind that I am currently on a full-time job, which may leave me with little to no time to dedicate to further developments, but I'll keep up with it, I promise ;)" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            card_view:cardCornerRadius="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="10dp"
+                    style="@android:style/TextAppearance.Holo.Large"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="30sp"
+                    android:text="The libraries I use..."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="true"
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:autoLink="web"
+                    android:text="Glide - An image loading and caching library for Android focused on smooth scrolling. I use it in the app to load media resources form different species or observations. https://github.com/bumptech/glide" />
+
+                <TextView
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="true"
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:autoLink="web"
+                    android:text="Gson - for serializing and de-seralizing json objects that come and go from and to the web. Check it here: https://code.google.com/p/google-gson/" />
+
+                <TextView
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="true"
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:autoLink="web"
+                    android:text="Volley - an extensive library to quicken the development of connected apps, making it easy to launch and manage web requests. https://developer.android.com/training/volley/index.html" />
+
+                <TextView
+                    android:contentDescription="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:gravity="start"
+                    android:clickable="true"
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:autoLink="web"
+                    android:text="Android Palette - a tool to easily generate a color code based on a bitmap resource. https://developer.android.com/reference/android/support/v7/graphics/Palette.html" />
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
+
 </ScrollView>
