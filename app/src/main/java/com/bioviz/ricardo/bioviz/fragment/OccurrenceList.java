@@ -207,6 +207,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         btRandomQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swipeRefreshLayout.setRefreshing(true);
                 executeGBIFQuery(true);
                 executeiNATQuery();
             }
@@ -227,7 +228,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
 
         if (items.get(position) instanceof GBIFOccurrence) {
             //myIntent = new Intent(getActivity(), OccurrenceDetails.class);
-            if (((GBIFOccurrence) items.get(position)).getSpeciesKey().equals("null")) {
+            if (((GBIFOccurrence) items.get(position)).getSpeciesKey() == null) {
                 Toast.makeText(
                         getActivity(),
                         "Sorry, but this item cannon be displayed",
