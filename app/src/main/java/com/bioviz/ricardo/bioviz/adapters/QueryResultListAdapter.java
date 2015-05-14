@@ -104,7 +104,7 @@ public class QueryResultListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     .asBitmap()
                     .centerCrop()
                     .placeholder(R.drawable.ic_yok_loading)
-                    .into(new BitmapImageViewTarget(((ObservationViewHolder) holder).ivItemDrawable) {
+                    .into(new BitmapImageViewTarget(holder.ivItemDrawable) {
                         @Override
                         public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
                             super.onResourceReady(bitmap, anim);

@@ -74,7 +74,7 @@ public class iNatSpecies {
     }
 
     private class TaxonPhotos {
-        public List<Photo> photo;
+        public Photo photo;
     }
 
     private class Photo {
