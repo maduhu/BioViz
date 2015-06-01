@@ -12,11 +12,10 @@ import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
-import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatSpecies;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

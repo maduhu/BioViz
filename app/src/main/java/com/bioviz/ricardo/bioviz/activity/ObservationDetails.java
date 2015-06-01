@@ -28,13 +28,11 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.fragment.iNatDescriptionFragment;
 import com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatSpecies;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 
 public class ObservationDetails  extends Activity implements ActionBar.TabListener, Response.ErrorListener, OnItemClickListener, Response.Listener<JSONArray> {

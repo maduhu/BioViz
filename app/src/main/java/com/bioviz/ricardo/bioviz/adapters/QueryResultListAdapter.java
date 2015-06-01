@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;

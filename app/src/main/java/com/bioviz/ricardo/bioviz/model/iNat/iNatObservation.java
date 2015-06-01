@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model.iNatResponses;
+package com.bioviz.ricardo.bioviz.model.iNat;
 
 
 import java.util.ArrayList;

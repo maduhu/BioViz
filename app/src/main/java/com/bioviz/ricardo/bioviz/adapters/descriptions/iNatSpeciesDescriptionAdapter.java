@@ -1,22 +1,16 @@
 package com.bioviz.ricardo.bioviz.adapters.descriptions;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
 

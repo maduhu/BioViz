@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.model.iNatResponses;
+package com.bioviz.ricardo.bioviz.model.iNat;
 
 import java.util.List;
 
@@ -73,15 +73,5 @@ public class iNatSpecies {
         public String lexicon;
     }
 
-    private class TaxonPhotos {
-        public Photo photo;
-    }
 
-    private class Photo {
-        public String square_url;
-        public String small_url;
-        public String large_url;
-        public String native_username;
-        public String attribution;
-    }
 }

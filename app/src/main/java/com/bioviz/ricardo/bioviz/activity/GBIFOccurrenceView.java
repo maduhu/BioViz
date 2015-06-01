@@ -93,6 +93,10 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
 
         occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
 
+        if (getActionBar() != null) {
+            getActionBar().setTitle(occurrenceItem.getScientificName());
+        }
+
         //Instantiate both fragments
         descriptionsFragment = OccurrenceDescriptionsFragment.newInstance(occurrenceItem);
         mediaFragment = OccurrenceMediaFragment.newInstance(occurrenceItem);

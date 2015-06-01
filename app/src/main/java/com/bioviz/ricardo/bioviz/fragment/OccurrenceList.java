@@ -37,7 +37,7 @@ import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
 import com.bioviz.ricardo.bioviz.adapters.QueryResultListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.OccurrenceLookupResponse;
-import com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;

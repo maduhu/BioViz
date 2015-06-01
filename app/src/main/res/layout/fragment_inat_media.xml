@@ -1,10 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/ll_occurrence_details"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment">
+    tools:context="com.bioviz.ricardo.bioviz.activity.OccurrenceDetails">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_media"
+        android:divider="@android:color/transparent"
+        android:scrollbars="none"
+        android:layout_marginEnd="2dp"
+        android:dividerHeight="10dp"
+        android:layout_marginStart="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:minHeight="30dp" />
 
-</FrameLayout>
+</LinearLayout>

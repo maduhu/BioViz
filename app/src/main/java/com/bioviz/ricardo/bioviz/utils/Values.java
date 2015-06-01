@@ -31,6 +31,6 @@ public class Values {
     public static int view_occurrence = 0;
     public static int view_observation = 1;
 
-    public static final Type ARRAY_INAT_OBSERVATIONS = new TypeToken<ArrayList<com.bioviz.ricardo.bioviz.model.iNatResponses.iNatObservation>>() {
+    public static final Type ARRAY_INAT_OBSERVATIONS = new TypeToken<ArrayList<com.bioviz.ricardo.bioviz.model.iNat.iNatObservation>>() {
     }.getType();
 }
