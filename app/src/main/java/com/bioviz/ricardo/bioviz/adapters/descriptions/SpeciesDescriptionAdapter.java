@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
-    private static Context context;
+    private static Context mContext;
     private ArrayList<GBIFSpeciesDescription> items;
     private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
@@ -39,7 +39,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                                      OnItemClickListener clickListener,
                                      Context context) {
 
-        this.context = context;
+        mContext = context;
         this.occurrenceItem = occurrence;
         this.items = srcItems;
         this.textSize = 14;
@@ -97,7 +97,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 if (occurrenceItem.getMedia() != null &&
                         occurrenceItem.getMedia().get(0).getIdentifier() != null) {
 
-                    Glide.with(context).load(occurrenceItem.getMedia().get(0).getIdentifier())
+                    Glide.with(mContext).load(occurrenceItem.getMedia().get(0).getIdentifier())
                             .crossFade()
                             .centerCrop()
                             .placeholder(R.drawable.ic_yok_loading)
@@ -119,14 +119,13 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 break;
 
             case Values.ITEM_TYPE_DESCRIPTION:
-                GBIFSpeciesDescription descItem = (GBIFSpeciesDescription) item;
-                String itemType = descItem.getType();
-                if (!descItem.getLanguage().equals("")) {
-                    itemType += " (" + descItem.getLanguage() + ")";
+                String itemType = item.getType();
+                if (!item.getLanguage().equals("")) {
+                    itemType += " (" + item.getLanguage() + ")";
                 }
 
                 //Deal with foreign characters
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(descItem.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
                 ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
                 ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
 
@@ -152,15 +151,15 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                     @Override
                     public void onClick(View v) {
                         if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                             clipboard.setText(text);
                         } else {
-                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                             android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
                             clipboard.setPrimaryClip(clip);
                         }
 
-                        Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Text copied to clipboard", Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
@@ -235,7 +234,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             default:
                 if (position == items.size()-1) {
                     return Values.ITEM_TYPE_END;
-                } else if (items.get(position) instanceof GBIFSpeciesDescription) {
+                } else if (items.get(position) != null) {
                     return Values.ITEM_TYPE_DESCRIPTION;
                 }
                 return Values.ITEM_TYPE_MEDIA;
@@ -301,11 +300,11 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
             tvExtrasHeader.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
                     alert.setTitle("Biological Classification");
                     alert.setIcon(R.drawable.ic_search);
 
-                    WebView wv = new WebView(context);
+                    WebView wv = new WebView(mContext);
                     wv.loadUrl("http://en.wikipedia.org/wiki/Biological_classification");
                     wv.setWebViewClient(new WebViewClient() {
                         @Override

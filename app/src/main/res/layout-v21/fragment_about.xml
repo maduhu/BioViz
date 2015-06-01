@@ -18,7 +18,7 @@
             android:padding="15dp"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
             android:textColor="@color/text_blue_grey_darker"
-            android:text="BioViz: finding biodiversity at home"
+            android:text="@string/bioviz_moto"
             />
         <TextView
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="15dp"
-            android:text="BioViz was developed with love and affection. We try to create easy to use tools for you to explore your world of biodiversity. All the information here available is directly extracted from the registered sources and no text is edited in the meantime. We hope you enjoy using this app and feel free to submit any features request that you wish to be implemented in the future."
+            android:text="@string/settings_header"
             />
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -55,7 +55,7 @@
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Some tweaks are also available..."
+                    android:text="@string/tweaks_available"
                     android:textColor="@color/text_blue_grey_darker"
                     android:layout_marginBottom="10dp"
                     />
@@ -67,7 +67,7 @@
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@android:color/darker_gray"
                     android:layout_gravity="center"
-                    android:text="Display only items with images. Although images allow to better visualize data, not all the records have images attached."
+                    android:text="@string/require_images"
                     android:background="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -80,7 +80,7 @@
                     android:textColor="@android:color/darker_gray"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="Only display english records. This will hide results that are written in other languages such as German or Portuguese."
+                    android:text="@string/require_english"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -104,7 +104,7 @@
                     android:layout_marginTop="10dp"
                     style="@android:style/Widget.Material.Button.Borderless.Colored"
                     android:textColor="@color/tab_red"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -135,7 +135,7 @@
                     style="@android:style/TextAppearance.Holo.Large"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="30sp"
-                    android:text="My informers..."
+                    android:text="@string/my_informers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -157,7 +157,7 @@
                         android:drawablePadding="8dp"
                         android:clickable="true"
                         style="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:text="Global Biodiversity Information Facility"/>
+                        android:text="@string/gbif"/>
 
                     <TextView
                         android:id="@+id/card_view_iNat"
@@ -170,7 +170,7 @@
                         android:drawablePadding="8dp"
                         android:clickable="true"
                         style="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:text="iNaturalist, a community for naturalists" />
+                        android:text="@string/inat" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -198,7 +198,7 @@
                     style="@android:style/TextAppearance.Holo.Large"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="30sp"
-                    android:text="One thing or two about this app..."
+                    android:text="@string/about_this_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -211,7 +211,7 @@
                     android:clickable="true"
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:autoLink="web"
-                    android:text="I developed this app to make it easy to discover different aspects of our biodiversity. The platforms connected to this app serve as data sources and thus, all the extracted data is of their full responsibility. It is possible that some of the records shown have missing or incomplete fields, and some of the information may seem repeated (even though it belongs to different records). From my standpoint, I will pursue to handle such cases and make this app better looking, for which and appreciate your feedback. Please also bear in mind that I am currently on a full-time job, which may leave me with little to no time to dedicate to further developments, but I'll keep up with it, I promise ;)" />
+                    android:text="@string/about" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -237,7 +237,7 @@
                     style="@android:style/TextAppearance.Holo.Large"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="30sp"
-                    android:text="The libraries I use..."
+                    android:text="@string/libraries"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -250,7 +250,7 @@
                     android:clickable="true"
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:autoLink="web"
-                    android:text="Glide - An image loading and caching library for Android focused on smooth scrolling. I use it in the app to load media resources form different species or observations. https://github.com/bumptech/glide" />
+                    android:text="@string/glide" />
 
                 <TextView
                     android:contentDescription="@string/app_name"
@@ -261,7 +261,7 @@
                     android:clickable="true"
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:autoLink="web"
-                    android:text="Gson - for serializing and de-seralizing json objects that come and go from and to the web. Check it here: https://code.google.com/p/google-gson/" />
+                    android:text="@string/gson" />
 
                 <TextView
                     android:contentDescription="@string/app_name"
@@ -272,7 +272,7 @@
                     android:clickable="true"
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:autoLink="web"
-                    android:text="Volley - an extensive library to quicken the development of connected apps, making it easy to launch and manage web requests. https://developer.android.com/training/volley/index.html" />
+                    android:text="@string/volley" />
 
                 <TextView
                     android:contentDescription="@string/app_name"
@@ -283,7 +283,7 @@
                     android:clickable="true"
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:autoLink="web"
-                    android:text="Android Palette - a tool to easily generate a color code based on a bitmap resource. https://developer.android.com/reference/android/support/v7/graphics/Palette.html" />
+                    android:text="@string/pallette" />
 
 
             </LinearLayout>

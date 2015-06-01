@@ -23,7 +23,7 @@
             android:textSize="30sp"
             android:gravity="center"
             android:textColor="@color/text_blue_grey"
-            android:text="I have failed you, master...."
+            android:text="@string/i_failed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:textSize="22sp"
             android:textColor="@color/text_blue_grey"
-            android:text="But my developer will handle this"
+            android:text="@string/developer_will_handle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:textSize="18sp"
             android:padding="10dp"
-            android:text="...meanwhile, tap here for some relief"
+            android:text="@string/tap_here_relief"
             android:textColor="@color/wallet_bright_foreground_disabled_holo_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

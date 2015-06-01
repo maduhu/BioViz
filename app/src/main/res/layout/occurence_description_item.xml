@@ -32,7 +32,7 @@
                 android:gravity="start"
                 android:textAppearance="@android:style/TextAppearance.Holo.WindowTitle"
                 android:textColor="@color/text_blue_grey_darker"
-                android:text="Type"
+                android:text="@string/type"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="6dp"
                 />
@@ -47,7 +47,7 @@
                 android:id="@+id/tvDescriptionValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/description"
                 />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="6dp"
-                android:text="Language"
+                android:text="@string/language"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,6 +68,7 @@
                 >
 
                 <ImageButton
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_copy"
                     android:id="@+id/description_item_copy"
                     style="@android:style/Widget.Holo.Button.Borderless"
@@ -76,6 +77,7 @@
                     />
 
                 <ImageButton
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/description_item_zoom_out"
                     android:src="@drawable/ic_minus"
                     style="@android:style/Widget.Holo.Button.Borderless"
@@ -84,6 +86,7 @@
                     />
 
                 <ImageButton
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/description_item_zoom_in"
                     android:src="@drawable/ic_plus"
                     style="@android:style/Widget.Holo.Button.Borderless"

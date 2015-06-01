@@ -39,7 +39,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
      * may be best to switch to a
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private OccurrenceDescriptionsFragment descriptionsFragment;
     private OccurrenceMediaFragment mediaFragment;
@@ -49,7 +49,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +203,6 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
                     return "Occurrence descriptions";

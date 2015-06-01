@@ -12,14 +12,14 @@
     <item
         android:icon="@drawable/ic_gps"
         android:id="@+id/action_near_me"
-        android:title="Around me"
+        android:title="@string/around_me"
         android:showAsAction="ifRoom"
         />
 
     <item
         android:icon="@drawable/ic_random"
         android:id="@+id/action_refresh"
-        android:title="Random"
+        android:title="@string/random"
         android:showAsAction="ifRoom"
         />
 </menu>

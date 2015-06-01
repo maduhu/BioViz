@@ -65,9 +65,11 @@ public class Home extends Fragment implements ViewSwitcher.ViewFactory, View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         if (getArguments() != null) {
 
         }
+        */
     }
 
     @Override

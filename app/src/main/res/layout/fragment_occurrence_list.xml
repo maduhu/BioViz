@@ -52,7 +52,7 @@
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Random occurences"
+            android:text="@string/radom_occurrences"
             android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
             android:drawableTop="@android:drawable/ic_menu_share"
             style="@android:style/Widget.Holo.Button.Borderless"

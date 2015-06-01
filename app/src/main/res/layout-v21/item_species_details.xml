@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:gravity="center"
-            android:text="Biological Classification"
+            android:text="@string/biological_classification"
             android:layout_marginBottom="10dp"
             />
         <LinearLayout
@@ -38,7 +38,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
-                android:text="Kingdom"
+                android:text="@string/kingdom"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
                 android:id="@+id/tvExtrasKingdom"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:layout_gravity="center_vertical"
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_weight=".5"
@@ -72,14 +72,14 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
-                android:text="Phylum"
+                android:text="@string/phylum"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tvExtrasPhylum"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
@@ -106,12 +106,12 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
-                android:text="Class"
+                android:text="@string/specimen_class"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:id="@+id/tvExtrasClass"
                 android:gravity="center"
@@ -141,12 +141,12 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
-                android:text="Order"
+                android:text="@string/order"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:id="@+id/tvExtrasOrder"
                 android:gravity="center"
@@ -174,14 +174,14 @@
 
             <TextView
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:text="Family"
+                android:text="@string/family"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:id="@+id/tvExtrasFamily"
                 android:gravity="center"
@@ -209,14 +209,14 @@
 
             <TextView
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:text="Genus"
+                android:text="@string/genus"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:id="@+id/tvExtrasGenus"
                 android:gravity="center"
@@ -244,14 +244,14 @@
 
             <TextView
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:text="Species"
+                android:text="@string/species"
                 android:layout_width="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".5"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="Philae"
+                android:text="@string/app_name"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:id="@+id/tvExtrasSpecies"
                 android:gravity="center"

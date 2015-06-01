@@ -16,6 +16,7 @@
         >
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_yok_loading"
             android:id="@+id/item_drawable"
             android:adjustViewBounds= "true"
@@ -61,6 +62,7 @@
                 />
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:id="@+id/ivRecordProvenance"
                 android:layout_below="@id/item_species"
                 android:layout_alignParentEnd="true"

@@ -25,11 +25,9 @@ import java.util.ArrayList;
  */
 public class SpeciesMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
-    private static Context context;
+    private static Context mContext;
     private ArrayList<GBIFMediaElement> items;
-    private GBIFOccurrence occurrenceItem;
     private static OnItemClickListener listener;
-    private int textSize;
 
 
     public SpeciesMediaAdapter(ArrayList<GBIFMediaElement> srcItems,
@@ -37,10 +35,10 @@ public class SpeciesMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                OnItemClickListener clickListener,
                                Context context) {
 
-        this.context = context;
-        this.occurrenceItem = occurrence;
+        mContext = context;
+        GBIFOccurrence occurrenceItem = occurrence;
         this.items = srcItems;
-        this.textSize = 14;
+        int textSize = 14;
         listener = clickListener;
     }
 
@@ -76,7 +74,7 @@ public class SpeciesMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         !item.getIdentifier().equals("")) {
 
 
-                    Glide.with(context)
+                    Glide.with(mContext)
                             .load(item.getIdentifier())
                             .asBitmap()
                             .into(new SimpleTarget<Bitmap>(200,200) {

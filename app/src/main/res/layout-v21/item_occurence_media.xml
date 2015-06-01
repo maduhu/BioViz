@@ -14,12 +14,12 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:id="@+id/iv_media"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_launcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             />
 
 
@@ -28,7 +28,7 @@
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:background="@color/text_blue_grey_darker"
-            android:text="Je suis le title"
+            android:text="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Holo.Medium"
@@ -40,7 +40,7 @@
             android:paddingEnd="5dp"
             android:paddingBottom="3dp"
             android:background="@color/text_blue_grey_darker"
-            android:text="I am the author"
+            android:text="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"

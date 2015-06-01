@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
-    private static Context context;
+    private static Context mContext;
     private ArrayList<String> items;
     private iNatObservation observationItem;
     private static OnItemClickListener listener;
@@ -37,7 +37,7 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
                                          OnItemClickListener clickListener,
                                          Context context) {
 
-        this.context = context;
+        mContext = context;
         this.observationItem = observation;
         this.items = srcItems;
         listener = clickListener;
@@ -81,7 +81,7 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
 
                 if (!observationItem.getUri().equals("")) {
 
-                    Glide.with(context).load(observationItem.getUri())
+                    Glide.with(mContext).load(observationItem.getUri())
                             .crossFade()
                             .centerCrop()
                             .placeholder(R.drawable.ic_yok_loading)
