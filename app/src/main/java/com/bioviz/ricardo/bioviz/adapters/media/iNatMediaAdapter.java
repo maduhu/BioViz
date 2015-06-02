@@ -11,21 +11,24 @@ import android.widget.TextView;
 
 import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
+import com.bioviz.ricardo.bioviz.model.iNat.Photo;
+import com.bioviz.ricardo.bioviz.model.iNat.TaxonPhotos;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class iNatMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {
 
     private static Context mContext;
-    private ArrayList<Photo> items;
+    private List<TaxonPhotos> items;
     private static OnItemClickListener listener;
 
 
-    public iNatMediaAdapter(ArrayList<Photo> srcItems,
+    public iNatMediaAdapter(List<TaxonPhotos> srcItems,
                                OnItemClickListener clickListener,
                                Context context) {
 
@@ -53,7 +56,7 @@ public class iNatMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder  holder, int position) {
-        final Photo item = items.get(position);
+        final Photo item = items.get(position).photo;
         int viewType = getItemViewType(position);
 
         switch (viewType) {
@@ -132,13 +135,5 @@ public class iNatMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public LastItemViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    private class Photo {
-        public String square_url;
-        public String small_url;
-        public String large_url;
-        public String native_username;
-        public String attribution;
     }
 }
