@@ -95,9 +95,7 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
 
             case Values.INAT_ITEM_TYPE_DESCRIPTION:
 
-                TextView description = ((SpeciesDescriptionViewHolder)holder).tvExtrasHeader;
-
-                description.setText(Html.fromHtml(
+                ((SpeciesDescriptionViewHolder)holder).tvExtrasHeader.setText(Html.fromHtml(
                         items.get(position)
                 ));
 

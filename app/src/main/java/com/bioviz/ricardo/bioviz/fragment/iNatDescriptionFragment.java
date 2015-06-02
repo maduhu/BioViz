@@ -116,9 +116,16 @@ public class iNatDescriptionFragment extends Fragment implements OnItemClickList
                     (species.getWikipedia_title() == null ? "" : species.getWikipedia_title() + "\n\n")
                             + species.getWikipedia_summary());
 
+            String lexicon = "";
+
             for (iNatSpecies.TaxonNames tn : species.getTaxon_names()) {
-                items.add(tn.name + " (" + tn.lexicon + ")\n");
+                if (tn.name == null || tn.lexicon == null)
+                    continue;
+
+                lexicon += tn.name + " (" + tn.lexicon + ")\n\n";
             }
+
+            items.add(lexicon);
         }
 
         mAdapter.notifyDataSetChanged();
