@@ -32,8 +32,8 @@ import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
 import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.activity.GBIFOccurrenceView;
-import com.bioviz.ricardo.bioviz.activity.ObservationDetails;
+import com.bioviz.ricardo.bioviz.activity.GBIFOccurrenceDetails;
+import com.bioviz.ricardo.bioviz.activity.iNatObservationDetails;
 import com.bioviz.ricardo.bioviz.adapters.QueryResultListAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.GBIF.Responses.OccurrenceLookupResponse;
@@ -235,9 +235,9 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
                         Toast.LENGTH_SHORT).show();
                 return;
             }
-            myIntent = new Intent(getActivity(), GBIFOccurrenceView.class);
+            myIntent = new Intent(getActivity(), GBIFOccurrenceDetails.class);
         } else {
-            myIntent = new Intent(getActivity(), ObservationDetails.class);
+            myIntent = new Intent(getActivity(), iNatObservationDetails.class);
         }
 
         myIntent.putExtra("item", new Gson().toJson(items.get(position)));

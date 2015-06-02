@@ -16,6 +16,7 @@ import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.model.iNat.iNatSpecies;
+import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -48,11 +49,17 @@ public class iNatDescriptionFragment extends Fragment implements OnItemClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            observationItem = new Gson().fromJson(getArguments().getString(
-                            "item"),
-                    iNatObservation.class);
+
+        if (getArguments() == null) {
+            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
         }
+
+        observationItem = new Gson().fromJson(getArguments().getString(
+                        "item"),
+                iNatObservation.class);
+
+        Toast.makeText(getActivity(), observationItem.getSpecies_guess(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -92,31 +99,27 @@ public class iNatDescriptionFragment extends Fragment implements OnItemClickList
             return;
         }
 
-        iNatSpecies response;
-        try {
-            response = new Gson().fromJson(jsonArray.get(0).toString(), iNatSpecies.class);
-        } catch (JSONException e) {
-            Toast.makeText(getActivity(), "Unable to load the resources", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        ArrayList<iNatSpecies> response;
+        //iNatSpecies response;
+
+        response = new Gson().fromJson(jsonArray.toString(), Values.ARRAY_INAT_SPECIES);
+
 
         if (items == null)
             items = new ArrayList<>();
 
-        items.add(
-                response.getName()
-                + " (\""
-                + response.getUnique_name()
-                + "\")");
+        for (int i = 0; i < response.size(); ++i) {
+            iNatSpecies species = response.get(i);
 
-        items.add(response.getWikipedia_title() + "\n\n\n" + response.getWikipedia_summary());
+            items.add(species.getName() + " (\""  + species.getUnique_name()  + "\")");
+            items.add(
+                    (species.getWikipedia_title() == null ? "" : species.getWikipedia_title() + "\n\n")
+                            + species.getWikipedia_summary());
 
-        String taxtonNames = "";
-        for (iNatSpecies.TaxonNames tn : response.getTaxon_names()) {
-            taxtonNames += tn.lexicon + " - " + tn.name;
+            for (iNatSpecies.TaxonNames tn : species.getTaxon_names()) {
+                items.add(tn.name + " (" + tn.lexicon + ")\n");
+            }
         }
-
-        items.add(taxtonNames);
 
         mAdapter.notifyDataSetChanged();
     }

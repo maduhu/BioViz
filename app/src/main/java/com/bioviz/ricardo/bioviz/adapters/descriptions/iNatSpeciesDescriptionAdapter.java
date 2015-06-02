@@ -2,6 +2,7 @@ package com.bioviz.ricardo.bioviz.adapters.descriptions;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,12 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
             return new SpeciesExtrasViewHolder(v);
         }
 
+        if (viewType == Values.INAT_ITEM_TYPE_DESCRIPTION) {
+            v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_species_base_text, parent, false);
+            return new SpeciesDescriptionViewHolder(v);
+        }
+
         v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.view_end, parent, false);
 
@@ -84,7 +91,17 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
                 break;
 
             case Values.INAT_ITEM_TYPE_EXTRAS:
+                break;
 
+            case Values.INAT_ITEM_TYPE_DESCRIPTION:
+
+                TextView description = ((SpeciesDescriptionViewHolder)holder).tvExtrasHeader;
+
+                description.setText(Html.fromHtml(
+                        items.get(position)
+                ));
+
+                break;
             default:
                 break;
         }
@@ -94,10 +111,12 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
     @Override
     public int getItemViewType(int position) {
         switch (position) {
+            /*
             case 0:
                 return Values.ITEM_TYPE_HEADER;
             case 1:
                 return Values.ITEM_TYPE_EXTRAS;
+                */
             default:
                 if (position == items.size()-1) {
                     return Values.ITEM_TYPE_END;
@@ -158,7 +177,30 @@ public class iNatSpeciesDescriptionAdapter  extends RecyclerView.Adapter<Recycle
         public SpeciesExtrasViewHolder(View rowView) {
             super(rowView);
 
+
             tvExtrasHeader = (TextView) rowView.findViewById(R.id.tvExtrasHeader);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listener.onItemClick(view, getPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
+        }
+    }
+
+    static class SpeciesDescriptionViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener{
+
+        private TextView tvExtrasHeader;
+
+        public SpeciesDescriptionViewHolder(View rowView) {
+            super(rowView);
+
+            tvExtrasHeader = (TextView) rowView.findViewById(R.id.item_description);
         }
 
         @Override

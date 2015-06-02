@@ -26,11 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ObservationDetails"
+            android:name=".activity.iNatObservationDetails"
             android:label="@string/title_activity_occurrence_details" >
         </activity>
         <activity
-            android:name=".activity.GBIFOccurrenceView"
+            android:name=".activity.GBIFOccurrenceDetails"
             android:label="@string/title_activity_gbifoccurrence_view" >
         </activity>
     </application>

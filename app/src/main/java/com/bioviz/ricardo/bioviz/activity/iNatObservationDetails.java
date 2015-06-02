@@ -5,31 +5,37 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.bioviz.ricardo.bioviz.AppController;
+import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.fragment.OccurrenceDescriptionsFragment;
-import com.bioviz.ricardo.bioviz.fragment.OccurrenceMediaFragment;
-import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
+import com.bioviz.ricardo.bioviz.fragment.iNatDescriptionFragment;
+import com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment;
+import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
 import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
-import java.util.Locale;
 
-public class GBIFOccurrenceView extends Activity implements ActionBar.TabListener, Response.ErrorListener {
+public class iNatObservationDetails extends Activity implements ActionBar.TabListener, Response.ErrorListener, OnItemClickListener, Response.Listener<JSONArray> {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,22 +45,23 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
      * may be best to switch to a
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    SectionsPagerAdapter mSectionsPagerAdapter;
 
-    private OccurrenceDescriptionsFragment descriptionsFragment;
-    private OccurrenceMediaFragment mediaFragment;
+    private iNatDescriptionFragment descriptionFragment;
+    private iNatMediaFragment mediaFragment;
 
-    private GBIFOccurrence occurrenceItem;
+    private iNatObservation observationItem;
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link android.support.v4.view.ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gbifoccurrence_view);
+
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -82,6 +89,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
                             .setTabListener(this));
         }
 
+
         String itemString;
 
         if (savedInstanceState == null) {
@@ -91,55 +99,35 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
             itemString = savedInstanceState.getString("item");
         }
 
-        occurrenceItem = new Gson().fromJson(itemString, GBIFOccurrence.class);
+        observationItem = new Gson().fromJson(itemString, iNatObservation.class);
 
         if (getActionBar() != null) {
-            getActionBar().setTitle(occurrenceItem.getScientificName());
             getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setTitle(observationItem.getSpecies_guess());
         }
 
-        //Instantiate both fragments
-        descriptionsFragment = OccurrenceDescriptionsFragment.newInstance(occurrenceItem);
-        mediaFragment = OccurrenceMediaFragment.newInstance(occurrenceItem);
+        descriptionFragment = iNatDescriptionFragment.newInstance(observationItem);
+        mediaFragment = iNatMediaFragment.newInstance(observationItem);
 
         /**
-         * Start network requests for descriptions and related media
+         * Deploy network request
          */
-        String request = Values.GBIFBaseAddr + "species/" + occurrenceItem.getSpeciesKey();
+        //http://www.inaturalist.org/taxa/search.json?q=merriam kangaroo rat
+        String request = Values.iNATBaseAddr + "taxa/search.json?q=" + observationItem.getSpecies_guess();
 
         //lookup species with speciesKey
-        Log.d("REQUEST", request + "/descriptions");
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
-                request + "/descriptions", null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        descriptionsFragment.onResponse(jsonObject);
-                    }
-                }, this);
+        Log.e("REQUEST", request);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(request,
+                this, this);
 
-
-        Log.d("REQUEST", request + "/media");
-        JsonObjectRequest mediaRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                request + "/media", null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        mediaFragment.onResponse(jsonObject);
-                    }
-                }, this);
-
-        AppController.getInstance().addToRequestQueue(jsonObjReq, "species_description_lookup");
-        AppController.getInstance().addToRequestQueue(mediaRequest, "species_media_lookup");
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonArrayRequest, "inat_species_description_lookup");
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gbifoccurrence_view, menu);
+        getMenuInflater().inflate(R.menu.menu_occurrence_details, menu);
         return true;
     }
 
@@ -152,27 +140,67 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onResponse(JSONArray jsonArray) {
+        descriptionFragment.onResponse(jsonArray);
+        mediaFragment.onResponse(jsonArray);
     }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        Log.e("VOLLEY", volleyError.toString());
+        Toast.makeText(this, "Something went wrong :| ", Toast.LENGTH_SHORT).show();
+        loadErrorView();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
 
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * Loads the view showing that there are no descriptions available
+     */
+    private void loadErrorView() {
+        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.view_woops, null);
+        LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        (v.findViewById(R.id.tvKittenMode)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.google.pt/search?q=kittens&source=lnms&tbm=isch&sa=X");
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
+
+
+        LinearLayout llDetails = (LinearLayout) findViewById(R.id.ll_occurrence_details);
+        llDetails.removeAllViews();
+        llDetails.addView(v, params);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+    /**
+     * A {@link android.support.v13.app.FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -186,7 +214,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
-                return descriptionsFragment;
+                return descriptionFragment;
             } else if (position == 1) {
                 return mediaFragment;
             }
@@ -203,9 +231,9 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Occurrence descriptions";
+                    return "Observation descriptions";
                 case 1:
-                    return "Occurrence media";
+                    return "Media";
             }
             return null;
         }
@@ -214,6 +242,6 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("item", new Gson().toJson(occurrenceItem));
+        outState.putString("item", new Gson().toJson(observationItem));
     }
 }

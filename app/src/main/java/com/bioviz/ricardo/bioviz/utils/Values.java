@@ -22,8 +22,7 @@ public class Values {
 
     public static final int INAT_ITEM_TYPE_HEADER = 0;
     public static final int INAT_ITEM_TYPE_EXTRAS = 1;
-    public static final int INAT_ITEM_TYPE_TAXON_NAME = 2;
-    public static final int INAT_ITEM_TYPE_TAXON_PHOTO = 2;
+    public static final int INAT_ITEM_TYPE_DESCRIPTION = 2;
 
     public static int section_about_id = 3;
     public static int section_home_id = 1;
@@ -32,5 +31,8 @@ public class Values {
     public static int view_observation = 1;
 
     public static final Type ARRAY_INAT_OBSERVATIONS = new TypeToken<ArrayList<com.bioviz.ricardo.bioviz.model.iNat.iNatObservation>>() {
+    }.getType();
+
+    public static final Type ARRAY_INAT_SPECIES = new TypeToken<ArrayList<com.bioviz.ricardo.bioviz.model.iNat.iNatSpecies>>() {
     }.getType();
 }

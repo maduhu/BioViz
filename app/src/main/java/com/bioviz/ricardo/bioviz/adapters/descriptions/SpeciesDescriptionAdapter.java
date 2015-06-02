@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
 
         switch (viewType) {
             case Values.ITEM_TYPE_HEADER:
+
                 ((OccurrenceViewHolder) holder).tvItemValue.setText(occurrenceItem.getScientificName());
                 ((OccurrenceViewHolder) holder).tvItemCountry.setText(occurrenceItem.getCountry() + ", " + occurrenceItem.getYear());
                 ((OccurrenceViewHolder) holder).tvItemSpecies.setText(occurrenceItem.getSpecies());
@@ -125,7 +127,7 @@ public class SpeciesDescriptionAdapter extends RecyclerView.Adapter<RecyclerView
                 }
 
                 //Deal with foreign characters
-                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(item.getDescription().replaceAll("[^\\x20-\\x7e]", ""));
+                ((DescriptionViewHolder) holder).tvDescriptionValue.setText(Html.fromHtml(item.getDescription()));
                 ((DescriptionViewHolder) holder).tvDescriptionType.setText(itemType);
                 ((DescriptionViewHolder) holder).tvDescriptionLanguage.setText("");
 
