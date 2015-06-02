@@ -95,6 +95,7 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
 
         if (getActionBar() != null) {
             getActionBar().setTitle(occurrenceItem.getScientificName());
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         //Instantiate both fragments
@@ -144,16 +145,9 @@ public class GBIFOccurrenceView extends Activity implements ActionBar.TabListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

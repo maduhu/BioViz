@@ -103,6 +103,7 @@ public class ObservationDetails  extends Activity implements ActionBar.TabListen
 
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setTitle(observationItem.getSpecies_guess());
         }
 
         descriptionFragment = iNatDescriptionFragment.newInstance(observationItem);
@@ -132,6 +133,9 @@ public class ObservationDetails  extends Activity implements ActionBar.TabListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
     }
 
