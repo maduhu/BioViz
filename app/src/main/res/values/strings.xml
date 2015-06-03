@@ -86,5 +86,6 @@
     <string name="pallette">Android Palette - a tool to easily generate a color code based on a bitmap resource. https://developer.android.com/reference/android/support/v7/graphics/Palette.html</string>
     <string name="allow_mobile_data">Use mobile data. Warning: when loading images, the application can use large ammounts of traffic. Please bear in mind your montlhy plan when using this option.</string>
     <string name="specimen_class">Class</string>
+    <string name="section_settings">Settings</string>
 
 </resources>

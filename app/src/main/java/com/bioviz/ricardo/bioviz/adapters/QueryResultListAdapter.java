@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;
 import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;

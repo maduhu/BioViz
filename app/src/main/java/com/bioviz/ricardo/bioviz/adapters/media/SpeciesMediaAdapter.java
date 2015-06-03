@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;

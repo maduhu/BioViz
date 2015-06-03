@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
-import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.media.SpeciesMediaAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFMediaElement;

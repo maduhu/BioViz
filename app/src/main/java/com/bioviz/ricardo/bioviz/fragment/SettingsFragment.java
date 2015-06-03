@@ -18,7 +18,7 @@ import com.bioviz.ricardo.bioviz.utils.Values;
 /**
  * Fragment to show additional info about the author and the involved technologies
  */
-public class About extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private Button btSaveConf;
     private Switch swData;
@@ -28,16 +28,16 @@ public class About extends Fragment implements CompoundButton.OnCheckedChangeLis
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @return A new instance of fragment About.
+     * @return A new instance of fragment SettingsFragment.
      */
-    public static About newInstance() {
-        About fragment = new About();
+    public static SettingsFragment newInstance() {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public About() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -55,7 +55,7 @@ public class About extends Fragment implements CompoundButton.OnCheckedChangeLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_about, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         swData = (Switch) rootView.findViewById(R.id.conf_sw_data);
         swLang = (Switch) rootView.findViewById(R.id.conf_sw_language);

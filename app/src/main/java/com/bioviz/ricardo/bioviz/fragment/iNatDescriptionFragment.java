@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
-import com.bioviz.ricardo.bioviz.Interface.OnObservationResponseListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnObservationResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.iNatSpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.iNat.iNatObservation;
@@ -20,7 +20,6 @@ import com.bioviz.ricardo.bioviz.utils.Values;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -108,13 +107,15 @@ public class iNatDescriptionFragment extends Fragment implements OnItemClickList
         if (items == null)
             items = new ArrayList<>();
 
+        //well someone out there in the iNat dev team found it useful to
+        // allow null values for data. wonderful.
         for (int i = 0; i < response.size(); ++i) {
             iNatSpecies species = response.get(i);
 
             items.add(species.getName() + " (\""  + species.getUnique_name()  + "\")");
             items.add(
-                    (species.getWikipedia_title() == null ? "" : species.getWikipedia_title() + "\n\n")
-                            + species.getWikipedia_summary());
+                    (species.getWikipedia_title() == null ? "" : species.getWikipedia_title() + "\n\n") +
+                    (species.getWikipedia_summary() == null ? "" : species.getWikipedia_summary() + "\n\n"));
 
             String lexicon = "";
 

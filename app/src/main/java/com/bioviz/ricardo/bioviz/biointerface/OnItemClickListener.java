@@ -1,4 +1,4 @@
-package com.bioviz.ricardo.bioviz.Interface;
+package com.bioviz.ricardo.bioviz.biointerface;
 
 import android.view.View;
 

@@ -102,7 +102,7 @@
                         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                         android:layout_width="0dp"
                         android:layout_weight=".9"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         />
                 </LinearLayout>
 

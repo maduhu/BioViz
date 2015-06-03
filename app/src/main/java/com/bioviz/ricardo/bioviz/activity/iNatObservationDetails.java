@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.bioviz.ricardo.bioviz.AppController;
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.fragment.iNatDescriptionFragment;
 import com.bioviz.ricardo.bioviz.fragment.iNatMediaFragment;

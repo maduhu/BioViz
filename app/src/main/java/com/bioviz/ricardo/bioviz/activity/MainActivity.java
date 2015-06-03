@@ -10,15 +10,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.fragment.About;
+import com.bioviz.ricardo.bioviz.fragment.SettingsFragment;
+import com.bioviz.ricardo.bioviz.fragment.AboutFragment;
 import com.bioviz.ricardo.bioviz.fragment.Home;
 import com.bioviz.ricardo.bioviz.fragment.NavigationDrawerFragment;
 import com.bioviz.ricardo.bioviz.fragment.OccurrenceList;
@@ -77,13 +75,15 @@ public class MainActivity extends Activity
                 colorTo = getResources().getColor(R.color.tab_blue);
                 break;
             case 2:
-                fragment = About.newInstance();
+                fragment = SettingsFragment.newInstance();
+                colorTo = getResources().getColor(R.color.tab_green);
+                break;
+            case 3:
+                fragment = AboutFragment.newInstance();
                 colorTo = getResources().getColor(R.color.tab_red);
                 break;
             default:
-                fragment = PlaceholderFragment.newInstance(position+1);
-                colorTo = getResources().getColor(R.color.tab_green);
-                break;
+                return;
         }
 
         colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorStatus, colorTo);
@@ -118,6 +118,9 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.section_occurrence_list);
                 break;
             case 3:
+                mTitle = getString(R.string.section_settings);
+                break;
+            case 4:
                 mTitle = getString(R.string.section_about);
                 break;
         }
@@ -154,46 +157,6 @@ public class MainActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
     }
 
 }

@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bioviz.ricardo.bioviz.AppController;
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
-import com.bioviz.ricardo.bioviz.Interface.OnOccurrenceResponseListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnOccurrenceResponseListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.descriptions.SpeciesDescriptionAdapter;
 import com.bioviz.ricardo.bioviz.model.GBIF.GBIFOccurrence;

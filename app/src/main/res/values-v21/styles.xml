@@ -7,8 +7,13 @@
         <!--<item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:colorPrimary">@color/primary</item> <!-- Act. Bar -->
         <item name="android:colorPrimaryDark">@color/primary_dark</item> <!-- Stat. Bar -->
-
         <item name="android:textColorPrimary">@color/text_primary</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
 
     </style>
 </resources>

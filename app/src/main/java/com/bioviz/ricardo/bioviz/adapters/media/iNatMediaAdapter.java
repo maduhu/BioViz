@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.model.iNat.Photo;
 import com.bioviz.ricardo.bioviz.model.iNat.TaxonPhotos;
@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class iNatMediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder > {

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bioviz.ricardo.bioviz.Interface.OnItemClickListener;
+import com.bioviz.ricardo.bioviz.biointerface.OnItemClickListener;
 import com.bioviz.ricardo.bioviz.R;
 import com.bioviz.ricardo.bioviz.adapters.media.iNatMediaAdapter;
 import com.bioviz.ricardo.bioviz.model.iNat.TaxonPhotos;
