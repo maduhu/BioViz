@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity
             public void onAnimationUpdate(ValueAnimator animator) {
                 colorStatus = colorTo;
                 if (Build.VERSION.SDK_INT >= 21) {
-                    //getWindow().setStatusBarColor(colorTo);
+                    getWindow().setStatusBarColor(colorTo);
                     mToolbar.setBackgroundColor(colorTo);
                 }
             }
