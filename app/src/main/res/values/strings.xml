@@ -87,5 +87,7 @@
     <string name="allow_mobile_data">Use mobile data. Warning: when loading images, the application can use large ammounts of traffic. Please bear in mind your montlhy plan when using this option.</string>
     <string name="specimen_class">Class</string>
     <string name="section_settings">Settings</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 
 </resources>

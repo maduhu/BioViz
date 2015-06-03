@@ -2,123 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-366d6540efc961b2ab09c9f362a5091c55538d2e.jar" />
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-796f8846ac16b27617c4ab7602c12644ba2ee363.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-9aefc22649daa2beab97ad8555469d5628e01749.jar" />
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-0c1b1deda89157b2e0592c504f4d76209392582f.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-3921d727694a398772cfb77fc4a743875381f35f.jar" />
+        sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-77bd8695901e5252341586482d41dedb621797fe.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-d4e8fba34acc9355119ac4583c0464b4fc69ea01.jar" />
+        sha1="d405025c600055237c171a0bbabaa49d69696573">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-38153dcb9db5d31babe6fc7a3e248e61d0b89eef.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-a92c6fb295766774d2fc0a83caf1abc110a53d85.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c6d79137693d494dee16372d3921f919eb724ced">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-102ac65644843e8826f054888dc443b1855024bc.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-e9f31955e1fe9f4064321fe4d241f29651a01399.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-b9af922b2a6fb0570598259c4f9fc92fb0e03013.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-501e5981ae5f901844b621331740c091778f9016.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ecf534dba3a8446ce84cbb797d314763be212a68">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/glide-3.5.2-95a6cd85550905e0687ea848b5efb7834b401b42.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-fe0beebb53e2085925c607c4210979f53ce84102.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-4709e6a1b6a297185dcabdb2e487739bdda22351.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/tools/android-sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-9a74308f3aa4ccf4c88038c3356cfb2c096d6149.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-79c89e28d8b1ee3c33c88ad88a4a701d9246178f.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v13/22.0.0/libs/internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="def3eff2b7b4774d96ae15b07b3fc0111edbfe24">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-23809f004465e5b9704961f64b7d05ee77d69164.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-bfe8ca0bce8a34c21cd64b2600ac2d70fad9aed8.jar" />
-    </item>
-    <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-e4f1cd42aa470e1f8073dafa7e573e0a9af325f5.jar" />
+        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-01251fe30d8b13a088535e8dd0fd55074cc171c2.jar" />
     </item>
     <item
         jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
@@ -128,11 +44,25 @@
         <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/gson-2.3-a78e3fb641a0856e61e54b318414a466145ae1f0.jar" />
     </item>
     <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-3921d727694a398772cfb77fc4a743875381f35f.jar" />
+    </item>
+    <item
         jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/palette-v7/21.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="b65c2fede61220ed2b6a063f11ca13160910089e">
         <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-cba0a495214e8bbf1f400c5a0bbcbcaa4764d62b.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-00d4d1d2f0db1fe240f76408987be65ad756f231.jar" />
     </item>
     <item
         jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v13/22.0.0/classes.jar"
@@ -142,32 +72,74 @@
         <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-d6b04a0b5fa7b44d5abd13e6c2d376b7787332b1.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-93e4a3c1de5d8a20735bc829d6041f2890755ff3.jar" />
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-dcf533b619ed6056c7fd4a679698de871b2c5e80.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-50fd129c1fee7bd1bca32fc2b230b13bec251f65.jar" />
+        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-669c8c7a122add71bdd8358ad28716601fd6134d.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="565a01f90f1529f73362707c4c185d0623a68782">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-a571dab0c82a7f3279d3f81e278e3ee92cf27977.jar" />
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-5ef9dceebd00d27326cfd789c01825c5721aa272.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-53ce7fe80820d2ef9a8001bc404df878deb356b7.jar" />
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-6613fcbb96df7a800d08dcba4fa3c229f9d52130.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-86c1313f4fb18dfce3006c237137acd250f9b219.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/android-sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-0deaf998e5870628fe7bb42a4034aad098acf020.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-17be8f54909d9aac9c01afb2854dcbe6c85709ad.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-102ac65644843e8826f054888dc443b1855024bc.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-452ad11d73e0e2fc9e20a6f0ed8e897cc150a3a7.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-e1c428f558493d38085bb6beded5edb4d1fb4634.jar" />
     </item>
     <item
         jar="/home/ricardo/Development/BioViz/app/libs/volley.jar"
@@ -177,46 +149,95 @@
         <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/volley-9cb0d172a3a6a928d3aa639c7f82c60e9349820d.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/classes.jar"
+        jar="/home/ricardo/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.5.2/ecf534dba3a8446ce84cbb797d314763be212a68/glide-3.5.2.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-75d00edaafc21d816cf308313566a05f005333f4.jar" />
+        sha1="ecf534dba3a8446ce84cbb797d314763be212a68">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/glide-3.5.2-95a6cd85550905e0687ea848b5efb7834b401b42.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-e479eadc45a45ba5e4d71be4572e667d02eb8401.jar" />
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-4fa8deb65a9a7b4ae5ee619dd9b23e582dda91de.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-554e7c40ceac0160d5c313abc77dbf5eb5d7d8bc.jar" />
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-7dd42c50fcc2c6bb097ff6584393225099dda8e4.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-5fea2f9ef72cd75aff5b69488b6d627fe0e27c8b.jar" />
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-f3e3a07d5d4cb62c7491ec4567fe19b129e82346.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/libs/internal_impl-22.1.1.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.5.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-f6c328501c5958e97765aeb8c9ea03a74ce99fe8.jar" />
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-f79ee0d6f6d0f2c91ede30aaf4d0345e532600f0.jar" />
     </item>
     <item
-        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/classes.jar"
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v13/22.0.0/libs/internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
-        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-ddc67e33bb20b0edf924cd2431654ba7a0da99d9.jar" />
+        sha1="def3eff2b7b4774d96ae15b07b3fc0111edbfe24">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-23809f004465e5b9704961f64b7d05ee77d69164.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-cd8211a4109b8664cbe1ae17105a28dc8e98538d.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-0602290a1f6feb797eed9bf85e4af2a8be52147c.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-65cde455b683ad3beb0c41c42de065142edd0efd.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-9b56a4f695b25753fc42a847e31008522b575ef7.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-b0f135dafc688394771db0f54a50520049db28ee.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-efc50c4f970b735dc254dcb642f8a56de8a6654a.jar" />
+    </item>
+    <item
+        jar="/home/ricardo/Development/BioViz/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.5.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
+        <dex dex="/home/ricardo/Development/BioViz/app/build/intermediates/pre-dexed/debug/classes-21f67c04425549bdd2f6d5d787b6ac7c89bf8918.jar" />
     </item>
 
 </items>

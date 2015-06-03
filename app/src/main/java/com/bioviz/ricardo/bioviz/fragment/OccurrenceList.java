@@ -2,7 +2,7 @@ package com.bioviz.ricardo.bioviz.fragment;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -243,7 +243,7 @@ public class OccurrenceList extends Fragment implements OnItemClickListener, Con
         myIntent.putExtra("item", new Gson().toJson(items.get(position)));
         ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                 0, view.getWidth(), view.getHeight());
-        startActivity(myIntent, options.toBundle());
+        getActivity().startActivity(myIntent, options.toBundle());
     }
 
     @Override

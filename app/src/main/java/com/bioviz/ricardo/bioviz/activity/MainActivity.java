@@ -2,111 +2,52 @@ package com.bioviz.ricardo.bioviz.activity;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 
-import com.bioviz.ricardo.bioviz.AppController;
 import com.bioviz.ricardo.bioviz.R;
-import com.bioviz.ricardo.bioviz.fragment.SettingsFragment;
 import com.bioviz.ricardo.bioviz.fragment.AboutFragment;
+import com.bioviz.ricardo.bioviz.fragment.FragmentDrawer;
 import com.bioviz.ricardo.bioviz.fragment.Home;
-import com.bioviz.ricardo.bioviz.fragment.NavigationDrawerFragment;
 import com.bioviz.ricardo.bioviz.fragment.OccurrenceList;
+import com.bioviz.ricardo.bioviz.fragment.SettingsFragment;
 
 
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity
+        implements FragmentDrawer.FragmentDrawerListener  {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
+
+    private Toolbar mToolbar;
+    private FragmentDrawer drawerFragment;
 
     private Integer colorStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        AppController.enableHttpResponseCache();
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment;
-        final Integer colorTo;
-        ValueAnimator colorAnimation;
-
-        if (colorStatus == null) {
-            colorStatus = R.color.primary;
-        }
-
-        switch (position) {
-            case 0:
-                fragment = Home.newInstance();
-                colorTo = getResources().getColor(R.color.primary);
-                break;
-            case 1:
-                fragment = OccurrenceList.newInstance();
-                colorTo = getResources().getColor(R.color.tab_blue);
-                break;
-            case 2:
-                fragment = SettingsFragment.newInstance();
-                colorTo = getResources().getColor(R.color.tab_green);
-                break;
-            case 3:
-                fragment = AboutFragment.newInstance();
-                colorTo = getResources().getColor(R.color.tab_red);
-                break;
-            default:
-                return;
-        }
-
-        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorStatus, colorTo);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                colorStatus = colorTo;
-                if (Build.VERSION.SDK_INT >= 21) {
-                    getWindow().setStatusBarColor(colorTo);
-                }
-
-                if (getActionBar() != null) {
-                    getActionBar().setBackgroundDrawable(new ColorDrawable((Integer) animator.getAnimatedValue()));
-                }
-            }
-        });
-        colorAnimation.start();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        drawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setDrawerListener(this);
+        displayView(0);
     }
 
     public void onSectionAttached(int number) {
@@ -126,23 +67,13 @@ public class MainActivity extends Activity
         }
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen
-        // if the drawer is not showing. Otherwise, let the drawer
-        // decide what to show in the action bar.
-        //getMenuInflater().inflate(R.menu.home, menu);
-        //restoreActionBar();
-        return !mNavigationDrawerFragment.isDrawerOpen() || super.onCreateOptionsMenu(menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -159,4 +90,70 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDrawerItemSelected(View view, int position) {displayView(position);}
+
+    private void displayView(int position) {
+        android.support.v4.app.Fragment fragment = null;
+        final Integer colorTo;
+
+        String title = getString(R.string.app_name);
+        switch (position) {
+            case 0:
+                fragment = new Home();
+                title = getString(R.string.section_home);
+                colorTo = getResources().getColor(R.color.primary);
+                break;
+            case 1:
+                fragment = new OccurrenceList();
+                title = getString(R.string.section_occurrence_list);
+                colorTo = getResources().getColor(R.color.tab_blue);
+                break;
+            case 2:
+                fragment = new SettingsFragment();
+                title = getString(R.string.section_settings);
+                colorTo = getResources().getColor(R.color.tab_red);
+                break;
+            case 3:
+                fragment = new AboutFragment();
+                title = getString(R.string.section_about);
+                colorTo = getResources().getColor(R.color.tab_green);
+                break;
+            default:
+                colorTo = null;
+                break;
+        }
+
+        ValueAnimator colorAnimation;
+
+        if (colorStatus == null) {
+            colorStatus = R.color.primary;
+        }
+
+        if (colorTo == null) {
+            return;
+        }
+
+        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorStatus, colorTo);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                colorStatus = colorTo;
+                if (Build.VERSION.SDK_INT >= 21) {
+                    //getWindow().setStatusBarColor(colorTo);
+                    mToolbar.setBackgroundColor(colorTo);
+                }
+            }
+        });
+        colorAnimation.start();
+
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+
+        // set the toolbar title
+        getSupportActionBar().setTitle(title);
+    }
 }
